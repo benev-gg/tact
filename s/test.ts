@@ -1,4 +1,5 @@
 
+import {need} from "@e280/stz"
 import {Scalar} from "@benev/math"
 import {science, suite, test, expect} from "@e280/science"
 
@@ -10,7 +11,6 @@ import {bindingsTable} from "./core/bindings/table.js"
 import {normalizeBindings} from "./core/bindings/normalize.js"
 import {makeIntentsResolver} from "./core/resolvers/intents.js"
 import {makeActionsResolver} from "./core/resolvers/actions.js"
-import { need } from "@e280/stz"
 
 export const exampleBindings = asBindings({
 	running: {forward: "KeyW", jump: ["and", "ShiftLeft", "Space"]},
@@ -191,22 +191,149 @@ await science.run({
 		}),
 	}),
 
-	// // TODO
-	// "holding and tapping": test(async() => {
-	// 	const bindings = asBindings({
-	// 		alpha: {
-	// 			tapper: ["code", "KeyE", {timing: ["tap", 10]}],
-	// 			holder: ["code", "KeyE", {timing: ["hold", 10]}],
-	// 		},
-	// 	})
-	// 	const resolveIntents = makeIntentsResolver(bindings)
-	// 	const resolveActions = makeActionsResolver(bindings)
-	// 	{
-	// 		const intents = resolveIntents(0, [["KeyE", 0]])
-	// 		const actions = resolveActions(intents)
-	// 		expect(actions.alpha.tapper.down).is(false)
-	// 		expect(actions.alpha.holder.down).is(false)
-	// 	}
-	// }),
+	"dynamics": {
+		"just tapping": test(async() => {
+			const bindings = asBindings({
+				alpha: {
+					tapper: ["code", "KeyE", {timing: ["tap", 10]}],
+				},
+			})
+			const resolveIntents = makeIntentsResolver(bindings)
+			const resolveActions = makeActionsResolver(bindings)
+			{
+				const intents = resolveIntents(0, [["KeyE", 0]])
+				const actions = resolveActions(intents)
+				expect(actions.alpha.tapper.down).is(false)
+			}
+			{
+				const intents = resolveIntents(1, [["KeyE", 1]])
+				const actions = resolveActions(intents)
+				expect(actions.alpha.tapper.down).is(false)
+			}
+			{
+				const intents = resolveIntents(2, [["KeyE", 0]])
+				const actions = resolveActions(intents)
+				expect(actions.alpha.tapper.down).is(true)
+			}
+		}),
+
+		"just holding": test(async() => {
+			const bindings = asBindings({
+				alpha: {
+					holder: ["code", "KeyE", {timing: ["hold", 10]}],
+				},
+			})
+			const resolveIntents = makeIntentsResolver(bindings)
+			const resolveActions = makeActionsResolver(bindings)
+			{
+				const intents = resolveIntents(0, [["KeyE", 0]])
+				const actions = resolveActions(intents)
+				expect(actions.alpha.holder.down).is(false)
+			}
+			{
+				const intents = resolveIntents(1, [["KeyE", 1]])
+				const actions = resolveActions(intents)
+				expect(actions.alpha.holder.down).is(false)
+			}
+			{
+				const intents = resolveIntents(11, [["KeyE", 1]])
+				const actions = resolveActions(intents)
+				expect(actions.alpha.holder.down).is(true)
+			}
+		}),
+
+		"tapper works while holder exists": test(async() => {
+			const bindings = asBindings({
+				alpha: {
+					tapper: ["code", "KeyE", {timing: ["tap", 10]}],
+					holder: ["code", "KeyE", {timing: ["hold", 10]}],
+				},
+			})
+			const resolveIntents = makeIntentsResolver(bindings)
+			const resolveActions = makeActionsResolver(bindings)
+			{
+				const intents = resolveIntents(0, [["KeyE", 0]])
+				const actions = resolveActions(intents)
+				expect(actions.alpha.tapper.down).is(false)
+			}
+			{
+				const intents = resolveIntents(1, [["KeyE", 1]])
+				const actions = resolveActions(intents)
+				expect(actions.alpha.tapper.down).is(false)
+			}
+			{
+				const intents = resolveIntents(2, [["KeyE", 0]])
+				const actions = resolveActions(intents)
+				expect(actions.alpha.tapper.down).is(true)
+			}
+		}),
+
+		"holder works while tapper exists": test(async() => {
+			const bindings = asBindings({
+				alpha: {
+					tapper: ["code", "KeyE", {timing: ["tap", 10]}],
+					holder: ["code", "KeyE", {timing: ["hold", 10]}],
+				},
+			})
+			const resolveIntents = makeIntentsResolver(bindings)
+			const resolveActions = makeActionsResolver(bindings)
+			{
+				const intents = resolveIntents(0, [["KeyE", 0]])
+				const actions = resolveActions(intents)
+				expect(actions.alpha.holder.down).is(false)
+			}
+			{
+				const intents = resolveIntents(1, [["KeyE", 1]])
+				const actions = resolveActions(intents)
+				expect(actions.alpha.holder.down).is(false)
+			}
+			{
+				const intents = resolveIntents(11, [["KeyE", 1]])
+				const actions = resolveActions(intents)
+				expect(actions.alpha.holder.down).is(true)
+			}
+		}),
+
+		"tapper and holder both work together": test(async() => {
+			const bindings = asBindings({
+				alpha: {
+					tapper: ["code", "KeyE", {timing: ["tap", 10]}],
+					holder: ["code", "KeyE", {timing: ["hold", 10]}],
+				},
+			})
+			const resolveIntents = makeIntentsResolver(bindings)
+			const resolveActions = makeActionsResolver(bindings)
+			{
+				const intents = resolveIntents(0, [["KeyE", 0]])
+				const actions = resolveActions(intents)
+				expect(actions.alpha.tapper.down).is(false)
+				expect(actions.alpha.holder.down).is(false)
+			}
+			{
+				const intents = resolveIntents(1, [["KeyE", 1]])
+				const actions = resolveActions(intents)
+				expect(actions.alpha.tapper.down).is(false)
+				expect(actions.alpha.holder.down).is(false)
+			}
+			{
+				const intents = resolveIntents(2, [["KeyE", 0]])
+				const actions = resolveActions(intents)
+				expect(actions.alpha.tapper.down).is(true)
+				expect(actions.alpha.holder.down).is(false)
+			}
+			{
+				const intents = resolveIntents(3, [["KeyE", 1]])
+				const actions = resolveActions(intents)
+				expect(actions.alpha.tapper.down).is(false)
+				expect(actions.alpha.holder.down).is(false)
+			}
+			{
+				const intents = resolveIntents(13, [["KeyE", 1]])
+				const actions = resolveActions(intents)
+				expect(actions.alpha.tapper.down).is(false)
+				expect(actions.alpha.holder.down).is(true)
+			}
+		}),
+	},
 })
 
