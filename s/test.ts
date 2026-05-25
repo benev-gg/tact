@@ -189,5 +189,23 @@ await science.run({
 			expect(actions.running.forward.changedUp).is(false)
 		}),
 	}),
+
+	// // TODO
+	// "holding and tapping": test(async() => {
+	// 	const bindings = asBindings({
+	// 		alpha: {
+	// 			tapper: ["code", "KeyE", {timing: ["tap", 10]}],
+	// 			holder: ["code", "KeyE", {timing: ["hold", 10]}],
+	// 		},
+	// 	})
+	// 	const resolveIntents = makeIntentsResolver(bindings)
+	// 	const resolveActions = makeActionsResolver(bindings)
+	// 	{
+	// 		const intents = resolveIntents(0, [["KeyE", 0]])
+	// 		const actions = resolveActions(intents)
+	// 		expect(actions.alpha.tapper.down).is(false)
+	// 		expect(actions.alpha.holder.down).is(false)
+	// 	}
+	// }),
 })
 
