@@ -1,13 +1,13 @@
 
-import {GMap, is} from "@e280/stz"
+import {guarantee, is, need} from "@e280/stz"
 
 export class Identifier<Item> {
 	#nextId = 0
-	#ids = new GMap<Item, number>()
-	#items = new GMap<number, Item>()
+	#ids = new Map<Item, number>()
+	#items = new Map<number, Item>()
 
 	id(item: Item) {
-		const id = this.#ids.guarantee(item, () => {
+		const id = guarantee(this.#ids, item, () => {
 			const freshId = this.#nextId++
 			this.#items.set(freshId, item)
 			return freshId
@@ -16,7 +16,7 @@ export class Identifier<Item> {
 	}
 
 	need(id: number) {
-		return this.#items.need(id)
+		return need(this.#items, id)
 	}
 
 	delete(item: Item) {

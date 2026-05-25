@@ -1,13 +1,17 @@
 
 import {RMap} from "@e280/strata"
+import {inserts, need} from "@e280/stz"
 import {Profile, ProfileKey} from "../types.js"
 
 export class Profiles {
 	stock
 
 	constructor(stock: Record<ProfileKey, Profile>, public custom: RMap<ProfileKey, Profile>) {
-		this.stock = new RMap<ProfileKey, Profile>().absorbObject(stock)
-		if (this.stock.size === 0) throw new Error("must be at least one stock profile")
+		this.stock = new RMap<ProfileKey, Profile>()
+		inserts(this.stock, Object.entries(stock))
+
+		if (this.stock.size === 0)
+			throw new Error("must be at least one stock profile")
 	}
 
 	get all() {
@@ -29,7 +33,7 @@ export class Profiles {
 	}
 
 	need(key: ProfileKey) {
-		return this.stock.get(key) ?? this.custom.need(key)
+		return this.stock.get(key) ?? need(this.custom, key)
 	}
 }
 

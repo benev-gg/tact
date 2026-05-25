@@ -10,7 +10,7 @@ export class Port {
 	constructor(runtime: Runtime) {
 		this.#runtime = runtime
 		this.#controllers = derived(
-			() => this.#runtime.controllers.array()
+			() => [...this.#runtime.controllers]
 				.filter(controller => this.#runtime.portAssignments.get(controller) === this)
 		)
 	}

@@ -1,10 +1,10 @@
 
-import {GMap} from "@e280/stz"
+import {guarantee} from "@e280/stz"
 import {tmax} from "../../utils/tmax.js"
 import {tmin} from "../../utils/tmin.js"
 import {lensAlgo} from "../atom/lens-algo.js"
-import {bindingsTable} from "../bindings/table.js"
 import {SampleMap} from "../parts/sample-map.js"
+import {bindingsTable} from "../bindings/table.js"
 import {defaultCodeState} from "../atom/defaults.js"
 import {Bindings, Sample, Intent} from "../types.js"
 import {Atom, CodeSettings, CodeState} from "../atom/types.js"
@@ -12,14 +12,14 @@ import {Atom, CodeSettings, CodeState} from "../atom/types.js"
 export function makeIntentsResolver<B extends Bindings>(bindings: B) {
 	const table = bindingsTable(bindings)
 	const sampleMap = new SampleMap()
-	const codeStates = new GMap<string, CodeState>()
-	const intentMap = new GMap<number, number>()
+	const codeStates = new Map<string, CodeState>()
+	const intentMap = new Map<number, number>()
 
 	for (const bind of table.values())
 		intentMap.set(bind.id, 0)
 
 	const resolveCode = (now: number, path: string[], code: string, settings?: Partial<CodeSettings>) => {
-		const state = codeStates.guarantee(
+		const state = guarantee(codeStates,
 			path.join("/"),
 			() => defaultCodeState(["code", code, settings], now),
 		)

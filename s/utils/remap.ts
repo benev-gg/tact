@@ -1,8 +1,6 @@
 
-import {GMap} from "@e280/stz"
-
-export function remap<K, V>(entries: [K, V][], fn?: (map: GMap<K, V>) => void) {
-	const map = new GMap(entries)
+export function remap<K, V>(entries: [K, V][], fn?: (map: Map<K, V>) => void) {
+	const map = new Map(entries)
 	fn?.(map)
 	return [...map.entries()]
 }

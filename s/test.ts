@@ -10,6 +10,7 @@ import {bindingsTable} from "./core/bindings/table.js"
 import {normalizeBindings} from "./core/bindings/normalize.js"
 import {makeIntentsResolver} from "./core/resolvers/intents.js"
 import {makeActionsResolver} from "./core/resolvers/actions.js"
+import { need } from "@e280/stz"
 
 export const exampleBindings = asBindings({
 	running: {forward: "KeyW", jump: ["and", "ShiftLeft", "Space"]},
@@ -23,23 +24,23 @@ await science.run({
 		}),
 
 		"table actions": test(async() => {
-			expect(bindingsTable(exampleBindings).need(0).action).is("shoot")
-			expect(bindingsTable(exampleBindings).need(1).action).deep("forward")
-			expect(bindingsTable(exampleBindings).need(2).action).deep("jump")
+			expect(need(bindingsTable(exampleBindings), 0).action).is("shoot")
+			expect(need(bindingsTable(exampleBindings), 1).action).deep("forward")
+			expect(need(bindingsTable(exampleBindings), 2).action).deep("jump")
 		}),
 
 		"table consistent ordering, mode": test(async() => {
 			for (const b of [
 				bindingsTable({alpha: {x: "KeyX"}, bravo: {x: "KeyX"}}),
 				bindingsTable({bravo: {x: "KeyX"}, alpha: {x: "KeyX"}}),
-			]) expect(b.need(0).mode).deep("alpha")
+			]) expect(need(b, 0).mode).deep("alpha")
 		}),
 
 		"table consistent ordering, action": test(async() => {
 			for (const b of [
 				bindingsTable({x: {alpha: "KeyA", bravo: "KeyB"}}),
 				bindingsTable({x: {bravo: "KeyB", alpha: "KeyA"}}),
-			]) expect(b.need(0).action).deep("alpha")
+			]) expect(need(b, 0).action).deep("alpha")
 		}),
 
 		normalize: {

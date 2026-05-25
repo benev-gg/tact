@@ -1,11 +1,10 @@
 
-import {GMap} from "@e280/stz"
 import {Bindings, BindingsRow} from "../types.js"
 import {sortByKey} from "../../utils/sort-by-key.js"
 
 export function bindingsTable<B extends Bindings>(data: B) {
 	data = structuredClone(data)
-	const table = new GMap<number, BindingsRow<B>>()
+	const table = new Map<number, BindingsRow<B>>()
 
 	Object.entries(data)
 		.sort(sortByKey)

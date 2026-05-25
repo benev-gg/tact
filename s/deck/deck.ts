@@ -1,5 +1,5 @@
 
-import {debounce} from "@e280/stz"
+import {debounce, guarantee} from "@e280/stz"
 import {Cubby} from "@e280/strata"
 import {Port} from "./port.js"
 import {Device} from "../core/types.js"
@@ -31,15 +31,15 @@ export class Deck<StockProfileKey extends ProfileKey = ProfileKey> {
 	#save = debounce(100, () => this.settings.save())
 
 	get ports() {
-		return this.#runtime.ports.array()
+		return [...this.#runtime.ports]
 	}
 
 	get controllers() {
-		return this.#runtime.controllers.array()
+		return [...this.#runtime.controllers]
 	}
 
 	get unassignedControllers() {
-		return this.#runtime.controllers.array()
+		return [...this.#runtime.controllers]
 			.filter(controller => !this.#runtime.portAssignments.get(controller))
 	}
 
@@ -60,7 +60,7 @@ export class Deck<StockProfileKey extends ProfileKey = ProfileKey> {
 			stockProfileKey: StockProfileKey,
 			device: D,
 		) {
-		const profileKey = this.settings.profileAssignments.guarantee(handle, () => stockProfileKey)
+		const profileKey = guarantee(this.settings.profileAssignments, handle, () => stockProfileKey)
 		const profile = this.profiles.get(profileKey)
 		const controller = new Controller(handle, profile.bindings, device)
 		this.#runtime.controllers.add(controller)

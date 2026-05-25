@@ -1,8 +1,7 @@
 
-import {GMap} from "@e280/stz"
 import {Sample} from "../types.js"
 
-export class SampleMap extends GMap<string, number> {
+export class SampleMap extends Map<string, number> {
 	constructor(samples?: Iterable<Sample>) {
 		super()
 		if (samples) {

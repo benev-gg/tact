@@ -40,7 +40,7 @@ export const GamepadApp = shadowElement(() => {
 
 	return html`
 		<div class=plate>
-			${connected.size > 0 ? connected.array().map(({samples, device: {gamepad}}) => html`
+			${connected.size > 0 ? [...connected].map(({samples, device: {gamepad}}) => html`
 				<div class=device>
 					<h2>🎮 ${gamepad.id}</h2>
 					<div class=stats>
@@ -50,10 +50,10 @@ export const GamepadApp = shadowElement(() => {
 						<span>vibrationActuator ${gamepad.vibrationActuator ? "yes" : "no"}</span>
 					</div>
 					<ul>
-						${samples.array().filter(([code]) => code.startsWith("gamepad.button")).map(renderSample)}
+						${[...samples].filter(([code]) => code.startsWith("gamepad.button")).map(renderSample)}
 					</ul>
 					<ul>
-						${samples.array().filter(([code]) => code.startsWith("gamepad.axis")).map(renderSample)}
+						${[...samples].filter(([code]) => code.startsWith("gamepad.axis")).map(renderSample)}
 					</ul>
 				</div>
 			`) : html`

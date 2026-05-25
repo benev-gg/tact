@@ -1,5 +1,4 @@
 
-import {GMap} from "@e280/stz"
 import {Atom} from "./atom/types.js"
 import {Action} from "./parts/action.js"
 
@@ -10,7 +9,7 @@ export type Bindings = {[mode: string]: {[action: string]: Atom}}
 export type BindingsShape<B extends Bindings> = {[MK in keyof B]: {[AK in keyof B[MK]]: number}}
 
 /** integer-indexed flat map of bindings info (for efficient networking) */
-export type BindingsTable<B extends Bindings> = GMap<number, BindingsRow<B>>
+export type BindingsTable<B extends Bindings> = Map<number, BindingsRow<B>>
 
 /** the binding for a single action */
 export type BindingsRow<B extends Bindings> = {
