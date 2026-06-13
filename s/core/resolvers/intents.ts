@@ -19,7 +19,8 @@ export function makeIntentsResolver<B extends Bindings>(bindings: B) {
 		intentMap.set(bind.id, 0)
 
 	const resolveCode = (now: number, path: string[], code: string, settings?: Partial<CodeSettings>) => {
-		const state = guarantee(codeStates,
+		const state = guarantee(
+			codeStates,
 			path.join("/"),
 			() => defaultCodeState(["code", code, settings], now),
 		)

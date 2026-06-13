@@ -16,27 +16,27 @@
 		"s"
 	],
 	"scripts": {
-		"link": "npm link ../../@e280/strata ../../@e280/sly",
+		"link": "npm link ../../@e280/strata ../../@e280/sly ../../@e280/stz",
 		"build": "octo-s 'rm -rf x' 'tsc' 'scute -v'",
-		"dev": "octo 'scute -vw' 'tsc -w' 'node --watch x/test.js' 'hottie x'",
+		"dev": "octo 'scute -vw' 'tsc -w' 'node --watch x/test.js' 'hottie x --port=8081'",
 		"test": "node x/test.js",
 		"count": "find s -path '*/_archive' -prune -o -name '*.ts' -exec wc -l {} +"
 	},
 	"peerDependencies": {
-		"@e280/sly": "^0.4.0-next.3",
-		"@e280/strata": "^0.4.0-next.6",
-		"lit": "^3.3.2"
+		"@e280/sly": "^0.4.0",
+		"@e280/strata": "^0.4.0",
+		"lit": "^3.3.3"
 	},
 	"dependencies": {
 		"@benev/math": "^0.3.4",
-		"@e280/kv": "^0.1.3",
-		"@e280/stz": "^0.2.36"
+		"@e280/kv": "^0.1.4",
+		"@e280/stz": "^0.3.0"
 	},
 	"devDependencies": {
 		"@e280/hottie": "^0.1.1",
 		"@e280/octo": "^0.1.1",
 		"@e280/science": "^0.1.11",
-		"@e280/scute": "^0.3.3",
+		"@e280/scute": "^0.4.0",
 		"http-server": "^14.1.1",
 		"npm-run-all": "^4.1.5",
 		"typescript": "^6.0.3"
@@ -54,5 +54,9 @@
 		"keybinds",
 		"keybindings",
 		"gamepad"
-	]
+	],
+	"allowScripts": {
+		"esbuild@0.28.1": true,
+		"classic-level@3.0.0": true
+	}
 }
