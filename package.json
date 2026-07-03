@@ -23,20 +23,20 @@
 		"count": "find s -path '*/_archive' -prune -o -name '*.ts' -exec wc -l {} +"
 	},
 	"peerDependencies": {
-		"@e280/sly": "^0.4.0",
-		"@e280/strata": "^0.4.0",
+		"@e280/sly": "^0.4.1",
+		"@e280/strata": "^0.4.1",
 		"lit": "^3.3.3"
 	},
 	"dependencies": {
 		"@benev/math": "^0.3.4",
 		"@e280/kv": "^0.1.4",
-		"@e280/stz": "^0.3.0"
+		"@e280/stz": "^0.3.1"
 	},
 	"devDependencies": {
-		"@e280/hottie": "^0.1.1",
-		"@e280/octo": "^0.1.1",
+		"@e280/hottie": "^0.1.2",
+		"@e280/octo": "^0.1.2",
 		"@e280/science": "^0.1.11",
-		"@e280/scute": "^0.4.0",
+		"@e280/scute": "^0.4.1",
 		"http-server": "^14.1.1",
 		"npm-run-all": "^4.1.5",
 		"typescript": "^6.0.3"
