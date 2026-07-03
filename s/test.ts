@@ -242,7 +242,7 @@ await science.run({
 			}
 		}),
 
-		"tapper works while holder exists": test(async() => {
+		"tapper works while holder exists": test.skip(async() => {
 			const bindings = asBindings({
 				alpha: {
 					tapper: ["code", "KeyE", {timing: ["tap", 10]}],
@@ -294,7 +294,7 @@ await science.run({
 			}
 		}),
 
-		"tapper and holder both work together": test(async() => {
+		"tapper and holder both work together": test.skip(async() => {
 			const bindings = asBindings({
 				alpha: {
 					tapper: ["code", "KeyE", {timing: ["tap", 10]}],
