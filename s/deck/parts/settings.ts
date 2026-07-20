@@ -1,6 +1,6 @@
 
-import {inserts} from "@e280/stz"
-import {Cubby, RMap} from "@e280/strata"
+import {RMap} from "@e280/strata"
+import {Cubby, inserts} from "@e280/stz"
 import {shiftLimit} from "../../utils/shift-limit.js"
 import {ControllerHandle, DeckState, Profile, ProfileKey} from "../types.js"
 

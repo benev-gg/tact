@@ -1,6 +1,5 @@
 
-import {debounce, guarantee} from "@e280/stz"
-import {Cubby} from "@e280/strata"
+import {Cubby, debounce, guarantee} from "@e280/stz"
 import {Port} from "./port.js"
 import {Device} from "../core/types.js"
 import {Runtime} from "./parts/runtime.js"
