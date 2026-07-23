@@ -1,7 +1,7 @@
 {
 	"name": "@benev/tact",
 	"version": "0.3.0-0",
-	"description": "keybindings and gamepad support for web games",
+	"description": "🎮 keybindings and couch co-op",
 	"license": "MIT",
 	"author": "Chase Moskal <chasemoskal@gmail.com>",
 	"type": "module",
@@ -42,12 +42,12 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/benevolent-games/tact.git"
+		"url": "git+https://github.com/benev-gg/tact.git"
 	},
 	"bugs": {
-		"url": "https://github.com/benevolent-games/tact/issues"
+		"url": "https://github.com/benev-gg/tact/issues"
 	},
-	"homepage": "https://github.com/benevolent-games/tact#readme",
+	"homepage": "https://github.com/benev-gg/tact#readme",
 	"keywords": [
 		"user input",
 		"keybinds",

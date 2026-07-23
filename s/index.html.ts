@@ -41,8 +41,8 @@ export default template(import.meta.url, async orb => html`
 						<a href="./gamepad/">gamepad visualizer</a>.
 					</p>
 					<p>
-						<a href="https://github.com/benevolent-games/tact">github</a>.
-						<a href="https://benevolent.games/">benevolent.games</a>.
+						<a href="https://github.com/benev-gg/tact">github</a>.
+						<a href="https://benev.gg/">benev.gg</a>.
 					</p>
 				</div>
 			</header>
