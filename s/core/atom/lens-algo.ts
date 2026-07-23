@@ -1,9 +1,9 @@
 
 import {pipe} from "@e280/stz"
-import {Scalar} from "@benev/math"
 import {CodeState} from "./types.js"
 import {defaultHoldTime} from "./defaults.js"
 import {isDown} from "../../utils/is-down.js"
+import {between, clamp, remap} from "@benev/math"
 
 export const lensAlgo = (
 		now: number,
@@ -15,12 +15,12 @@ export const lensAlgo = (
 		const {settings} = state
 		if (settings.clamp) {
 			const [bottom, top] = settings.clamp
-			value = Scalar.clamp(value, bottom, top)
+			value = clamp(value, bottom, top)
 		}
 		if (settings.range) {
 			const [bottom, top] = settings.range
-			value = Scalar.isBetween(value, bottom, top)
-				? Scalar.remap(
+			value = between(value, bottom, top)
+				? remap(
 					value,
 					bottom, top,
 					0, 1,

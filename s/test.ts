@@ -1,6 +1,6 @@
 
 import {need} from "@e280/stz"
-import {Scalar} from "@benev/math"
+import {distance} from "@benev/math"
 import {science, suite, test, expect} from "@e280/science"
 
 import {asBindings, Intent} from "./core/types.js"
@@ -96,7 +96,7 @@ await science.run({
 			const target = Math.PI / 4
 			const bytes = encodeIntents([[25, target]])
 			const [[,suspect]] = decodeIntents(bytes)
-			expect(Scalar.isNear(suspect, target, 1 / 1_000_000)).is(true)
+			expect(distance(suspect, target) < (1 / 1_000_000)).is(true)
 		}),
 
 		"encoded billion": test(async() => {

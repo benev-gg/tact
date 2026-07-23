@@ -1,6 +1,6 @@
 
 import {html} from "lit"
-import {Scalar} from "@benev/math"
+import {clamp} from "@benev/math"
 import {Content, shadow, useCss, useName} from "@e280/sly"
 
 import styleCss from "./style.css.js"
@@ -20,7 +20,7 @@ export const DeskView = shadow((deck: Deck, options: DeskOptions = {}) => {
 		const ports = deck.ports
 		const info = deck.queryController(controller)
 		const portIndex = ports.indexOf(info.port!)
-		const newIndex = Scalar.clamp(portIndex + offset, 0, ports.length - 1)
+		const newIndex = clamp(portIndex + offset, 0, ports.length - 1)
 		const newPort = ports.at(newIndex)
 		if (newPort)
 			newPort.plug(controller)
