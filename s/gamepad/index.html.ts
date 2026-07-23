@@ -2,7 +2,7 @@
 import {template, html, dataSvgEmoji, socialCard} from "@e280/scute"
 
 const title = "@benev/tact gamepad"
-const domain = "tact.benevolent.games"
+const domain = "tact.benev.gg"
 const favicon = "/assets/b.png"
 const description = "tact gamepad tester"
 
