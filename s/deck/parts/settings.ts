@@ -1,6 +1,6 @@
 
 import {RMap} from "@e280/strata"
-import {Cubby, inserts} from "@e280/stz"
+import {Cubby, setEntries} from "@e280/stz"
 import {shiftLimit} from "../../utils/shift-limit.js"
 import {ControllerHandle, DeckState, Profile, ProfileKey} from "../types.js"
 
@@ -23,8 +23,8 @@ export class Settings {
 		const state = await this.store.get()
 		this.customProfiles.clear()
 		this.profileAssignments.clear()
-		inserts(this.customProfiles, state?.customProfiles ?? [])
-		inserts(this.profileAssignments, state?.profileAssignments ?? [])
+		setEntries(this.customProfiles, state?.customProfiles ?? [])
+		setEntries(this.profileAssignments, state?.profileAssignments ?? [])
 	}
 }
 

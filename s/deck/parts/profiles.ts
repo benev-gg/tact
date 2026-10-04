@@ -1,6 +1,6 @@
 
 import {RMap} from "@e280/strata"
-import {inserts, need} from "@e280/stz"
+import {need, setEntries} from "@e280/stz"
 import {Profile, ProfileKey} from "../types.js"
 
 export class Profiles {
@@ -8,7 +8,7 @@ export class Profiles {
 
 	constructor(stock: Record<ProfileKey, Profile>, public custom: RMap<ProfileKey, Profile>) {
 		this.stock = new RMap<ProfileKey, Profile>()
-		inserts(this.stock, Object.entries(stock))
+		setEntries(this.stock, Object.entries(stock))
 
 		if (this.stock.size === 0)
 			throw new Error("must be at least one stock profile")
