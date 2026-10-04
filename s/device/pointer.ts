@@ -5,8 +5,8 @@ import {SamplerDevice} from "./sampler.js"
 import {splitAxis} from "../utils/split-axis.js"
 
 export class PointerDevice extends SamplerDevice {
-	client = new Vec2(0, 0)
-	movement = new Vec2(0, 0)
+	client = new Vec2()
+	movement = new Vec2()
 	dispose = disposer()
 
 	constructor(target: EventTarget = window) {
@@ -74,22 +74,14 @@ export class PointerDevice extends SamplerDevice {
 	}
 
 	#specialPreProcessing() {
-		const [x, y] = this.movement
-		const [left, right] = splitAxis(x)
+		const {x, y} = this.movement
+		const [right, left] = splitAxis(x)
 		const [down, up] = splitAxis(y)
 
-		if (x) {
-			if (x >= 0)
-				this.setSample(`pointer.move.right`, Math.abs(right))
-			else
-				this.setSample(`pointer.move.left`, Math.abs(left))
-		}
-		if (y) {
-			if (y >= 0)
-				this.setSample(`pointer.move.up`, Math.abs(up))
-			else
-				this.setSample(`pointer.move.down`, Math.abs(down))
-		}
+		this.setSample("pointer.move.left", left)
+		this.setSample("pointer.move.right", right)
+		this.setSample("pointer.move.up", up)
+		this.setSample("pointer.move.down", down)
 
 		this.movement.set_(0, 0)
 	}
