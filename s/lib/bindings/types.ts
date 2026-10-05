@@ -4,7 +4,7 @@ export type Bindings = Expression | {
 	[key: string]: Bindings
 }
 
-export type Actions = {}
+export type Actions<B extends Bindings = any> = {}
 
 export type Expression = (
 	| string // a code like "KeyW", "pointer.move.up"

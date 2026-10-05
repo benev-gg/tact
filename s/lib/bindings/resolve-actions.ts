@@ -1,10 +1,10 @@
 
-import {Bindings, Actions} from "./types.js"
+import {Actions} from "./types.js"
 
-export function resolveActions<B extends Bindings>(
-		bindings: B,
+export function resolveActions(
+		actions: Actions,
 		intents: Uint8Array,
-	): Actions {
+	) {
 
 	throw new Error("TODO")
 }
