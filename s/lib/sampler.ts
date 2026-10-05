@@ -5,7 +5,7 @@ export class Sampler {
 	dispose
 	#ledger: Sample[] = []
 
-	constructor(public readonly source: Source, max = 1024) {
+	constructor(source: Source, max = 1024) {
 		this.dispose = source.onSample(sample => {
 			this.#ledger.push(sample)
 
