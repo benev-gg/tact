@@ -13,8 +13,7 @@ export class KeyboardSource implements Source {
 	}
 
 	#publish(code: string, value: number) {
-		const time = performance.now()
-		this.onSample.publish([time, code, value])
+		this.onSample.publish([code, value])
 	}
 
 	#targetListeners = {

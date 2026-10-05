@@ -2,8 +2,8 @@
 import {Vec2} from "@benev/math"
 import {disposer, ev, sub} from "@e280/stz"
 import {Sample, Source} from "../types.js"
-import {splitAxis} from "../utils/split-axis.js"
-import {mouseButton} from "../utils/mouse-button.js"
+import {splitAxis} from "../../utils/split-axis.js"
+import {mouseButton} from "../../utils/mouse-button.js"
 
 export class PointerSource implements Source {
 	dispose = disposer()
@@ -17,8 +17,7 @@ export class PointerSource implements Source {
 	}
 
 	#publish(code: string, value: number) {
-		const time = performance.now()
-		this.onSample.publish([time, code, value])
+		this.onSample.publish([code, value])
 	}
 
 	#listeners = {
