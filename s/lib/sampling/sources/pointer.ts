@@ -1,13 +1,14 @@
 
 import {Vec2} from "@benev/math"
-import {disposer, ev, sub} from "@e280/stz"
+import {disposer, ev} from "@e280/stz"
 import {Sample, Source} from "../types.js"
+import {addSample} from "../utils/add-sample.js"
 import {splitAxis} from "../../utils/split-axis.js"
 import {mouseButton} from "../../utils/mouse-button.js"
 
 export class PointerSource implements Source {
+	samples: Sample[] = []
 	dispose = disposer()
-	onSample = sub<[Sample]>()
 	client = new Vec2()
 
 	constructor(target: EventTarget = window) {
@@ -17,7 +18,7 @@ export class PointerSource implements Source {
 	}
 
 	#publish(code: string, value: number) {
-		this.onSample.publish([code, value])
+		addSample(this.samples, code, value)
 	}
 
 	#listeners = {

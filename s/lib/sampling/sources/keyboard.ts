@@ -1,10 +1,11 @@
 
-import {disposer, ev, sub} from "@e280/stz"
+import {disposer, ev} from "@e280/stz"
 import {Sample, Source} from "../types.js"
+import {addSample} from "../utils/add-sample.js"
 
 export class KeyboardSource implements Source {
+	samples: Sample[] = []
 	dispose = disposer()
-	onSample = sub<[Sample]>()
 	#down = new Set<string>()
 
 	constructor(target: EventTarget = window) {
@@ -13,7 +14,7 @@ export class KeyboardSource implements Source {
 	}
 
 	#publish(code: string, value: number) {
-		this.onSample.publish([code, value])
+		addSample(this.samples, code, value)
 	}
 
 	#targetListeners = {

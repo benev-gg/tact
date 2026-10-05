@@ -1,11 +1,11 @@
 
-import {sub} from "@e280/stz"
 import {Vec2, Xy} from "@benev/math"
 import {Sample, Source} from "../types.js"
+import {addSample} from "../utils/add-sample.js"
 import {splitVector} from "../../utils/split-axis.js"
 
 export class StickSource implements Source {
-	onSample = sub<[Sample]>()
+	samples: Sample[] = []
 	vector = Vec2.zero()
 
 	constructor(public channel = "stick") {}
@@ -21,7 +21,7 @@ export class StickSource implements Source {
 	}
 
 	#publish(code: string, value: number) {
-		this.onSample.publish([code, value])
+		addSample(this.samples, code, value)
 	}
 }
 

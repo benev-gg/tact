@@ -1,14 +1,19 @@
 
-import {sub} from "@e280/stz"
 import {Pad} from "../../utils/pad/pad.js"
 import {Sample, Source} from "../types.js"
+import {addSample} from "../utils/add-sample.js"
 import {splitAxis} from "../../utils/split-axis.js"
 
 export class GamepadSource implements Source {
-	onSample = sub<[Sample]>()
+	#samples: Sample[] = []
 	#values = new Map<string, number>()
 
 	constructor(public pad: Pad) {}
+
+	get samples() {
+		this.poll()
+		return this.#samples
+	}
 
 	get gamepad() {
 		return this.pad.gamepad
@@ -25,7 +30,7 @@ export class GamepadSource implements Source {
 
 		if (value !== previous) {
 			this.#values.set(code, value)
-			this.onSample.publish([code, value])
+			addSample(this.samples, code, value)
 		}
 	}
 

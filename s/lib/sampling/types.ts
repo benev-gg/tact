@@ -1,8 +1,8 @@
 
-export type Sample = [code: string, value: number]
-export type SampleFrame = [time: number, samples: Sample[]]
+export type Sample = [time: number, code: string, value: number]
 
 export type Source = {
-	onSample: (fn: (sample: Sample) => void) => () => void
+	readonly samples: Sample[]
+	dispose?: () => void
 }
 
