@@ -1,5 +1,5 @@
 
-export type Intent = Uint8Array
+export type Intent = ArrayBuffer
 
 /** schema and dsl for controls and keybinds. */
 export type Bindings = Expression | {
