@@ -1,4 +1,5 @@
 
+import {isDown} from "./is-down.js"
 import {Action, Intent} from "../types.js"
 import {decodeIntent} from "./intent-coding.js"
 
@@ -40,10 +41,10 @@ export class ActionResolver {
 		if (value !== previous)
 			action.change = 1
 
-		if (previous <= 0 && value > 0)
+		if (!isDown(previous) && isDown(value))
 			action.down = 1
 
-		if (previous > 0 && value <= 0)
+		if (isDown(previous) && !isDown(value))
 			action.up = 1
 	}
 }

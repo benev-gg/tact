@@ -5,7 +5,6 @@ import {Expression, Intent} from "../types.js"
 import {encodeIntent} from "./intent-coding.js"
 
 export class IntentResolver {
-	#last: number | undefined
 	#seen: Sample | undefined
 	#evaluator = new Evaluator()
 	#previousEvaluationResults: number[] | undefined
@@ -14,14 +13,13 @@ export class IntentResolver {
 	resolve(hash: number, expressionlist: Expression[], samples: Sample[], now: number): Intent {
 		const evaluator = this.#evaluator
 		const intentions: {id: number, value: number}[] = []
-		const since = this.#sinceLast(now)
 
 		// initialize previous with zeros
 		if (!this.#previousEvaluationResults)
 			this.#previousEvaluationResults = expressionlist.map(() => 0)
 
 		// update evaluator
-		evaluator.update(since, this.#selectFresh(samples))
+		evaluator.update(now, this.#selectFresh(samples))
 
 		// evaluate, and save values that changed
 		for (const [id, expression] of expressionlist.entries()) {
@@ -43,15 +41,6 @@ export class IntentResolver {
 		}
 		this.#seen = samples.at(-1)
 		return samples
-	}
-
-	#sinceLast(now: number) {
-		const last = this.#last
-		this.#last = now
-		const since = (last !== undefined)
-			? now - last
-			: 0
-		return since
 	}
 }
 
