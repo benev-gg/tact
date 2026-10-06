@@ -40,7 +40,7 @@ export type Expression = (
 
 	// temporal
 	| ["dt"] // delta time in seconds since last resolve, used for stick sensitivity
-	| ["accumulate", Expression] // sum all values of this expression since last resolve
+	| ["accumulate", string] // sum all values of this expression since last resolve
 	| ["tapped", ms: number, taps: number, Expression]
 	| ["held", ms: number, Expression]
 )

@@ -96,17 +96,11 @@ export class Evaluator {
 				return this.#since / 1000
 
 			case "accumulate": {
-				const [, expr] = exp
-
-				if (typeof expr !== "string")
-					throw new Error("accumulate currently requires a code expression")
-
+				const [, subexpression] = exp
 				let total = 0
-
 				for (const sample of this.#samples)
-					if (sample.code === expr)
+					if (sample.code === subexpression)
 						total += sample.value
-
 				return total
 			}
 
