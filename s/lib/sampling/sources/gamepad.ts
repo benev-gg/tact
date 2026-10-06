@@ -11,7 +11,7 @@ export class GamepadSource implements Source {
 	constructor(public pad: Pad) {}
 
 	get samples() {
-		this.poll()
+		this.#poll()
 		return this.#samples
 	}
 
@@ -19,7 +19,7 @@ export class GamepadSource implements Source {
 		return this.pad.gamepad
 	}
 
-	poll() {
+	#poll() {
 		const gamepad = this.gamepad
 		this.#pollButtons(gamepad)
 		this.#pollAxes(gamepad)
@@ -30,7 +30,7 @@ export class GamepadSource implements Source {
 
 		if (value !== previous) {
 			this.#values.set(code, value)
-			addSample(this.samples, code, value)
+			addSample(this.#samples, code, value)
 		}
 	}
 

@@ -6,8 +6,8 @@ import {Expression} from "../types.js"
 import {Sample} from "../../sampling/types.js"
 
 export class Evaluator {
-	#now = performance.now()
-	#last = performance.now()
+	#now = 0
+	#last: number | undefined
 	#since = 0
 	#samples: Sample[] = []
 	#values = new Map<string, number>()
@@ -16,9 +16,10 @@ export class Evaluator {
 
 	update(now: number, samples: Sample[]) {
 		this.#now = now
-		const last = this.#last
+		this.#since = this.#last === undefined
+			? 0
+			: now - this.#last
 		this.#last = now
-		this.#since = now - last
 		this.#samples = samples
 		for (const sample of samples)
 			this.#values.set(sample.code, sample.value)
@@ -116,7 +117,7 @@ export class Evaluator {
 
 				if (down && !held) {
 					held = {start: this.#now}
-					this.#held.set(exp, {start: this.#now})
+					this.#held.set(exp, held)
 				}
 
 				if (!down && held) {
