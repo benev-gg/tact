@@ -40,11 +40,12 @@ export class Resolver<B extends Bindings> {
 		this.#expressionlist = investigation.expressionlist
 	}
 
-	resolveIntent(samples: Sample[]): Intent {
+	resolveIntent(samples: Sample[], now = performance.now()): Intent {
 		return this.#intentResolver.resolve(
 			this.#hash,
 			this.#expressionlist,
 			samples,
+			now,
 		)
 	}
 
