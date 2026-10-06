@@ -36,10 +36,16 @@ export class IntentResolver {
 	#selectFresh(samples: Sample[]) {
 		if (this.#seen) {
 			const index = samples.indexOf(this.#seen)
-			if (index !== -1)
-				samples = samples.slice(index + 1)
+
+			if (index === -1)
+				throw new Error("sample history gap")
+
+			samples = samples.slice(index + 1)
 		}
-		this.#seen = samples.at(-1)
+
+		if (samples.length)
+			this.#seen = samples.at(-1)
+
 		return samples
 	}
 }
