@@ -25,18 +25,22 @@ export type Expression = (
 	| ["*", ...(Expression | number)[]]
 
 	// comparisons
+	| ["==", Expression, Expression]
+	| ["!=", Expression, Expression]
 	| [">", Expression, Expression]
 	| ["<", Expression, Expression]
 	| [">=", Expression, Expression]
 	| ["<=", Expression, Expression]
 
 	// transforms
+	| ["!", Expression]
+	| ["!!", Expression]
 	| ["clamp", a: Expression | null, b: Expression | null, Expression]
 	| ["remap", [a: Expression, b: Expression], [c: Expression, d: Expression], Expression]
 
 	// temporal
 	| ["dt"] // delta time in seconds since last resolve, used for stick sensitivity
-	| ["accumulated", Expression] // sum all values of this expression since last resolve
+	| ["accumulate", Expression] // sum all values of this expression since last resolve
 	| ["tapped", ms: number, taps: number, Expression]
 	| ["held", ms: number, Expression]
 )
