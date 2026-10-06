@@ -1,6 +1,5 @@
 
 export type Sample = {
-	time: number
 	code: string
 	value: number
 }

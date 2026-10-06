@@ -16,8 +16,8 @@ await run({
 			const {forward} = resolver.actions
 			const source = new ExampleSource()
 			source.samples = [
-				{time: 1, code: "KeyW", value: 0},
-				{time: 2, code: "KeyW", value: 1},
+				{code: "KeyW", value: 0},
+				{code: "KeyW", value: 1},
 			]
 
 			resolver.resolveActions(resolver.resolveIntent(source.samples, 3))
@@ -26,7 +26,7 @@ await run({
 			resolver.resolveActions(resolver.resolveIntent(source.samples, 4))
 			expect(forward).deep({value: 1, previous: 1, change: 0, down: 0, up: 0, lowest: 1, highest: 1})
 
-			source.samples.push({time: 5, code: "KeyW", value: 0})
+			source.samples.push({code: "KeyW", value: 0})
 			resolver.resolveActions(resolver.resolveIntent(source.samples, 6))
 			expect(forward).deep({value: 0, previous: 1, change: 1, down: 0, up: 1, lowest: 0, highest: 1})
 		}),
