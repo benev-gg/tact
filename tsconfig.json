@@ -14,7 +14,7 @@
 	"include": [
 		"s/**/*.ts",
 		"s/**/*.js"
-	],
+, "s/lib2/core/y"	],
 	"exclude": [
 		"s/**/_*"
 	]
