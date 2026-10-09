@@ -1,7 +1,7 @@
 
 import {expect, run, suite, test} from "@e280/science"
-import {InputEncoder} from "./core/encoder/encoder.js"
-import {InputDecoder} from "./core/decoder/decoder.js"
+import {InputEncoder} from "./core/encoder.js"
+import {InputDecoder} from "./core/decoder.js"
 import {ExampleSource} from "./core/sources/example.js"
 
 await run({

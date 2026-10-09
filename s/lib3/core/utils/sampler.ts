@@ -1,6 +1,6 @@
 
 import {arraylimit} from "@e280/stz"
-import {Sample, Source} from "../../types.js"
+import {Sample, Source} from "../types.js"
 
 export class Sampler {
 	readonly dispose

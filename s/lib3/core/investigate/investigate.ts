@@ -4,7 +4,7 @@ import {makeInput} from "./make-input.js"
 import {hashBindings} from "./hash-bindings.js"
 import {isExpression} from "./is-expression.js"
 import {makeExpressionIndex} from "./expression-index.js"
-import {Bindings, Expression, Input, Inputs} from "../../types.js"
+import {Bindings, Expression, Input, Inputs} from "../types.js"
 
 export function investigate<B extends Bindings>(bindings: B) {
 	const hash = hashBindings(bindings)

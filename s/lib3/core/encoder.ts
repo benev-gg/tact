@@ -1,12 +1,12 @@
 
 import {deepClone, deepFreeze} from "@e280/stz"
-import {Intent} from "../data/types.js"
-import {Sampler} from "./parts/sampler.js"
-import {encodeData} from "../data/encode.js"
+import {Intent} from "./data/types.js"
+import {Sampler} from "./utils/sampler.js"
+import {encodeData} from "./data/encode.js"
 import {evaluate} from "./evaluate/evaluate.js"
-import {investigate} from "./parts/investigate.js"
 import {EvaluationContext} from "./evaluate/context.js"
-import {Bindings, InputData, Rebindings, Source} from "../types.js"
+import {investigate} from "./investigate/investigate.js"
+import {Bindings, InputData, Rebindings, Source} from "./types.js"
 
 export class InputEncoder<B extends Bindings> {
 	#sampler

@@ -1,6 +1,6 @@
 
 import {guarantee, isArray, isString} from "@e280/stz"
-import {Expression} from "../../types.js"
+import {Expression} from "../types.js"
 
 export function makeExpressionIndex(expressionlist: Expression[]) {
 	type Code = string

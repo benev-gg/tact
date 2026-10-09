@@ -1,8 +1,8 @@
 
-import {isDown} from "../utils/is-down.js"
-import {decodeData} from "../data/decode.js"
-import {Inputs, Bindings, InputData} from "../types.js"
-import {investigate} from "../encoder/parts/investigate.js"
+import {isDown} from "./utils/is-down.js"
+import {decodeData} from "./data/decode.js"
+import {Inputs, Bindings, InputData} from "./types.js"
+import {investigate} from "./investigate/investigate.js"
 
 export class InputDecoder<B extends Bindings> {
 	#investigation

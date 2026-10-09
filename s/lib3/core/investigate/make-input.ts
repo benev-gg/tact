@@ -1,5 +1,5 @@
 
-import {Input} from "../../types.js"
+import {Input} from "../types.js"
 
 export function makeInput(): Input {
 	return {

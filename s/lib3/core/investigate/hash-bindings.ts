@@ -1,6 +1,6 @@
 
 import {hash32} from "@e280/stz"
-import {Bindings} from "../../types.js"
+import {Bindings} from "../types.js"
 import {isExpression} from "./is-expression.js"
 
 export function hashBindings(bindings: Bindings) {
