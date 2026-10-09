@@ -20,6 +20,7 @@ export class InputEncoder<B extends Bindings> {
 		this.#investigation = investigate(this.#bindings)
 		this.#sampler = new Sampler(source)
 		this.#context = new EvaluationContext()
+		this.#initialEvaluation()
 	}
 
 	get bindings() {
@@ -37,6 +38,7 @@ export class InputEncoder<B extends Bindings> {
 		this.#investigation.rootIndex = fresh.rootIndex
 		this.#context = new EvaluationContext()
 		this.#history.clear()
+		this.#initialEvaluation()
 	}
 
 	encode(time = performance.now()): InputData {
@@ -81,6 +83,11 @@ export class InputEncoder<B extends Bindings> {
 		}
 
 		return encodeData(this.#investigation.hash, intents)
+	}
+
+	#initialEvaluation() {
+		for (const root of this.#investigation.rootList)
+			evaluate(this.#context, root, root)
 	}
 
 	#relevantRoots(code: string) {
