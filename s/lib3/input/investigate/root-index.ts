@@ -4,23 +4,22 @@ import {Expression} from "../types.js"
 
 export function makeRootIndex(rootList: Expression[]) {
 	type Code = string
-	type Info = {id: number, root: Expression}
-	const rootIndex = new Map<Code, Set<Info>>()
+	const rootIndex = new Map<Code, Set<Expression>>()
 
-	function recurse(info: {id: number, root: Expression}, e: Expression) {
+	function recurse(root: Expression, e: Expression) {
 		if (isString(e)) {
 			guarantee(rootIndex, e, () => new Set())
-				.add(info)
+				.add(root)
 		}
 		else if (isArray(e)) {
 			for (const sub of e.slice(1))
 				if (sub !== null)
-					recurse(info, sub)
+					recurse(root, sub)
 		}
 	}
 
-	for (const [id, root] of rootList.entries())
-		recurse({id, root}, root)
+	for (const root of rootList)
+		recurse(root, root)
 
 	return rootIndex
 }

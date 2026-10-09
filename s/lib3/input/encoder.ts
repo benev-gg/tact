@@ -5,21 +5,21 @@ import {encodeData} from "./data/encode.js"
 import {evaluate} from "./evaluate/evaluate.js"
 import {EvaluationContext} from "./evaluate/context.js"
 import {investigate} from "./investigate/investigate.js"
-import {Bindings, Expression, InputData, Rebindings, Source} from "./types.js"
+import {Bindings, Expression, InputData, Intent, Rebindings, Source} from "./types.js"
 
 export class InputEncoder<B extends Bindings> {
 	#sampler
 	#bindings
 	#investigation
 	#context
-	#history = new Map<Expression, number>()
+	#expressionValues = new Map<Expression, number>()
 
 	constructor(source: Source, bindings: B) {
 		this.#bindings = deepFreeze(deepClone(bindings)) as any as Rebindings<B>
 		this.#investigation = investigate(this.#bindings)
 		this.#sampler = new Sampler(source)
 		this.#context = new EvaluationContext()
-		this.#initialize()
+		this.#init()
 	}
 
 	get bindings() {
@@ -36,8 +36,8 @@ export class InputEncoder<B extends Bindings> {
 		this.#investigation.rootList = fresh.rootList
 		this.#investigation.rootIndex = fresh.rootIndex
 		this.#context = new EvaluationContext()
-		this.#history.clear()
-		this.#initialize()
+		this.#expressionValues.clear()
+		this.#init()
 	}
 
 	encode(time = performance.now()): InputData {
@@ -54,10 +54,9 @@ export class InputEncoder<B extends Bindings> {
 		for (const sample of samples) {
 			this.#context.sampleValues.set(sample.code, sample.value)
 
-			for (const {id, root} of this.#relevantRoots(sample.code)) {
-				const value = evaluate(this.#context, root, root)
-				yield {id, value}
-				this.#history.set(root, value)
+			for (const root of this.#investigation.rootIndex.get(sample.code) ?? []) {
+				const intent = this.#makeIntent(root, sample.mode === "pulse")
+				if (intent) yield intent
 			}
 
 			if (sample.mode === "pulse")
@@ -66,33 +65,31 @@ export class InputEncoder<B extends Bindings> {
 
 		this.#context.phase = "holdy"
 		for (const root of this.#context.holdyRoots) {
-			const was = this.#history.get(root) ?? 0
-			const value = evaluate(this.#context, root, root)
-			this.#history.set(root, value)
-
-			if (value !== was) {
-				const id = got(this.#investigation.rootIds.get(root))
-				yield {id, value}
-			}
+			const intent = this.#makeIntent(root)
+			if (intent) yield intent
 		}
 
 		this.#context.phase = "dt"
 		this.#context.dt = this.#context.clock.since / 1000
 		for (const root of this.#context.dtRoots) {
-			const value = evaluate(this.#context, root, root)
-			const id = got(this.#investigation.rootIds.get(root))
-			yield {id, value}
+			const intent = this.#makeIntent(root, true)
+			if (intent) yield intent
 		}
 	}
 
-	#initialize() {
+	#init() {
 		for (const root of this.#investigation.rootList)
 			evaluate(this.#context, root, root)
 	}
 
-	#relevantRoots(code: string) {
-		const indexed = this.#investigation.rootIndex.get(code)
-		return [...indexed ?? []]
+	#makeIntent(root: Expression, force = false) {
+		const value = evaluate(this.#context, root, root)
+		const was = this.#expressionValues.get(root)
+		if (force || value !== was) {
+			this.#expressionValues.set(root, value)
+			const id = got(this.#investigation.rootIds.get(root))
+			return <Intent>{id, value}
+		}
 	}
 
 	dispose() {

@@ -11,6 +11,8 @@ export type Source = {
 	readonly poll?: () => void
 }
 
+export type Intent = {id: number, value: number}
+
 export type InputData = ArrayBuffer
 
 export type Input = {

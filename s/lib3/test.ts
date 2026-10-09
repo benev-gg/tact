@@ -18,6 +18,15 @@ await run({
 			expect(inputs.change).is(1)
 		}),
 
+		"encoder dedupes sticky samples": test(async() => {
+			const {sample, encoder} = quickbind("KeyE")
+			sample({code: "KeyE", value: 0, mode: "sticky"})
+			sample({code: "KeyE", value: 1, mode: "sticky"})
+			sample({code: "KeyE", value: 1, mode: "sticky"})
+			const intents = [...encoder.evaluate(2)]
+			expect(intents.length).is(2)
+		}),
+
 		"pulse accumulation": test(async() => {
 			const {sample, solve} = quickbind("pointer.up")
 			sample({mode: "pulse", code: "pointer.up", value: 2})

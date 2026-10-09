@@ -1,5 +1,5 @@
 
-import {Intent} from "./types.js"
+import {Intent} from "../types.js"
 import {endian, sizeHash, sizeId, sizeValue} from "./params.js"
 
 export function decodeData(buffer: ArrayBuffer) {
