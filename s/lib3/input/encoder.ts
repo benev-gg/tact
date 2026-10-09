@@ -34,8 +34,8 @@ export class InputEncoder<B extends Bindings> {
 		this.#investigation.expressionList = fresh.expressionList
 	}
 
-	encode(): InputData {
-		this.#context.clock.update()
+	encode(time = performance.now()): InputData {
+		this.#context.clock.update(time)
 		const intents: Intent[] = []
 		const samples = this.#sampler.take()
 

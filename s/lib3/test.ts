@@ -1,11 +1,12 @@
 
 import {expect, run, suite, test} from "@e280/science"
-import {InputEncoder} from "./core/encoder.js"
-import {InputDecoder} from "./core/decoder.js"
-import {ExampleSource} from "./core/sources/example.js"
+import {InputEncoder} from "./input/encoder.js"
+import {InputDecoder} from "./input/decoder.js"
+import {ExampleSource} from "./input/sources/example.js"
+import { Bindings } from "./input/types.js"
 
 await run({
-	core: suite({
+	input: suite({
 		"roundtrip": test(async() => {
 			const source = new ExampleSource()
 			const encoder = new InputEncoder(source, "KeyE")
@@ -66,6 +67,43 @@ await run({
 			expect(input.up).is(1)
 			expect(input.change).is(3)
 		}),
+
+		"double trouble": (() => {
+			const bindings = {
+				tapper: ["taps", 1, 10, "KeyE"],
+				holder: ["held", 10, "KeyE"],
+			} satisfies Bindings
+
+			function setup() {
+				const source = new ExampleSource()
+				const encoder = new InputEncoder(source, bindings)
+				const decoder = new InputDecoder(encoder.bindings)
+				return (time: number, value: number | null) => {
+					if (value !== null)
+						source.onSample.publish({mode: "sticky", code: "KeyE", value})
+					return decoder.resolve(encoder.encode(time))
+				}
+			}
+
+			return suite({
+				"tapper works while holder exists": test(async() => {
+					const step = setup()
+					expect(step(1, 0).tapper.down).is(0)
+					expect(step(2, 1).tapper.down).is(1)
+					expect(step(3, 0).tapper.down).is(0)
+				}),
+
+				"tapper and holder both work together": test.skip(async() => {
+					const step = setup()
+					expect(step(0, 0).holder.down).is(0)
+					expect(step(1, 1).tapper.down).is(1)
+					expect(step(2, 0).holder.down).is(0)
+					expect(step(3, 1).holder.down).is(0)
+
+					expect(step(13, null).holder.down).is(1)
+				}),
+			})
+		})(),
 	}),
 })
 
