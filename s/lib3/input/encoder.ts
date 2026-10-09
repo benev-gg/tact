@@ -7,7 +7,7 @@ import {EvaluationContext} from "./evaluate/context.js"
 import {investigate} from "./investigate/investigate.js"
 import {Bindings, Expression, InputData, Intent, Rebindings, Source} from "./types.js"
 
-export class InputEncoder<B extends Bindings> {
+export class InputEncoder<B extends Bindings = any> {
 	#sampler
 	#bindings
 	#investigation
