@@ -7,10 +7,11 @@ import {EvaluationContext} from "./context.js"
 
 export function evaluate(
 		context: EvaluationContext,
+		root: Expression,
 		expression: Expression,
 	): number {
 
-	const e = (expression: Expression) => evaluate(context, expression)
+	const e = (expression: Expression) => evaluate(context, root, expression)
 
 	if (isNumber(expression))
 		return expression
@@ -80,6 +81,8 @@ export function evaluate(
 			return context.clock.since / 1000
 
 		case "held": {
+			context.holdyRoots.add(root)
+
 			const [, ms, subexpression] = expression
 			const down = isDown(e(subexpression))
 			let held = context.holding.get(expression)

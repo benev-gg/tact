@@ -1,9 +1,9 @@
 
 import {expect, run, suite, test} from "@e280/science"
+import {Bindings} from "./input/types.js"
 import {InputEncoder} from "./input/encoder.js"
 import {InputDecoder} from "./input/decoder.js"
 import {ExampleSource} from "./input/sources/example.js"
-import { Bindings } from "./input/types.js"
 
 await run({
 	input: suite({
@@ -93,13 +93,12 @@ await run({
 					expect(step(3, 0).tapper.down).is(0)
 				}),
 
-				"tapper and holder both work together": test.skip(async() => {
+				"tapper and holder both work together": test(async() => {
 					const step = setup()
 					expect(step(0, 0).holder.down).is(0)
 					expect(step(1, 1).tapper.down).is(1)
 					expect(step(2, 0).holder.down).is(0)
 					expect(step(3, 1).holder.down).is(0)
-
 					expect(step(13, null).holder.down).is(1)
 				}),
 			})

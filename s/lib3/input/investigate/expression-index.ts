@@ -2,12 +2,12 @@
 import {guarantee, isArray, isString} from "@e280/stz"
 import {Expression} from "../types.js"
 
-export function makeExpressionIndex(expressionlist: Expression[]) {
+export function makeRootIndex(rootList: Expression[]) {
 	type Code = string
-	type Info = {id: number, expression: Expression}
+	type Info = {id: number, root: Expression}
 	const expressionIndex = new Map<Code, Set<Info>>()
 
-	function recurse(info: {id: number, expression: Expression}, e: Expression) {
+	function recurse(info: {id: number, root: Expression}, e: Expression) {
 		if (isString(e)) {
 			guarantee(expressionIndex, e, () => new Set())
 				.add(info)
@@ -19,8 +19,8 @@ export function makeExpressionIndex(expressionlist: Expression[]) {
 		}
 	}
 
-	for (const [id, expression] of expressionlist.entries())
-		recurse({id, expression}, expression)
+	for (const [id, root] of rootList.entries())
+		recurse({id, root}, root)
 
 	return expressionIndex
 }

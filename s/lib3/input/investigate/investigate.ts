@@ -3,19 +3,19 @@ import {obMap} from "@e280/stz"
 import {makeInput} from "./make-input.js"
 import {hashBindings} from "./hash-bindings.js"
 import {isExpression} from "./is-expression.js"
-import {makeExpressionIndex} from "./expression-index.js"
 import {Bindings, Expression, Input, Inputs} from "../types.js"
+import {makeRootIndex as makeRootIndex} from "./expression-index.js"
 
 export function investigate<B extends Bindings>(bindings: B) {
 	const hash = hashBindings(bindings)
 	const inputList: Input[] = []
-	const expressionList: Expression[] = []
+	const rootList: Expression[] = []
 
 	function makeInputs(b: Bindings): unknown {
 		if (isExpression(b)) {
 			const input = makeInput()
 			inputList.push(input)
-			expressionList.push(b)
+			rootList.push(b)
 			return input
 		}
 		else {
@@ -24,14 +24,14 @@ export function investigate<B extends Bindings>(bindings: B) {
 	}
 
 	const inputs = makeInputs(bindings) as Inputs<B>
-	const expressionIndex = makeExpressionIndex(expressionList)
+	const rootIndex = makeRootIndex(rootList)
 
 	return {
 		hash,
 		inputs,
 		inputList,
-		expressionList,
-		expressionIndex,
+		rootList,
+		rootIndex,
 	}
 }
 
