@@ -2,7 +2,7 @@
 export type Sample = {
 	code: string
 	value: number
-	mode: "sticky" | "pulsy"
+	mode: "sticky" | "pulse"
 }
 
 export type Source = {

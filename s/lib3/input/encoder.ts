@@ -1,5 +1,5 @@
 
-import {deepClone, deepFreeze} from "@e280/stz"
+import {deepClone, deepFreeze, got} from "@e280/stz"
 import {Intent} from "./data/types.js"
 import {Sampler} from "./utils/sampler.js"
 import {encodeData} from "./data/encode.js"
@@ -39,9 +39,12 @@ export class InputEncoder<B extends Bindings> {
 	}
 
 	encode(time = performance.now()): InputData {
-		this.#context.clock.update(time)
 		const intents: Intent[] = []
 		const samples = this.#sampler.take()
+
+		this.#context.clock.update(time)
+		this.#context.phase = "samples"
+		this.#context.dt = 0
 
 		for (const sample of samples) {
 			this.#context.sampleValues.set(sample.code, sample.value)
@@ -52,20 +55,28 @@ export class InputEncoder<B extends Bindings> {
 				this.#history.set(root, value)
 			}
 
-			if (sample.mode === "pulsy")
+			if (sample.mode === "pulse")
 				this.#context.sampleValues.set(sample.code, 0)
 		}
 
-		// always evaluate holdyRoots to check if they've changed in time
+		this.#context.phase = "holdy"
 		for (const root of this.#context.holdyRoots) {
 			const was = this.#history.get(root) ?? 0
 			const value = evaluate(this.#context, root, root)
 			this.#history.set(root, value)
 
 			if (value !== was) {
-				const id = this.#investigation.rootList.indexOf(root)
+				const id = got(this.#investigation.rootIds.get(root))
 				intents.push({id, value})
 			}
+		}
+
+		this.#context.phase = "dt"
+		this.#context.dt = this.#context.clock.since / 1000
+		for (const root of this.#context.dtRoots) {
+			const value = evaluate(this.#context, root, root)
+			const id = got(this.#investigation.rootIds.get(root))
+			intents.push({id, value})
 		}
 
 		return encodeData(this.#investigation.hash, intents)

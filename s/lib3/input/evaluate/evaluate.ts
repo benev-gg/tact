@@ -77,8 +77,10 @@ export function evaluate(
 			return remap(e(expr), e(a), e(b), e(c), e(d))
 		}
 
-		case "dt":
-			return context.clock.since / 1000
+		case "dt": {
+			context.dtRoots.add(root)
+			return context.dt
+		}
 
 		case "held": {
 			context.holdyRoots.add(root)

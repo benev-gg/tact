@@ -5,11 +5,11 @@ import {Expression} from "../types.js"
 export function makeRootIndex(rootList: Expression[]) {
 	type Code = string
 	type Info = {id: number, root: Expression}
-	const expressionIndex = new Map<Code, Set<Info>>()
+	const rootIndex = new Map<Code, Set<Info>>()
 
 	function recurse(info: {id: number, root: Expression}, e: Expression) {
 		if (isString(e)) {
-			guarantee(expressionIndex, e, () => new Set())
+			guarantee(rootIndex, e, () => new Set())
 				.add(info)
 		}
 		else if (isArray(e)) {
@@ -22,6 +22,6 @@ export function makeRootIndex(rootList: Expression[]) {
 	for (const [id, root] of rootList.entries())
 		recurse({id, root}, root)
 
-	return expressionIndex
+	return rootIndex
 }
 

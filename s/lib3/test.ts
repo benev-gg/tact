@@ -18,10 +18,10 @@ await run({
 			expect(inputs.change).is(1)
 		}),
 
-		"pulsy accumulation": test(async() => {
+		"pulse accumulation": test(async() => {
 			const {sample, solve} = quickbind("pointer.up")
-			sample({mode: "pulsy", code: "pointer.up", value: 2})
-			sample({mode: "pulsy", code: "pointer.up", value: 3})
+			sample({mode: "pulse", code: "pointer.up", value: 2})
+			sample({mode: "pulse", code: "pointer.up", value: 3})
 			expect(solve().pulses).is(5)
 			expect(solve().pulses).is(0)
 		}),
@@ -30,16 +30,26 @@ await run({
 			const {sample, solve} = quickbind(["*", "ShiftLeft", "pointer.up"])
 			sample({mode: "sticky", code: "ShiftLeft", value: 1})
 			solve()
-			sample({mode: "pulsy", code: "pointer.up", value: 5})
-			sample({mode: "pulsy", code: "pointer.up", value: 3})
+			sample({mode: "pulse", code: "pointer.up", value: 5})
+			sample({mode: "pulse", code: "pointer.up", value: 3})
 			expect(solve().pulses).is(8)
 		}),
 
 		"pulses don't linger": test(async() => {
 			const {sample, solve} = quickbind(["max", "pointer.up", "gamepad.up"])
-			sample({mode: "pulsy", code: "pointer.up", value: 5})
+			sample({mode: "pulse", code: "pointer.up", value: 5})
 			sample({mode: "sticky", code: "gamepad.up", value: 2})
 			expect(solve().pulses).is(7)
+		}),
+
+		"pointer and joystick coexist": test(async() => {
+			const {sample, solve} = quickbind(["+", "pointer.up", ["*", ["dt"], "gamepad.up"]])
+			solve(0)
+			sample({mode: "pulse", code: "pointer.up", value: 1})
+			sample({mode: "sticky", code: "gamepad.up", value: 1})
+			sample({mode: "pulse", code: "pointer.up", value: 1})
+			expect(solve(1000).pulses).is(3)
+			expect(solve(2000).pulses).is(1)
 		}),
 
 		"rapid transitions": test(async() => {
@@ -55,41 +65,26 @@ await run({
 			expect(input.change).is(3)
 		}),
 
-		"double trouble": suite({
-			"tapper works while holder exists": test(async() => {
-				const {sample, solve} = quickbind({
-					tapper: ["taps", 1, 10, "KeyE"],
-					holder: ["held", 10, "KeyE"],
-				})
+		"taps and holds don't interfere": test(async() => {
+			const {sample, solve} = quickbind({
+				tapper: ["taps", 1, 10, "KeyE"],
+				holder: ["held", 10, "KeyE"],
+			})
 
-				sample({mode: "sticky", code: "KeyE", value: 0})
-				expect(solve(1).tapper.down).is(0)
+			sample({mode: "sticky", code: "KeyE", value: 0})
+			expect(solve(0).tapper.down).is(0)
 
-				sample({mode: "sticky", code: "KeyE", value: 1})
-				expect(solve(2).tapper.down).is(1)
+			sample({mode: "sticky", code: "KeyE", value: 1})
+			expect(solve(1).tapper.down).is(1)
 
-				sample({mode: "sticky", code: "KeyE", value: 0})
-				expect(solve(3).tapper.down).is(0)
-			}),
+			sample({mode: "sticky", code: "KeyE", value: 0})
+			const released = solve(2)
+			expect(released.tapper.down).is(0)
+			expect(released.holder.down).is(0)
 
-			"tapper and holder don't interfere": test(async() => {
-				const {sample, solve} = quickbind({
-					tapper: ["taps", 1, 10, "KeyE"],
-					holder: ["held", 10, "KeyE"],
-				})
-
-				const step = (time: number, value: number | null) => {
-					if (value !== null)
-						sample({mode: "sticky", code: "KeyE", value})
-					return solve(time)
-				}
-
-				expect(step(0, 0).holder.down).is(0)
-				expect(step(1, 1).tapper.down).is(1)
-				expect(step(2, 0).holder.down).is(0)
-				expect(step(3, 1).holder.down).is(0)
-				expect(step(13, null).holder.down).is(1)
-			}),
+			sample({mode: "sticky", code: "KeyE", value: 1})
+			expect(solve(3).holder.down).is(0)
+			expect(solve(13).holder.down).is(1)
 		}),
 	}),
 })
