@@ -34,6 +34,7 @@ export class InputEncoder<B extends Bindings> {
 	}
 
 	encode(): InputData {
+		this.#context.clock.update()
 		const intents: Intent[] = []
 		const samples = this.#sampler.take()
 

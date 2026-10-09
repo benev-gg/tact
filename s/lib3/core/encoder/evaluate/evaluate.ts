@@ -86,7 +86,7 @@ export function evaluate(
 			let held = context.holding.get(expression)
 
 			if (down && !held) {
-				held = {start: sample.time}
+				held = {start: context.clock.time}
 				context.holding.set(expression, held)
 			}
 
@@ -96,7 +96,7 @@ export function evaluate(
 			}
 
 			if (held) {
-				const timeHeld = sample.time - held.start
+				const timeHeld = context.clock.time - held.start
 				if (timeHeld >= ms)
 					return 1
 			}
@@ -117,9 +117,9 @@ export function evaluate(
 			tapped.previous = value
 
 			if (nowDown && !wasDown) {
-				tapped.events.push(sample.time)
+				tapped.events.push(context.clock.time)
 				tapped.events = arraylimit(
-					tapped.events.filter(time => time >= (sample.time - ms)),
+					tapped.events.filter(time => time >= (context.clock.time - ms)),
 					1024,
 				)
 				if (tapped.events.length >= taps) {

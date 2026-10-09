@@ -1,0 +1,38 @@
+
+import {decodeData} from "../utils/data.js"
+import {updateInput} from "./utils/update-input.js"
+import {Inputs, Bindings, InputData} from "../types.js"
+import {investigate} from "../encoder/parts/investigate.js"
+
+export class InputDecoder<B extends Bindings> {
+	#investigation
+
+	constructor(bindings: B) {
+		this.#investigation = investigate(bindings)
+	}
+
+	get inputs() {
+		return this.#investigation.inputs
+	}
+
+	resolve(data: InputData): Inputs<B> {
+		const decoded = decodeData(data)
+
+		if (decoded.hash !== this.#investigation.hash)
+			throw new Error("intent bindings hash mismatch")
+
+		// wipe all pulses
+		for (const input of this.#investigation.inputList)
+			input.pulses = 0
+
+		// update inputs
+		for (const {id, value} of decoded.intents) {
+			const input = this.#investigation.inputList[id]
+			if (!input) throw new Error(`unknown action id ${id}`)
+			updateInput(input, value)
+		}
+
+		return this.inputs
+	}
+}
+

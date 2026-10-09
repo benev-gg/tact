@@ -1,5 +1,6 @@
 
 import {obMap} from "@e280/stz"
+import {makeInput} from "./make-input.js"
 import {hashBindings} from "./hash-bindings.js"
 import {isExpression} from "../../utils/is-expression.js"
 import {makeExpressionIndex} from "./expression-index.js"
@@ -31,21 +32,6 @@ export function investigate<B extends Bindings>(bindings: B) {
 		inputList,
 		expressionList,
 		expressionIndex,
-	}
-}
-
-function makeInput(): Input {
-	return {
-		value: 0,
-		previous: 0,
-		accumulated: 0,
-
-		change: 0,
-		down: 0,
-		up: 0,
-
-		lowest: 0,
-		highest: 0,
 	}
 }
 

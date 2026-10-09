@@ -22,7 +22,7 @@ export type Input = {
 	previous: number
 
 	/** sum of values in batch. */
-	accumulated: number
+	pulses: number
 
 	/** number of times this value has changed in this batch. */
 	change: number
