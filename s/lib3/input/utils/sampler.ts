@@ -2,6 +2,8 @@
 import {arraylimit} from "@e280/stz"
 import {Sample, Source} from "../types.js"
 
+const limit = 1024
+
 export class Sampler {
 	readonly dispose
 	#samples: Sample[] = []
@@ -9,7 +11,8 @@ export class Sampler {
 	constructor(source: Source) {
 		this.dispose = source.onSample(sample => {
 			this.#samples.push(sample)
-			this.#samples = arraylimit(this.#samples, 1024)
+			if (this.#samples.length > limit) console.warn(`tact sampler exceeded limit ${limit}`)
+			this.#samples = arraylimit(this.#samples, limit)
 		})
 	}
 
