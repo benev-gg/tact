@@ -21,31 +21,30 @@ export class InputDecoder<B extends Bindings> {
 		if (decoded.hash !== this.#investigation.hash)
 			throw new Error("intent bindings hash mismatch")
 
-		for (const [inputId, input] of this.#investigation.inputList.entries()) {
+		for (const input of this.#investigation.inputList) {
+			input.was = input.value
 			input.pulses = 0
 			input.change = 0
 			input.up = 0
 			input.down = 0
 			input.highest = null
 			input.lowest = null
+		}
 
-			for (const {id, value} of decoded.intents) {
-				if (id === inputId) {
-					const previous = input.value
+		for (const {id, value} of decoded.intents) {
+			const input = this.#investigation.inputList[id]
+			if (!input) throw new Error(`unknown input id ${id}`)
 
-					input.value = value
-					input.pulses += value
+			const previous = input.value
+			input.value = value
+			input.pulses += value
 
-					if (value !== previous)
-						input.change++
+			if (value !== previous) input.change++
+			if (!isDown(previous) && isDown(value)) input.down++
+			if (isDown(previous) && !isDown(value)) input.up++
 
-					if (!isDown(previous) && isDown(value))
-						input.down++
-
-					if (isDown(previous) && !isDown(value))
-						input.up++
-				}
-			}
+			input.lowest = Math.min(input.lowest ?? value, value)
+			input.highest = Math.max(input.highest ?? value, value)
 		}
 
 		return this.inputs
