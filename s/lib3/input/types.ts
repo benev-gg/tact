@@ -8,6 +8,7 @@ export type Sample = {
 export type Source = {
 	readonly onSample: (fn: (sample: Sample) => void) => () => void
 	readonly dispose: () => void
+	readonly poll?: () => void
 }
 
 export type InputData = ArrayBuffer
