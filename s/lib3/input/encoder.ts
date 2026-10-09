@@ -1,6 +1,5 @@
 
 import {deepClone, deepFreeze, got} from "@e280/stz"
-import {Intent} from "./data/types.js"
 import {Sampler} from "./utils/sampler.js"
 import {encodeData} from "./data/encode.js"
 import {evaluate} from "./evaluate/evaluate.js"
@@ -20,7 +19,7 @@ export class InputEncoder<B extends Bindings> {
 		this.#investigation = investigate(this.#bindings)
 		this.#sampler = new Sampler(source)
 		this.#context = new EvaluationContext()
-		this.#initialEvaluation()
+		this.#initialize()
 	}
 
 	get bindings() {
@@ -38,11 +37,14 @@ export class InputEncoder<B extends Bindings> {
 		this.#investigation.rootIndex = fresh.rootIndex
 		this.#context = new EvaluationContext()
 		this.#history.clear()
-		this.#initialEvaluation()
+		this.#initialize()
 	}
 
 	encode(time = performance.now()): InputData {
-		const intents: Intent[] = []
+		return encodeData(this.#investigation.hash, [...this.evaluate(time)])
+	}
+
+	*evaluate(time = performance.now()) {
 		const samples = this.#sampler.take()
 
 		this.#context.clock.update(time)
@@ -54,7 +56,7 @@ export class InputEncoder<B extends Bindings> {
 
 			for (const {id, root} of this.#relevantRoots(sample.code)) {
 				const value = evaluate(this.#context, root, root)
-				intents.push({id, value})
+				yield {id, value}
 				this.#history.set(root, value)
 			}
 
@@ -70,7 +72,7 @@ export class InputEncoder<B extends Bindings> {
 
 			if (value !== was) {
 				const id = got(this.#investigation.rootIds.get(root))
-				intents.push({id, value})
+				yield {id, value}
 			}
 		}
 
@@ -79,13 +81,11 @@ export class InputEncoder<B extends Bindings> {
 		for (const root of this.#context.dtRoots) {
 			const value = evaluate(this.#context, root, root)
 			const id = got(this.#investigation.rootIds.get(root))
-			intents.push({id, value})
+			yield {id, value}
 		}
-
-		return encodeData(this.#investigation.hash, intents)
 	}
 
-	#initialEvaluation() {
+	#initialize() {
 		for (const root of this.#investigation.rootList)
 			evaluate(this.#context, root, root)
 	}
