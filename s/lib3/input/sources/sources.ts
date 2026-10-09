@@ -1,12 +1,10 @@
 
-import {disposer, sub} from "@e280/stz"
-import {Sample, Source} from "../types.js"
+import {Source} from "../types.js"
+import {PlainSource} from "./plain.js"
 
-export class Sources implements Source {
-	readonly dispose = disposer()
-	readonly onSample = sub<[Sample]>()
-
+export class Sources extends PlainSource {
 	constructor(...sources: Source[]) {
+		super()
 		for (const source of sources)
 			this.dispose.schedule(
 				source.onSample(sample => this.onSample.publish(sample))
