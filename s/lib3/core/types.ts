@@ -18,7 +18,7 @@ export type Input = {
 	value: number
 
 	/** previously-known value. */
-	previous: number
+	was: number
 
 	/** sum of values in batch. */
 	pulses: number
@@ -33,10 +33,10 @@ export type Input = {
 	down: number
 
 	/** lowest value in batch. */
-	lowest: number
+	lowest: number | null
 
 	/** highest value in batch. */
-	highest: number
+	highest: number | null
 }
 
 export type Inputs<B extends Bindings = any> = (
