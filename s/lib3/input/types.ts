@@ -51,6 +51,8 @@ export type Bindings = Expression | {
 	[key: string]: Bindings
 }
 
+export const asBindings = <B extends Bindings>(bindings: B) => (bindings as any as Rebindings<B>)
+
 export type Rebindings<B extends Bindings> = (
 	B extends Expression
 		? Expression
