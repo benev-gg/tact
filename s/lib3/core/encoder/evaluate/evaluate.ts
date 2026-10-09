@@ -1,6 +1,6 @@
 
 import {remap} from "@benev/math"
-import {arraylimit, got, guarantee, isNumber, isString} from "@e280/stz"
+import {arraylimit, guarantee, isNumber, isString} from "@e280/stz"
 import {Expression} from "../../types.js"
 import {isDown} from "../../utils/is-down.js"
 import {EvaluationContext} from "./context.js"
@@ -10,14 +10,13 @@ export function evaluate(
 		expression: Expression,
 	): number {
 
-	const sample = got(context.sample)
 	const e = (expression: Expression) => evaluate(context, expression)
 
 	if (isNumber(expression))
 		return expression
 
 	else if (isString(expression))
-		return context.values.get(expression) ?? 0
+		return context.sampleValues.get(expression) ?? 0
 
 	else switch (expression[0]) {
 		case "min":

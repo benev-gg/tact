@@ -17,8 +17,8 @@
 	],
 	"scripts": {
 		"build": "octo-s 'rm -rf x' 'tsc' 'scute -v'",
-		"dev": "octo 'scute -vw' 'tsc -w' 'node --watch x/lib/test.js' 'hottie x --port=8081'",
-		"test": "node x/lib/test.js",
+		"dev": "octo 'scute -vw' 'tsc -w' 'node --watch x/lib3/test.js' 'hottie x --port=8081'",
+		"test": "node x/lib3/test.js",
 		"count": "find s -path '*/_archive' -prune -o -name '*.ts' -exec wc -l {} +"
 	},
 	"peerDependencies": {

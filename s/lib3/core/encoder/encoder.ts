@@ -39,8 +39,7 @@ export class InputEncoder<B extends Bindings> {
 		const samples = this.#sampler.take()
 
 		for (const sample of samples) {
-			this.#context.sample = sample
-			this.#context.values.set(sample.code, sample.value)
+			this.#context.sampleValues.set(sample.code, sample.value)
 
 			for (const {id, expression} of this.#relevantExpressions(sample.code)) {
 				const value = evaluate(this.#context, expression)
@@ -48,7 +47,7 @@ export class InputEncoder<B extends Bindings> {
 			}
 
 			if (sample.mode === "pulsy")
-				this.#context.values.set(sample.code, 0)
+				this.#context.sampleValues.set(sample.code, 0)
 		}
 
 		return encodeData(this.#investigation.hash, intents)

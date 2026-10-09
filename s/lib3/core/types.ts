@@ -2,7 +2,6 @@
 export type Sample = {
 	code: string
 	value: number
-	time: number
 	mode: "sticky" | "pulsy"
 }
 
