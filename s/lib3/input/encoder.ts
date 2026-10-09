@@ -32,6 +32,7 @@ export class InputEncoder<B extends Bindings> {
 		if (fresh.hash !== this.#investigation.hash)
 			throw new Error("incompatible bindings")
 
+		this.#investigation.rootIds = fresh.rootIds
 		this.#investigation.rootList = fresh.rootList
 		this.#investigation.rootIndex = fresh.rootIndex
 		this.#context = new EvaluationContext()
