@@ -64,12 +64,12 @@ export type Rebindings<B extends Bindings> = (
 )
 
 export type RootExpression =
-	| ["delta", Expression] // use summed values
-	| Expression // use latest-known value
+	| ["delta", Expression] // values represent an amount of change, every event is respected.
+	| Expression // values represent final state, non-changes are discarded.
 
 export type Expression = (
-	| number // constants for doing math
-	| string // use last-known sample value for a code like "KeyW", "pointer.move.up"
+	| number // constants for doing math.
+	| string // use last-known sample value for a code like "KeyW", "pointer.move.up".
 
 	// special
 	| ["pulse", string] // use current sample's value, or zero.

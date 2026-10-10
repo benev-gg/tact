@@ -8,11 +8,12 @@ import {Expression, RootExpression} from "../types.js"
 
 export function evaluate(
 		context: EvaluationContext,
+		id: number,
 		root: RootExpression,
 		expression: RootExpression,
 	): number {
 
-	const e = (expression: Expression) => evaluate(context, root, expression)
+	const e = (expression: Expression) => evaluate(context, id, root, expression)
 
 	if (isNumber(expression))
 		return expression
@@ -90,14 +91,14 @@ export function evaluate(
 		}
 
 		case "dt": {
-			context.dtRoots.add(root)
+			context.dtRoots.add(id)
 			return context.currentSample === null
 				? context.dt
 				: 0
 		}
 
 		case "held": {
-			context.holdyRoots.add(root)
+			context.holdyRoots.add(id)
 
 			const [, ms, subexpression] = expression
 			const down = isDown(e(subexpression))

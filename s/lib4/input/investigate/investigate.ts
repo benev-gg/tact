@@ -10,7 +10,6 @@ export function investigate<B extends Bindings>(bindings: B) {
 	const hash = hashBindings(bindings)
 	const inputList: Input[] = []
 	const rootList: RootExpression[] = []
-	const rootIds = new Map<RootExpression, number>()
 
 	function makeInputs(b: Bindings): unknown {
 		if (isRootExpression(b)) {
@@ -27,16 +26,12 @@ export function investigate<B extends Bindings>(bindings: B) {
 	const inputs = makeInputs(bindings) as Inputs<B>
 	const rootIndex = makeRootIndex(rootList)
 
-	for (const [id, root] of rootList.entries())
-		rootIds.set(root, id)
-
 	return {
 		hash,
 		inputs,
 		inputList,
 		rootList,
 		rootIndex,
-		rootIds,
 	}
 }
 
