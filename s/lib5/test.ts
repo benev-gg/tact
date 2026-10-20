@@ -1,9 +1,9 @@
 
 import {expect, run, suite, test} from "@e280/science"
+import {asBindings} from "./input/types.js"
+import {InputEncoder} from "./input/encoder.js"
+import {PlainSource} from "./input/sources/plain.js"
 import {quickbind} from "./input/testing/quickbind.js"
-import { PlainSource } from "./input/sources/plain.js"
-import { InputEncoder } from "./input/encoder.js"
-import { asBindings } from "./input/types.js"
 
 await run({
 	input: suite({
