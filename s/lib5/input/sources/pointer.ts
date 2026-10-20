@@ -33,20 +33,23 @@ export class PointerSource extends PlainSource {
 			if (event.movementX) this.onSample.publish({code: "pointer.x", value: event.movementX})
 			if (event.movementY) this.onSample.publish({code: "pointer.y", value: event.movementY})
 
-			if (left) this.onSample.publish({code: "pointer.left", value: left})
-			if (right) this.onSample.publish({code: "pointer.right", value: right})
-			if (up) this.onSample.publish({code: "pointer.up", value: up})
-			if (down) this.onSample.publish({code: "pointer.down", value: down})
+			if (left) this.onSample.publish({code: "pointer.x.pos", value: left})
+			if (right) this.onSample.publish({code: "pointer.x.neg", value: right})
+			if (up) this.onSample.publish({code: "pointer.y.pos", value: up})
+			if (down) this.onSample.publish({code: "pointer.y.neg", value: down})
 		},
 
 		wheel: (event: WheelEvent) => {
 			const [right, left] = splitAxis(event.deltaX)
 			const [down, up] = splitAxis(event.deltaY)
 
-			if (left) this.onSample.publish({code: "pointer.wheel.left", value: left})
-			if (right) this.onSample.publish({code: "pointer.wheel.right", value: right})
-			if (up) this.onSample.publish({code: "pointer.wheel.up", value: up})
-			if (down) this.onSample.publish({code: "pointer.wheel.down", value: down})
+			if (event.deltaX) this.onSample.publish({code: "pointer.wheel.x", value: event.deltaX})
+			if (left) this.onSample.publish({code: "pointer.wheel.x.pos", value: left})
+			if (right) this.onSample.publish({code: "pointer.wheel.x.neg", value: right})
+
+			if (event.deltaY) this.onSample.publish({code: "pointer.wheel.y", value: event.deltaY})
+			if (up) this.onSample.publish({code: "pointer.wheel.y.pos", value: up})
+			if (down) this.onSample.publish({code: "pointer.wheel.y.neg", value: down})
 		},
 	}
 }
