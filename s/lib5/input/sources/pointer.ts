@@ -24,32 +24,32 @@ export class PointerSource extends PlainSource {
 			this.onSample.publish({code: mouseButton(event.button), value: 0})
 		},
 
-		pointermove: (event: PointerEvent) => {
-			this.client.set_(event.clientX, event.clientY)
+		pointermove: ({clientX, clientY, movementX, movementY}: PointerEvent) => {
+			this.client.set_(clientX, clientY)
 
-			const [right, left] = splitAxis(event.movementX)
-			const [down, up] = splitAxis(event.movementY)
+			const [xPos, xNeg] = splitAxis(movementX)
+			const [yPos, yNeg] = splitAxis(movementY)
 
-			if (event.movementX) this.onSample.publish({code: "pointer.x", value: event.movementX})
-			if (event.movementY) this.onSample.publish({code: "pointer.y", value: event.movementY})
+			if (movementX) this.onSample.publish({code: "pointer.x", value: movementX})
+			if (xPos) this.onSample.publish({code: "pointer.x.pos", value: xPos})
+			if (xNeg) this.onSample.publish({code: "pointer.x.neg", value: xNeg})
 
-			if (left) this.onSample.publish({code: "pointer.x.pos", value: left})
-			if (right) this.onSample.publish({code: "pointer.x.neg", value: right})
-			if (up) this.onSample.publish({code: "pointer.y.pos", value: up})
-			if (down) this.onSample.publish({code: "pointer.y.neg", value: down})
+			if (movementY) this.onSample.publish({code: "pointer.y", value: movementY})
+			if (yPos) this.onSample.publish({code: "pointer.y.pos", value: yPos})
+			if (yNeg) this.onSample.publish({code: "pointer.y.neg", value: yNeg})
 		},
 
-		wheel: (event: WheelEvent) => {
-			const [right, left] = splitAxis(event.deltaX)
-			const [down, up] = splitAxis(event.deltaY)
+		wheel: ({deltaX, deltaY}: WheelEvent) => {
+			const [xPos, xNeg] = splitAxis(deltaX)
+			const [yPos, yNeg] = splitAxis(deltaY)
 
-			if (event.deltaX) this.onSample.publish({code: "pointer.wheel.x", value: event.deltaX})
-			if (left) this.onSample.publish({code: "pointer.wheel.x.pos", value: left})
-			if (right) this.onSample.publish({code: "pointer.wheel.x.neg", value: right})
+			if (deltaX) this.onSample.publish({code: "pointer.wheel.x", value: deltaX})
+			if (xPos) this.onSample.publish({code: "pointer.wheel.x.pos", value: xPos})
+			if (xNeg) this.onSample.publish({code: "pointer.wheel.x.neg", value: xNeg})
 
-			if (event.deltaY) this.onSample.publish({code: "pointer.wheel.y", value: event.deltaY})
-			if (up) this.onSample.publish({code: "pointer.wheel.y.pos", value: up})
-			if (down) this.onSample.publish({code: "pointer.wheel.y.neg", value: down})
+			if (deltaY) this.onSample.publish({code: "pointer.wheel.y", value: deltaY})
+			if (yPos) this.onSample.publish({code: "pointer.wheel.y.pos", value: yPos})
+			if (yNeg) this.onSample.publish({code: "pointer.wheel.y.neg", value: yNeg})
 		},
 	}
 }

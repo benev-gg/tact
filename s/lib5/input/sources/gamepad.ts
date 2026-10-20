@@ -45,7 +45,7 @@ export class GamepadSource extends PlainSource {
 	#pollAxes(gamepad: Gamepad) {
 		for (const [index, value] of gamepad.axes.entries()) {
 			const i = index + 1
-			const [neg, pos] = splitAxis(value)
+			const [pos, neg] = splitAxis(value)
 			this.#publish(`gamepad.axis.${i}`, value)
 			this.#publish(`gamepad.axis.${i}.neg`, neg)
 			this.#publish(`gamepad.axis.${i}.pos`, pos)
