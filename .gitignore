@@ -1,11 +1,5 @@
 
-/.codex
-/.parcel-cache
-/dist
-/assets/temp
 /x
-/notes
 /temp
 /node_modules
-/yarn.lock
 
