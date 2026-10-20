@@ -14,7 +14,7 @@ export class InputEncoder<B extends Bindings = any> {
 	#context
 
 	constructor(source: Source, bindings: B) {
-		this.#bindings = deepFreeze(deepClone(bindings)) as any as Rebindings<B>
+		this.#bindings = deepFreeze(structuredClone(bindings)) as any as Rebindings<B>
 		this.#investigation = investigate(this.#bindings)
 		this.#sampler = new Sampler(source)
 		this.#context = new EvaluationContext()
@@ -25,11 +25,13 @@ export class InputEncoder<B extends Bindings = any> {
 	}
 
 	set bindings(b: Rebindings<B>) {
-		const fresh = investigate(b)
+		const bindings = deepFreeze(structuredClone(b)) as Rebindings<B>
+		const fresh = investigate(bindings)
 
 		if (fresh.hash !== this.#investigation.hash)
 			throw new Error("incompatible bindings")
 
+		this.#bindings = bindings
 		this.#investigation.rootList = fresh.rootList
 		this.#context = new EvaluationContext()
 	}

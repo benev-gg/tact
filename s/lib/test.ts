@@ -20,6 +20,25 @@ await run({
 			expect(inputs.delta).is(1)
 		}),
 
+		"update bindings": test(async() => {
+			const {sample, solve, encoder} = quickbind("KeyA")
+
+			sample({code: "KeyA", value: 1})
+			expect(solve().value).is(1)
+
+			sample({code: "KeyA", value: 0})
+			expect(solve().value).is(0)
+
+			encoder.bindings = "KeyB"
+			expect(encoder.bindings).is("KeyB")
+			sample({code: "KeyA", value: 1})
+			expect(solve().value).is(0)
+
+			sample({code: "KeyA", value: 0})
+			sample({code: "KeyB", value: 1})
+			expect(solve().value).is(1)
+		}),
+
 		"pointer movement accumulation": test(async() => {
 			const {sample, solve} = quickbind(["accumulate", ["sum", "pointer.x"]])
 			let inputs = solve()
