@@ -15,8 +15,10 @@ export class InputDecoder<B extends Bindings> {
 	}
 
 	decode(...datas: InputData[]): Inputs<B> {
-		for (const input of this.#investigation.inputList)
+		for (const input of this.#investigation.inputList) {
 			input.was = input.value
+			input.delta = 0
+		}
 
 		for (const data of datas) {
 			const decoded = decodeData(data)

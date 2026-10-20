@@ -1,5 +1,5 @@
 
-import {deepClone, deepFreeze} from "@e280/stz"
+import {deepFreeze} from "@e280/stz"
 import {Sampler} from "./utils/sampler.js"
 import {encodeData} from "./data/encode.js"
 import {evaluate} from "./evaluate/evaluate.js"
