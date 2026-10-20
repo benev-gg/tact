@@ -2,9 +2,9 @@
 import {remap} from "@benev/math"
 import {arraylimit, guarantee, isNumber, isString} from "@e280/stz"
 
-import {Expression} from "../types.js"
 import {isDown} from "../utils/is-down.js"
 import {EvaluationContext} from "./context.js"
+import type {Expression} from "../expression.js"
 
 export function evaluate(
 		context: EvaluationContext,
