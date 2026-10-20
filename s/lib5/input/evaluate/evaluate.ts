@@ -21,6 +21,13 @@ export function evaluate(
 		return context.latestValues.get(expression) ?? 0
 
 	else switch (expression[0]) {
+		case "accumulate": {
+			const subexpression = expression[1]
+			const total = (context.accumulated.get(expression) ?? 0) + e(subexpression)
+			context.accumulated.set(expression, total)
+			return total
+		}
+
 		case "sum": {
 			const code = expression[1]
 			let x = 0
@@ -162,26 +169,24 @@ export function evaluate(
 
 		case "taps": {
 			const [, taps, ms, subexpression] = expression
-			const value = e(subexpression)
+			const presses = e(subexpression)
+			const now = context.clock.time
+
 			const tapped = guarantee(context.tapping, expression, () => ({
-				previous: 0,
-				events: [],
+				events: [] as number[],
 			}))
 
-			const nowDown = isDown(value)
-			const wasDown = isDown(tapped.previous)
-			tapped.previous = value
+			for (let i = 0; i < presses; i++)
+				tapped.events.push(now)
 
-			if (nowDown && !wasDown) {
-				tapped.events.push(context.clock.time)
-				tapped.events = arraylimit(
-					tapped.events.filter(time => time >= (context.clock.time - ms)),
-					1024,
-				)
-				if (tapped.events.length >= taps) {
-					tapped.events = []
-					return 1
-				}
+			tapped.events = arraylimit(
+				tapped.events.filter(time => time >= now - ms),
+				128,
+			)
+
+			if (tapped.events.length >= taps) {
+				tapped.events = []
+				return 1
 			}
 
 			return 0
