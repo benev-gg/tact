@@ -13,7 +13,7 @@ export function quickbind<B extends Bindings>(b: B) {
 		samples.forEach(s => source.onSample.publish(s))
 
 	const solve = (time?: number) =>
-		decoder.resolve(encoder.encode(time))
+		decoder.decode(encoder.encode(time))
 
 	return {source, encoder, decoder, sample, solve}
 }

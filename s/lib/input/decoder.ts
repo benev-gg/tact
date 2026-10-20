@@ -14,7 +14,7 @@ export class InputDecoder<B extends Bindings> {
 		return this.#investigation.inputs
 	}
 
-	resolve(...datas: InputData[]): Inputs<B> {
+	decode(...datas: InputData[]): Inputs<B> {
 		for (const input of this.#investigation.inputList)
 			input.was = input.value
 

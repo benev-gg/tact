@@ -5,29 +5,32 @@ import {RMap, RSet} from "@e280/strata"
 import {shadowElement, useCss, useMount, useOnce} from "@e280/sly"
 
 import styleCss from "./style.css.js"
-import {onPad} from "../../device/pad/on-pad.js"
-import {GamepadDevice} from "../../device/gamepad.js"
+
+import {onPad} from "../../lib/input/utils/pad/on-pad.js"
+import {GamepadSource} from "../../lib/input/sources/gamepad.js"
 
 export const GamepadApp = shadowElement(() => {
 	useCss(styleCss)
 
 	const connected = useOnce(() => new RSet<{
-		device: GamepadDevice
+		source: GamepadSource
 		samples: RMap<string, number>
 	}>())
 
 	useMount(() => onPad(pad => {
-		const device = new GamepadDevice(pad)
-		const connectee = {device, samples: new RMap<string, number>()}
+		const source = new GamepadSource(pad)
+		const connectee = {source, samples: new RMap<string, number>()}
+		const stop = source.onSample(sample => connectee.samples.set(sample.code, sample.value))
 		connected.add(connectee)
-		return () => connected.delete(connectee)
+		return () => {
+			stop()
+			connected.delete(connectee)
+		}
 	}))
 
 	useMount(() => cycle(async() => {
-		for (const conn of connected) {
-			for (const [code, value] of conn.device.samples())
-				conn.samples.set(code, value)
-		}
+		for (const conn of connected)
+			conn.source.poll()
 		await nap(1000 / 60)
 	}))
 
@@ -40,7 +43,7 @@ export const GamepadApp = shadowElement(() => {
 
 	return html`
 		<div class=plate>
-			${connected.size > 0 ? [...connected].map(({samples, device: {gamepad}}) => html`
+			${connected.size > 0 ? [...connected].map(({samples, source: {gamepad}}) => html`
 				<div class=device>
 					<h2>🎮 ${gamepad.id}</h2>
 					<div class=stats>
