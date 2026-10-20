@@ -4,6 +4,26 @@
 - 🔶 deprecation or possible breaking change
 - 🍏 harmless addition, fix, or enhancement
 
+
+
+<br/>
+
+## v0.4
+
+### v0.4.0
+- 🟥 rewrite.
+
+
+
+<br/>
+
+## v0.3
+
+### v0.3.0-5
+- 🟥 superceded rewrite.
+
+
+
 <br/>
 
 ## v0.2
@@ -12,6 +32,8 @@
 - 🟥 removes web component — for now we only ship sly shadow views
 - 🟥 deck overlay and nubs are now rendered as `@e280/sly` shadow views instead of custom elements
 - 🍏 updates the codebase for newer `@e280/sly`, `@e280/strata`, and `@benev/math` apis
+
+
 
 <br/>
 
