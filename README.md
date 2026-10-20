@@ -14,9 +14,7 @@ npm install @benev/tact@next
 
 <br/>
 
-## 🎮 let's play
-
-### 🕹️ sources emit samples.
+## 🕹️ sources emit samples.
 
 - **samples look like** `{code: "KeyW", value: 1}`
     ```ts
@@ -29,9 +27,13 @@ npm install @benev/tact@next
     )
     ```
     - proper sources: [GamepadSource](./s/lib/input/sources/gamepad.ts), [KeyboardSource](./s/lib/input/sources/keyboard.ts), [PointerSource](./s/lib/input/sources/pointer.ts), [StickSource](./s/lib/input/sources/stick.ts).
-    - utility sources: [Sources](./s/lib/input/sources/sources.ts), [PlainSource](./s/lib/input/sources/plain.ts).
+    - utility sources: [Sources](./s/lib/input/sources/sources.ts) *(consolidates sources)*, [PlainSource](./s/lib/input/sources/plain.ts) *(handy base class)*.
 
-### 🕹️ bindings describe controls.
+
+
+<br/>
+
+## 🕹️ bindings describe controls.
 
 - **bindings are tiny programs,** a dsl in js data.
     ```ts
@@ -46,7 +48,11 @@ npm install @benev/tact@next
     ```
     - see [expression.ts](./s/lib/input/expression.ts) to learn what's possible.
 
-### 🕹️ encode and decode.
+
+
+<br/>
+
+## 🕹️ encode and decode.
 
 - **the data is binary for efficient networking.**
     ```ts
@@ -60,7 +66,7 @@ npm install @benev/tact@next
     function frame() {
 
       // data is an ArrayBuffer (you could stream it over the network).
-      const data = encoder.encode(performance.now())
+      const data = encoder.encode()
 
       // decoding interprets the data as handy input objects.
       const inputs = decoder.decode(data)
@@ -89,6 +95,8 @@ npm install @benev/tact@next
 
 
 <br/><br/>
+
+---
 
 👼 *https://benev.gg/*
 
