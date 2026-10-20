@@ -82,13 +82,23 @@ npm install @benev/tact@next
 
     requestAnimationFrame(frame)
     ```
+- **understanding networking situations.**
+  - the encoder could be on your clientside.
+  - the decoder could be on your serverside.
+  - thus, clients are streaming their input data to the serverside, which is decoding it and using it in game logic.
+  - don't worry, it's not a keylogger -- the encoded data is more like `jump: 1`, `look: 5`, etc.
+  - the decoder can accept multiple data packets at once, `decoder.decode(...datas)`.
+- **understanding multithreaded worker situations.**
+  - the encoder would be on the main thread, where javascript events are accessible.
+  - you can then send the encoded input data to the thread where you're simulating the game.
+  - you can have multiple encoders -- one encoder sending data to a worker thread -- another encoder sending data to the serverside.
 - **update the encoder's bindings anytime.**
     ```ts
     // the new bindings must be schema-compatible or an error is thrown.
     encoder.bindings = {
       forward: "KeyE",
       jump: "Space",
-      look: "gamepad.axis.2.x"
+      look: "gamepad.axis.2"
     }
     ```
 
