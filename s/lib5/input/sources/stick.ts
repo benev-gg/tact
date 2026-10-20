@@ -12,13 +12,18 @@ export class StickSource extends PlainSource {
 		super()
 	}
 
-	set(vector: Xy) {
-		this.vector.set_(vector.x, vector.y)
+	set({x, y}: Xy) {
+		this.vector.set_(x, y)
+
+		this.onSample.publish({code: `${this.channel}.x`, value: x})
+		this.onSample.publish({code: `${this.channel}.y`, value: y})
+
 		const {up, down, left, right} = splitVector(this.vector)
 		this.onSample.publish({code: `${this.channel}.up`, value: up})
 		this.onSample.publish({code: `${this.channel}.down`, value: down})
 		this.onSample.publish({code: `${this.channel}.left`, value: left})
 		this.onSample.publish({code: `${this.channel}.right`, value: right})
+
 		return this
 	}
 }

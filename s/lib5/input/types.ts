@@ -22,7 +22,7 @@ export type Input = {
 	/** previously-known value. */
 	was: number
 
-	/** value - was */
+	/** change in value since the previously-known value. */
 	delta: number
 }
 

@@ -35,9 +35,7 @@ export class GamepadSource extends PlainSource {
 		for (const [index, button] of gamepad.buttons.entries()) {
 			const value = button.value
 			const i = index + 1
-
 			this.#publish(`gamepad.button.${i}`, value)
-
 			any = Math.max(any, value)
 		}
 
@@ -48,7 +46,6 @@ export class GamepadSource extends PlainSource {
 		for (const [index, value] of gamepad.axes.entries()) {
 			const i = index + 1
 			const [neg, pos] = splitAxis(value)
-
 			this.#publish(`gamepad.axis.${i}`, value)
 			this.#publish(`gamepad.axis.${i}.neg`, neg)
 			this.#publish(`gamepad.axis.${i}.pos`, pos)

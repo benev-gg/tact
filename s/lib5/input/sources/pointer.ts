@@ -30,10 +30,13 @@ export class PointerSource extends PlainSource {
 			const [right, left] = splitAxis(event.movementX)
 			const [down, up] = splitAxis(event.movementY)
 
-			if (left) this.onSample.publish({code: "pointer.move.left", value: left})
-			if (right) this.onSample.publish({code: "pointer.move.right", value: right})
-			if (up) this.onSample.publish({code: "pointer.move.up", value: up})
-			if (down) this.onSample.publish({code: "pointer.move.down", value: down})
+			if (event.movementX) this.onSample.publish({code: "pointer.x", value: event.movementX})
+			if (event.movementY) this.onSample.publish({code: "pointer.y", value: event.movementY})
+
+			if (left) this.onSample.publish({code: "pointer.left", value: left})
+			if (right) this.onSample.publish({code: "pointer.right", value: right})
+			if (up) this.onSample.publish({code: "pointer.up", value: up})
+			if (down) this.onSample.publish({code: "pointer.down", value: down})
 		},
 
 		wheel: (event: WheelEvent) => {
