@@ -1,4 +1,6 @@
 
+export * from "./input/investigate/is-compatible.js"
+
 export * from "./input/sources/gamepad.js"
 export * from "./input/sources/keyboard.js"
 export * from "./input/sources/plain.js"
