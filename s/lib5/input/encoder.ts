@@ -18,7 +18,6 @@ export class InputEncoder<B extends Bindings = any> {
 		this.#investigation = investigate(this.#bindings)
 		this.#sampler = new Sampler(source)
 		this.#context = new EvaluationContext()
-		this.#init()
 	}
 
 	get bindings() {
@@ -32,9 +31,7 @@ export class InputEncoder<B extends Bindings = any> {
 			throw new Error("incompatible bindings")
 
 		this.#investigation.rootList = fresh.rootList
-		this.#investigation.rootIndex = fresh.rootIndex
 		this.#context = new EvaluationContext()
-		this.#init()
 	}
 
 	encode(time = performance.now()): InputData {
@@ -56,11 +53,6 @@ export class InputEncoder<B extends Bindings = any> {
 
 		for (const {code, value} of samples)
 			this.#context.previousValues.set(code, value)
-	}
-
-	#init() {
-		for (const [id, expression] of this.#investigation.rootList.entries())
-			evaluate(this.#context, id, expression)
 	}
 
 	dispose() {
