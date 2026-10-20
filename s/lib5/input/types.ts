@@ -49,7 +49,6 @@ export type Rebindings<B extends Bindings> = (
 )
 
 export type Expression = (
-	| null // indicate no change.
 	| number // constants for doing math.
 
 	// special
@@ -88,7 +87,7 @@ export type Expression = (
 
 	// temporal
 	| ["dt"] // delta time in seconds since last frame, useful for stick sensitivity.
-	| ["taps", taps: number, ms: number, Expression]
 	| ["held", ms: number, Expression]
+	| ["taps", taps: number, ms: number, Expression]
 )
 
