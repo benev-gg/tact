@@ -1,6 +1,6 @@
 
 # 🎮 @benev/tact
-> *from keypress to couch co-op*
+> *from keypress to couch co-op.*
 
 **tact is a tiny input toolkit for web games.**  
 keyboards, mice, gamepads. expressive bindings json dsl.  
