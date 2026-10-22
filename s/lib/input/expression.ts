@@ -2,9 +2,6 @@
 export type Expression = (
 	| number // constants for doing math.
 
-	// special
-	| ["accumulate", Expression] // add each frame's result to a running total.
-
 	// samplers
 	| string // use last-known sample value for a code like "KeyW", "pointer.move.up".
 	| ["sum", string] // sum values this frame.

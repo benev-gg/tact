@@ -43,7 +43,7 @@ npm install @benev/tact@next
     const bindings = asBindings({
       forward: ["max", "KeyW", "ArrowUp"],
       jump: ["down", "Space"],
-      look: ["accumulate", ["sum", "pointer.x"]],
+      look: ["sum", "pointer.x"],
     })
     ```
     - see [expression.ts](./s/lib/input/expression.ts) to learn what's possible.
@@ -74,7 +74,7 @@ npm install @benev/tact@next
       // your game logic can read these handy input values.
       inputs.forward.value // current held state.
       inputs.jump.value // down-presses this frame.
-      inputs.look.value // total accumulated mouse movement.
+      inputs.look.value // mouse movement this frame.
 
       // this was so cool, let's do this forever.
       requestAnimationFrame(frame)

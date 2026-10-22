@@ -44,43 +44,6 @@ export default suite({
 		expect(() => encoder.bindings = <any>{bravo: "KeyA"}).throws()
 	}),
 
-	"pointer movement accumulation": test(async() => {
-		const {sample, solve} = quickbind(["accumulate", ["sum", "pointer.x"]])
-		let inputs = solve()
-
-		sample({code: "pointer.x", value: 0})
-		sample({code: "pointer.x", value: 1})
-		sample({code: "pointer.x", value: 2})
-		sample({code: "pointer.x", value: -5})
-		inputs = solve()
-		expect(inputs.value).is(-2)
-		expect(inputs.delta).is(-2)
-
-		sample({code: "pointer.x", value: 2})
-		sample({code: "pointer.x", value: 5})
-		inputs = solve()
-		expect(inputs.value).is(5)
-		expect(inputs.delta).is(7)
-	}),
-
-	"accumulations are maintained despite rebinding": test(async() => {
-		const {sample, solve, encoder} = quickbind(["accumulate", ["sum", "pointer.x"]])
-		let inputs = solve()
-
-		sample({code: "pointer.x", value: 5})
-		sample({code: "pointer.x", value: 3})
-		inputs = solve()
-		expect(inputs.value).is(8)
-
-		encoder.bindings = ["accumulate", ["sum", "pointer.y"]]
-		inputs = solve()
-		expect(inputs.value).is(8)
-
-		sample({code: "pointer.y", value: 1})
-		inputs = solve()
-		expect(inputs.value).is(9)
-	}),
-
 	"rapid transitions": test(async() => {
 		const {sample, solve} = quickbind({
 			key: "KeyE",
@@ -133,21 +96,6 @@ export default suite({
 		sample({code: "KeyE", value: 1})
 		expect(solve(600).value).is(0)
 		expect(solve(900).value).is(1)
-	}),
-
-	"joystick integration": test(async() => {
-		const {sample, solve} = quickbind(
-			["accumulate", ["*", "gamepad.x", ["dt"]]]
-		)
-
-		solve(0)
-		sample({code: "gamepad.x", value: 1})
-
-		expect(solve(500).value).is(0.5)
-		expect(solve(1000).value).is(1)
-
-		sample({code: "gamepad.x", value: 0})
-		expect(solve(1500).value).is(1)
 	}),
 
 	"taps and holds coexist": test(async() => {

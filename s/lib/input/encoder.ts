@@ -50,7 +50,7 @@ export class InputEncoder<B extends Bindings = any> {
 			this.#context.latestValues.set(code, value)
 
 		for (const [id, expression] of this.#investigation.rootList.entries())
-			yield {id, value: evaluate(this.#context, expression, [id])} as Intent
+			yield {id, value: evaluate(this.#context, expression)} as Intent
 
 		for (const {code, value} of samples)
 			this.#context.previousValues.set(code, value)

@@ -10,8 +10,7 @@ export class EvaluationContext {
 	latestValues = new Map<string, number>()
 	previousValues = new Map<string, number>()
 
-	accumulated = new Map<string, number>()
-	holding = new Map<string, {start: number}>()
-	tapping = new Map<string, {events: number[]}>()
+	holding = new Map<object, {start: number}>()
+	tapping = new Map<object, {events: number[]}>()
 }
 
