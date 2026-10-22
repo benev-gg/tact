@@ -8,11 +8,13 @@ import type {Expression} from "../expression.js"
 
 export function evaluate(
 		context: EvaluationContext,
-		id: number,
 		expression: Expression,
+		path: number[],
 	): number {
 
-	const e = (expression: Expression) => evaluate(context, id, expression)
+	let i = 0
+	const stableKey = path.join(":")
+	const e = (expression: Expression) => evaluate(context, expression, [...path, i++])
 
 	if (isNumber(expression))
 		return expression
@@ -23,8 +25,8 @@ export function evaluate(
 	else switch (expression[0]) {
 		case "accumulate": {
 			const subexpression = expression[1]
-			const total = (context.accumulated.get(expression) ?? 0) + e(subexpression)
-			context.accumulated.set(expression, total)
+			const total = (context.accumulated.get(stableKey) ?? 0) + e(subexpression)
+			context.accumulated.set(stableKey, total)
 			return total
 		}
 
@@ -146,16 +148,16 @@ export function evaluate(
 		case "held": {
 			const [, ms, subexpression] = expression
 			const down = isDown(e(subexpression))
-			let held = context.holding.get(expression)
+			let held = context.holding.get(stableKey)
 
 			if (down && !held) {
 				held = {start: context.clock.time}
-				context.holding.set(expression, held)
+				context.holding.set(stableKey, held)
 			}
 
 			if (!down && held) {
 				held = undefined
-				context.holding.delete(expression)
+				context.holding.delete(stableKey)
 			}
 
 			if (held) {
@@ -172,7 +174,7 @@ export function evaluate(
 			const presses = e(subexpression)
 			const now = context.clock.time
 
-			const tapped = guarantee(context.tapping, expression, () => ({
+			const tapped = guarantee(context.tapping, stableKey, () => ({
 				events: [] as number[],
 			}))
 
