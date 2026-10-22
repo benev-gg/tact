@@ -39,6 +39,11 @@ await run({
 			expect(solve().value).is(1)
 		}),
 
+		"incompatible bindings throws an error": test(async() => {
+			const {encoder} = quickbind({alpha: "KeyA"})
+			expect(() => encoder.bindings = <any>{bravo: "KeyA"}).throws()
+		}),
+
 		"pointer movement accumulation": test(async() => {
 			const {sample, solve} = quickbind(["accumulate", ["sum", "pointer.x"]])
 			let inputs = solve()
