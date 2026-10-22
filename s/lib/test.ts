@@ -58,6 +58,22 @@ await run({
 			expect(inputs.delta).is(7)
 		}),
 
+		"accumulations are maintained despite rebinding": test(async() => {
+			const {sample, solve, encoder} = quickbind(["accumulate", ["sum", "pointer.x"]])
+			let inputs = solve()
+
+			sample({code: "pointer.x", value: 5})
+			sample({code: "pointer.x", value: 3})
+			inputs = solve()
+			expect(inputs.value).is(8)
+
+			encoder.bindings = ["accumulate", ["sum", "pointer.y"]]
+			inputs = solve()
+			expect(inputs.value).is(8)
+			sample({code: "pointer.y", value: 1})
+			expect(inputs.value).is(9)
+		}),
+
 		"rapid transitions": test(async() => {
 			const {sample, solve} = quickbind({
 				key: "KeyE",
