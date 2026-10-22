@@ -2,7 +2,7 @@
 import {expect, suite, test} from "@e280/science"
 
 import {asBindings} from "./types.js"
-import {InputEncoder} from "./encoder.js"
+import {Controller} from "./controller.js"
 import {PlainSource} from "./sources/plain.js"
 import {quickbind} from "./testing/quickbind.js"
 
@@ -131,8 +131,8 @@ export default suite({
 			ups: ["up", "KeyE"],
 		})
 
-		const fast = new InputEncoder(source, bindings)
-		const slow = new InputEncoder(source, bindings)
+		const fast = new Controller({source, bindings})
+		const slow = new Controller({source, bindings})
 
 		source.onSample.publish({code: "KeyE", value: 1})
 		expect([...fast.evaluate(1)].map(i => i.value)).deep([1, 0])

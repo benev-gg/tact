@@ -7,16 +7,16 @@ import {EvaluationContext} from "./evaluate/context.js"
 import {investigate} from "./investigate/investigate.js"
 import {Bindings, InputData, Intent, Rebindings, Source} from "./types.js"
 
-export class InputEncoder<B extends Bindings = any> {
+export class Controller<B extends Bindings = any> {
 	#sampler
 	#bindings
 	#investigation
 	#context
 
-	constructor(source: Source, bindings: B) {
-		this.#bindings = deepFreeze(structuredClone(bindings)) as any as Rebindings<B>
+	constructor(options: {source: Source, bindings: B}) {
+		this.#bindings = deepFreeze(structuredClone(options.bindings)) as any as Rebindings<B>
 		this.#investigation = investigate(this.#bindings)
-		this.#sampler = new Sampler(source)
+		this.#sampler = new Sampler(options.source)
 		this.#context = new EvaluationContext()
 	}
 
@@ -35,10 +35,6 @@ export class InputEncoder<B extends Bindings = any> {
 		this.#investigation.rootList = fresh.rootList
 	}
 
-	encode(time = performance.now()): InputData {
-		return encodeData(this.#investigation.hash, [...this.evaluate(time)])
-	}
-
 	*evaluate(time = performance.now()) {
 		const samples = this.#sampler.take()
 
@@ -54,6 +50,10 @@ export class InputEncoder<B extends Bindings = any> {
 
 		for (const {code, value} of samples)
 			this.#context.previousValues.set(code, value)
+	}
+
+	encode(time = performance.now()): InputData {
+		return encodeData(this.#investigation.hash, [...this.evaluate(time)])
 	}
 
 	dispose() {

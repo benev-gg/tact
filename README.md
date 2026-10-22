@@ -33,9 +33,9 @@ npm install @benev/tact@next
 
 <br/>
 
-## 🕹️ bindings describe controls.
+## 🕹️ bindings is a tiny language for interpreting samples.
 
-- **bindings are tiny programs,** a dsl in js data.
+- **bindings dsl is json-friendly.**
     ```ts
     import {asBindings} from "@benev/tact"
     ```
@@ -52,21 +52,22 @@ npm install @benev/tact@next
 
 <br/>
 
-## 🕹️ encode and decode.
+## 🕹️ controllers, decoders.
 
-- **the data is binary for efficient networking.**
+- **controller encodes input data, decoder decodes it.**
     ```ts
-    import {InputEncoder, InputDecoder} from "@benev/tact"
+    import {Controller, InputDecoder} from "@benev/tact"
     ```
     ```ts
-    const encoder = new InputEncoder(source, bindings)
+    const controller = new Controller({bindings, source})
     const decoder = new InputDecoder(bindings)
     ```
+- **the data is binary for efficient networking.**
     ```ts
     function frame() {
 
       // data is an ArrayBuffer (you could stream it over the network).
-      const data = encoder.encode()
+      const data = controller.encode()
 
       // decoding interprets the data as handy input objects.
       const inputs = decoder.decode(data)
@@ -82,20 +83,12 @@ npm install @benev/tact@next
 
     requestAnimationFrame(frame)
     ```
-- **understanding networking situations.**
-  - the encoder could be on your clientside.
-  - the decoder could be on your serverside.
-  - thus, clients are streaming their input data to the serverside, which is decoding it and using it in game logic.
-  - don't worry, it's not a keylogger -- the encoded data is more like `jump: 1`, `look: 5`, etc.
-  - the decoder can accept multiple data packets at once, `decoder.decode(...datas)`.
-- **understanding multithreaded worker situations.**
-  - the encoder would be on the main thread, where javascript events are accessible.
-  - you can then send the encoded input data to the thread where you're simulating the game.
-  - you can have multiple encoders -- one encoder sending data to a worker thread -- another encoder sending data to the serverside.
-- **update the encoder's bindings anytime.**
+- **networking:** imagine a clientside controller, and a serverside decoder.
+- **workerized multithreading:** imagine controller on the main thread, decoder on the simulation thread.
+- **update the controllers's bindings anytime.**
     ```ts
     // the new bindings must be schema-compatible or an error is thrown.
-    encoder.bindings = {
+    controller.bindings = {
       forward: "KeyE",
       jump: "Space",
       look: "gamepad.axis.2"
