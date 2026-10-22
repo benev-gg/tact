@@ -12,9 +12,8 @@ export function evaluate(
 		path: number[],
 	): number {
 
-	let i = 0
 	const stableKey = path.join(":")
-	const e = (expression: Expression) => evaluate(context, expression, [...path, i++])
+	const e = (expression: Expression, i: number) => evaluate(context, expression, [...path, i])
 
 	if (isNumber(expression))
 		return expression
@@ -25,7 +24,7 @@ export function evaluate(
 	else switch (expression[0]) {
 		case "accumulate": {
 			const subexpression = expression[1]
-			const total = (context.accumulated.get(stableKey) ?? 0) + e(subexpression)
+			const total = (context.accumulated.get(stableKey) ?? 0) + e(subexpression, 0)
 			context.accumulated.set(stableKey, total)
 			return total
 		}
@@ -80,9 +79,9 @@ export function evaluate(
 
 		case "if": {
 			const [, condition, yes, no] = expression
-			return e(condition)
-				? e(yes)
-				: (no ? e(no) : 0)
+			return e(condition, 0)
+				? e(yes, 1)
+				: (no ? e(no, 2) : 0)
 		}
 
 		case "min":
@@ -102,36 +101,36 @@ export function evaluate(
 				.reduce((p, c) => p * c, 1)
 
 		case "==":
-			return +(e(expression[1]) === e(expression[2]))
+			return +(e(expression[1], 0) === e(expression[2], 1))
 
 		case "!=":
-			return +(e(expression[1]) !== e(expression[2]))
+			return +(e(expression[1], 0) !== e(expression[2], 1))
 
 		case ">":
-			return +(e(expression[1]) > e(expression[2]))
+			return +(e(expression[1], 0) > e(expression[2], 1))
 
 		case "<":
-			return +(e(expression[1]) < e(expression[2]))
+			return +(e(expression[1], 0) < e(expression[2], 1))
 
 		case ">=":
-			return +(e(expression[1]) >= e(expression[2]))
+			return +(e(expression[1], 0) >= e(expression[2], 1))
 
 		case "<=":
-			return +(e(expression[1]) <= e(expression[2]))
+			return +(e(expression[1], 0) <= e(expression[2], 1))
 
 		case "!":
-			return +(e(expression[1]) === 0)
+			return +(e(expression[1], 0) === 0)
 
 		case "!!":
-			return +(e(expression[1]) !== 0)
+			return +(e(expression[1], 0) !== 0)
 
 		case "clamp": {
 			const [, min, max, expr] = expression
-			const value = e(expr)
+			const value = e(expr, 0)
 			return Math.min(
-				max === null ? Infinity : e(max),
+				max === null ? Infinity : e(max, 1),
 				Math.max(
-					min === null ? -Infinity : e(min),
+					min === null ? -Infinity : e(min, 2),
 					value,
 				),
 			)
@@ -139,7 +138,7 @@ export function evaluate(
 
 		case "remap": {
 			const [, a, b, c, d, expr] = expression
-			return remap(e(expr), e(a), e(b), e(c), e(d))
+			return remap(e(expr, 0), e(a, 1), e(b, 2), e(c, 3), e(d, 4))
 		}
 
 		case "dt":
@@ -147,7 +146,7 @@ export function evaluate(
 
 		case "held": {
 			const [, ms, subexpression] = expression
-			const down = isDown(e(subexpression))
+			const down = isDown(e(subexpression, 0))
 			let held = context.holding.get(stableKey)
 
 			if (down && !held) {
@@ -171,7 +170,7 @@ export function evaluate(
 
 		case "taps": {
 			const [, taps, ms, subexpression] = expression
-			const presses = e(subexpression)
+			const presses = e(subexpression, 0)
 			const now = context.clock.time
 
 			const tapped = guarantee(context.tapping, stableKey, () => ({
