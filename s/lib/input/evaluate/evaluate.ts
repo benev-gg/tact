@@ -126,19 +126,19 @@ export function evaluate(
 
 		case "clamp": {
 			const [, min, max, expr] = expression
-			const value = e(expr, 0)
+			const value = e(expr, 2)
 			return Math.min(
 				max === null ? Infinity : e(max, 1),
 				Math.max(
-					min === null ? -Infinity : e(min, 2),
+					min === null ? -Infinity : e(min, 0),
 					value,
 				),
 			)
 		}
 
 		case "remap": {
-			const [, a, b, c, d, expr] = expression
-			return remap(e(expr, 0), e(a, 1), e(b, 2), e(c, 3), e(d, 4))
+			const [a, b, c, d, value] = expression.slice(1).map(e)
+			return remap(value, a, b, c, d)
 		}
 
 		case "dt":
