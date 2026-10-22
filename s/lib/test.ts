@@ -75,7 +75,9 @@ await run({
 			encoder.bindings = ["accumulate", ["sum", "pointer.y"]]
 			inputs = solve()
 			expect(inputs.value).is(8)
+
 			sample({code: "pointer.y", value: 1})
+			inputs = solve()
 			expect(inputs.value).is(9)
 		}),
 
