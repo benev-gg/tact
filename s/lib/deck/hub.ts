@@ -1,6 +1,6 @@
 
-import {RMap} from "@e280/strata"
-import {adds, count, deletes, got, IdCounter} from "@e280/stz"
+import {RMap, RSet} from "@e280/strata"
+import {count, got, IdCounter} from "@e280/stz"
 
 import {Controller} from "../input/controller.js"
 import {Bindings, Intent} from "../input/types.js"
@@ -12,10 +12,11 @@ export type PortId = number
 export class Hub<B extends Bindings = any> {
 	#hash
 	#ids = new IdCounter()
-	#datas = new Map<PortId, ArrayBuffer>()
+	#datas = new RMap<PortId, ArrayBuffer>()
+	#unassigned = new RSet<Controller>()
 	#ports = new RMap<PortId, {
-		controllers: Set<Controller>,
-		intents: Map<number, number>,
+		controllers: RSet<Controller>,
+		intents: RMap<number, number>,
 	}>()
 
 	constructor(options: {bindings: B, portCount: number}) {
@@ -28,9 +29,19 @@ export class Hub<B extends Bindings = any> {
 		return [...this.#ports.keys()]
 	}
 
+	get controllers() {
+		return {
+			unassigned: [...this.#unassigned],
+			assigned: new Map<PortId, Controller<B>[]>(
+				[...this.#ports]
+					.map(([portId, port]) => [portId, [...port.controllers]])
+			),
+		}
+	}
+
 	createPort(): PortId {
 		const portId = this.#ids.next()
-		this.#ports.set(portId, {controllers: new Set(), intents: new Map()})
+		this.#ports.set(portId, {controllers: new RSet(), intents: new RMap()})
 		return portId
 	}
 
@@ -38,15 +49,25 @@ export class Hub<B extends Bindings = any> {
 		this.#ports.delete(portId)
 	}
 
-	unplug(...controllers: Controller<B>[]) {
-		for (const port of this.#ports.values())
-			deletes(port.controllers, controllers)
+	add(controller: Controller<B>) {
+		this.unplug(controller)
 	}
 
-	plug(portId: PortId, ...controllers: Controller<B>[]) {
+	remove(controller: Controller<B>) {
+		this.unplug(controller)
+		this.#unassigned.delete(controller)
+	}
+
+	unplug(controller: Controller<B>) {
+		this.#unassigned.add(controller)
 		for (const port of this.#ports.values())
-			deletes(port.controllers, controllers)
-		adds(got(this.#ports.get(portId)).controllers, controllers)
+			port.controllers.delete(controller)
+	}
+
+	plug(portId: PortId, controller: Controller<B>) {
+		this.unplug(controller)
+		got(this.#ports.get(portId)).controllers.add(controller)
+		this.#unassigned.delete(controller)
 	}
 
 	encode(portId: PortId, time = performance.now()) {
