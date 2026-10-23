@@ -46,6 +46,7 @@ export class Hub<B extends Bindings = any> {
 	}
 
 	deletePort(portId: PortId) {
+		this.#ports.get(portId)?.controllers.forEach(c => this.#unassigned.add(c))
 		this.#ports.delete(portId)
 	}
 

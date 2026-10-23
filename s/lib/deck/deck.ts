@@ -1,21 +1,19 @@
 
-import {Cubby} from "@e280/stz"
-
+import {Kv} from "@e280/kv"
 import {Hub} from "./hub.js"
-import {DeckState} from "./types.js"
+import {Profiles} from "./profiles.js"
 import {Bindings} from "../input/types.js"
 
 export class Deck<B extends Bindings> {
-	#store
-	readonly hub
-
-	constructor(options: {
+	constructor(private parts: {
+			kv: Kv
 			hub: Hub<B>
-			store: Cubby<DeckState>
+			profiles: Profiles<B>
 		}) {
-		this.hub = options.hub
-		this.#store = options.store
 	}
+
+	get hub() { return this.parts.hub }
+	get profiles() { return this.parts.profiles }
 
 	async load() {}
 }

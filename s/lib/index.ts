@@ -19,3 +19,5 @@ export * from "./input/decoder.js"
 export * from "./input/expression.js"
 export * from "./input/types.js"
 
+export * from "./views/deck.js"
+
