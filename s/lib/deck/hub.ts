@@ -12,10 +12,9 @@ export type PortId = number
 export class Hub<B extends Bindings = any> {
 	#hash
 	#ids = new IdCounter()
-	#datas = new RMap<PortId, ArrayBuffer>()
-	#unassigned = new RSet<Controller>()
+	#unassigned = new RSet<Controller<B>>()
 	#ports = new RMap<PortId, {
-		controllers: RSet<Controller>,
+		controllers: RSet<Controller<B>>,
 		intents: RMap<number, number>,
 	}>()
 
@@ -46,27 +45,33 @@ export class Hub<B extends Bindings = any> {
 	deletePort(portId: PortId) {
 		this.#ports.get(portId)?.controllers.forEach(c => this.#unassigned.add(c))
 		this.#ports.delete(portId)
+		return this
 	}
 
 	add(controller: Controller<B>) {
 		this.unplug(controller)
+		return this
 	}
 
 	remove(controller: Controller<B>) {
 		this.unplug(controller)
 		this.#unassigned.delete(controller)
+		return this
 	}
 
 	unplug(controller: Controller<B>) {
 		this.#unassigned.add(controller)
 		for (const port of this.#ports.values())
 			port.controllers.delete(controller)
+		return this
 	}
 
-	plug(portId: PortId, controller: Controller<B>) {
+	plug(controller: Controller<B>, portId?: PortId) {
+		portId ??= this.portIds.at(-1) ?? this.createPort()
 		this.unplug(controller)
 		got(this.#ports.get(portId)).controllers.add(controller)
 		this.#unassigned.delete(controller)
+		return this
 	}
 
 	encode(portId: PortId, time = performance.now()) {
@@ -90,13 +95,11 @@ export class Hub<B extends Bindings = any> {
 		)
 	}
 
-	encodeAll(time = performance.now()) {
-		this.#datas.clear()
-
-		for (const portId of this.#ports.keys())
-			this.#datas.set(portId, this.encode(portId, time))
-
-		return this.#datas
+	encodeAll(time = performance.now()): [portId: PortId, data: ArrayBuffer][] {
+		return Array.from(this.#ports.keys()).map(portId => [
+			portId,
+			this.encode(portId, time),
+		])
 	}
 }
 

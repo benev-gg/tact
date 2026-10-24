@@ -1,43 +1,51 @@
 
 import {html} from "lit"
 import {Kv} from "@e280/kv"
-import {shadowElement, useCss, useOnce} from "@e280/sly"
+import {cycle} from "@e280/stz"
+import {shadowElement, useCss, useMount, useOnce} from "@e280/sly"
 
 import styleCss from "./style.css.js"
 import {Hub} from "../../lib/deck/hub.js"
-import {DeckView} from "../../lib/views/deck.js"
+import {asDeck} from "../../lib/deck/types.js"
+import {DeckView} from "../../lib/views/deck/view.js"
 import {Profiles} from "../../lib/deck/profiles.js"
 import {asBindings} from "../../lib/input/types.js"
 import {Controller} from "../../lib/input/controller.js"
 import {Sources} from "../../lib/input/sources/sources.js"
+import {autoGamepads} from "../../lib/deck/auto-gamepads.js"
 import {PointerSource} from "../../lib/input/sources/pointer.js"
 import {KeyboardSource} from "../../lib/input/sources/keyboard.js"
-import {primaryController} from "../../lib/deck/primary-controller.js"
 
 export const setupDemoApp = () => shadowElement(() => {
 	useCss(styleCss)
 
-	const kv = useOnce(() => new Kv())
-	const bindings = useOnce(() => asBindings("KeyW"))
-	const hub = useOnce(() => new Hub(bindings))
+	const deck = useOnce(() => {
+		const bindings = asBindings({use: "KeyE"})
+		return asDeck({
+			bindings,
+			kv: new Kv(),
+			profiles: new Profiles({
+				standard: {bindings, label: "⌨️standard"},
+				gamer: {bindings, label: "🎮gamer"},
+				micro: {bindings, label: "🦠micro"},
+			}),
+			hub: new Hub(bindings).plug(new Controller({
+				bindings,
+				handle: "⌨️keyboard+mouse",
+				source: new Sources(
+					new KeyboardSource(),
+					new PointerSource(),
+				),
+			})),
+		})
+	})
 
-	const profiles = useOnce(() => new Profiles({
-		primary: {bindings, label: "⌨️keyboard+mouse"},
-		gamepad: {bindings, label: "🎮gamepad"},
-	}))
-
-	useOnce(() => primaryController(hub, profiles, new Controller({
-		bindings,
-		handle: "keyboard+mouse",
-		source: new Sources(
-			new KeyboardSource(),
-			new PointerSource(),
-		),
-	})))
+	useMount(() => autoGamepads(deck, "gamer"))
+	useMount(() => cycle(async() => deck.hub.encodeAll()))
 
 	return html`
 		<div class=plate>
-			${DeckView({kv, bindings, hub, profiles})}
+			${DeckView({deck, maxPorts: 4})}
 		</div>
 	`
 })
