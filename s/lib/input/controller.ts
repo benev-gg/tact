@@ -8,12 +8,14 @@ import {investigate} from "./investigate/investigate.js"
 import {Bindings, InputData, Intent, Rebindings, Source} from "./types.js"
 
 export class Controller<B extends Bindings = any> {
+	readonly handle
 	#sampler
 	#bindings
 	#investigation
 	#context
 
-	constructor(options: {source: Source, bindings: B}) {
+	constructor(options: {source: Source, bindings: B, handle?: string}) {
+		this.handle = options.handle
 		this.#bindings = deepFreeze(structuredClone(options.bindings)) as any as Rebindings<B>
 		this.#investigation = investigate(this.#bindings)
 		this.#sampler = new Sampler(options.source)

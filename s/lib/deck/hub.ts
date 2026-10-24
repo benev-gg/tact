@@ -1,6 +1,6 @@
 
 import {RMap, RSet} from "@e280/strata"
-import {count, got, IdCounter} from "@e280/stz"
+import {got, IdCounter} from "@e280/stz"
 
 import {Controller} from "../input/controller.js"
 import {Bindings, Intent} from "../input/types.js"
@@ -19,10 +19,8 @@ export class Hub<B extends Bindings = any> {
 		intents: RMap<number, number>,
 	}>()
 
-	constructor(options: {bindings: B, portCount: number}) {
-		this.#hash = hashBindings(options.bindings)
-		for (const _ of count(options.portCount))
-			this.createPort()
+	constructor(bindings: B) {
+		this.#hash = hashBindings(bindings)
 	}
 
 	get portIds() {
