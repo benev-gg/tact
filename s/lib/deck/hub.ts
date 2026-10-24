@@ -19,7 +19,7 @@ export class Hub<B extends Bindings = any> {
 		intents: RMap<number, number>,
 	}>()
 
-	constructor(bindings: B) {
+	constructor(readonly bindings: B) {
 		this.#hash = hashBindings(bindings)
 	}
 

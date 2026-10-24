@@ -1,7 +1,7 @@
 
 import {html} from "lit"
-
 import {lightView, shadowDuplex} from "@e280/sly"
+
 import {Deck} from "../deck/deck.js"
 import {Controller} from "../input/controller.js"
 
@@ -43,13 +43,13 @@ const PortView = lightView((deck: Deck, portId: number, index: number) => {
 })
 
 const ControllerView = lightView((deck: Deck, controller: Controller, index: number) => {
-	const currentProfileKey = deck.controllerProfiles.get(controller) ?? deck.primary.profile
+	const currentProfileKey = deck.profiles.assignments.get(controller) ?? deck.profiles.default
 
 	return html`
 		<div class=controller>
 			<p>controller ${index + 1}</p>
 			<select>
-				${Object.entries(deck.profiles).map(([key, profile]) => html`
+				${[...deck.profiles.stock.entries()].map(([key, profile]) => html`
 					<option ?selected="${key === currentProfileKey}">
 						${profile.label}
 					</option>
