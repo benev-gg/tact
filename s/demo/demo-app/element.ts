@@ -5,13 +5,14 @@ import {shadowElement, useCss, useOnce} from "@e280/sly"
 
 import styleCss from "./style.css.js"
 import {Hub} from "../../lib/deck/hub.js"
-import {primaryController, Profiles} from "../../lib/deck/deck.js"
 import {DeckView} from "../../lib/views/deck.js"
+import {Profiles} from "../../lib/deck/profiles.js"
 import {asBindings} from "../../lib/input/types.js"
 import {Controller} from "../../lib/input/controller.js"
 import {Sources} from "../../lib/input/sources/sources.js"
 import {PointerSource} from "../../lib/input/sources/pointer.js"
 import {KeyboardSource} from "../../lib/input/sources/keyboard.js"
+import {primaryController} from "../../lib/deck/primary-controller.js"
 
 export const setupDemoApp = () => shadowElement(() => {
 	useCss(styleCss)

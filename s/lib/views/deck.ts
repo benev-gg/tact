@@ -2,7 +2,7 @@
 import {html} from "lit"
 import {lightView, shadowDuplex} from "@e280/sly"
 
-import {Deck} from "../deck/deck.js"
+import {Deck} from "../deck/types.js"
 import {Controller} from "../input/controller.js"
 
 export const [DeckView, makeDeck] = shadowDuplex((deck: Deck) => {
