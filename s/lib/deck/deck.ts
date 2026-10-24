@@ -4,6 +4,8 @@ import {Hub} from "./hub.js"
 import {Profiles} from "./profiles.js"
 import {Bindings} from "../input/types.js"
 
+// export type Deck<B extends Bindings> = {}
+
 export class Deck<B extends Bindings> {
 	constructor(private parts: {
 			kv: Kv
