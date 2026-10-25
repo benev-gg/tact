@@ -75,31 +75,18 @@ export default css`@layer view {
 	.controller {
 		cursor: grab;
 		display: flex;
-		background: var(--card);
+		align-items: center;
+
+		gap: var(--pad);
+		padding: var(--nib);
+
 		border-radius: 0.5em;
+		background: var(--card);
 		overflow: clip;
 		box-shadow: var(--box-shadow);
-		gap: var(--pad);
 
 		&:hover {
 			background: color-mix(in oklch, var(--card), var(--draggy) 20%);
-		}
-
-		.content {
-			flex: 1 1 auto;
-			display: flex;
-			padding: var(--nib);
-			gap: var(--pad);
-
-			h4 {
-				flex: 1 1 auto;
-				font-size: 1em;
-				font-weight: normal;
-			}
-
-			select {
-				padding: var(--nib) var(--pad);
-			}
 		}
 
 		.griptape {
@@ -113,6 +100,16 @@ export default css`@layer view {
 			svg {
 				opacity: 0.5;
 			}
+		}
+
+		h4 {
+			flex: 1 1 auto;
+			font-size: 1em;
+			font-weight: normal;
+		}
+
+		select {
+			padding: var(--nib) var(--pad);
 		}
 	}
 }

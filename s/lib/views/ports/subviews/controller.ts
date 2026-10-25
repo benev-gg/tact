@@ -23,17 +23,15 @@ export const ControllerView = lightView((context: Context, controller: Controlle
 				${dragVerticalFillSvg}
 			</div>
 
-			<div class=content>
-				<h4>${controller.handle ?? `controller ${context.controllerNames.get(controller)}`}</h4>
+			<h4>${controller.handle ?? `controller ${context.controllerNames.get(controller)}`}</h4>
 
-				<select>
-					${Array.from(deck.profiles.all()).map(([key, profile]) => html`
-						<option ?selected="${key === currentProfileKey}">
-							${profile.label}
-						</option>
-					`)}
-				</select>
-			</div>
+			<select>
+				${Array.from(deck.profiles.all()).map(([key, profile]) => html`
+					<option ?selected="${key === currentProfileKey}">
+						${profile.label}
+					</option>
+				`)}
+			</select>
 		</div>
 	`
 })
