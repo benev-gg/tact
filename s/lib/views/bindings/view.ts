@@ -5,9 +5,9 @@ import styleCss from "./style.css.js"
 import themeCss from "../theme.css.js"
 import {Deck} from "../../deck/types.js"
 
-export const BindingsView = shadowView((options: {deck: Deck}) => {
+export const BindingsView = shadowView((deck: Deck) => {
 	useCss(themeCss, styleCss)
-	void options
+	void deck
 
 	return html`
 		<div class=plate>

@@ -16,6 +16,7 @@ export type Deck<B extends Bindings = any> = {
 	hub: Hub<B>
 	bindings: B
 	profiles: Profiles<B>
+	maxPorts: number
 }
 
 export const asDeck = <B extends Bindings>(deck: Deck<B>) => deck

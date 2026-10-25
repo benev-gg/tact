@@ -13,10 +13,9 @@ import {PortView} from "./subviews/port.js"
 import {CardView} from "./subviews/card.js"
 import {ControllerNames} from "../deck/parts/controller-names.js"
 
-export const PortsView = shadowView((options: {deck: Deck, maxPorts: number}) => {
+export const PortsView = shadowView((deck: Deck) => {
 	useCss(themeCss, styleCss)
 
-	const {deck, maxPorts} = options
 	const {hub} = deck
 	const controllers = hub.controllers
 	const clickCreatePort = () => deck.hub.createPort()
@@ -39,7 +38,7 @@ export const PortsView = shadowView((options: {deck: Deck, maxPorts: number}) =>
 		<div class=plate ?data-drag-and-drop="${!!context.dnd.dragging}">
 			<div class=ports>
 				${hub.portIds.map(renderPort)}
-				${when(hub.portIds.length < maxPorts, () => html`
+				${when(hub.portIds.length < deck.maxPorts, () => html`
 					<div class=box>
 						<button theme-button @click="${clickCreatePort}">
 							${circlePlusSvg}

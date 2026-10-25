@@ -12,7 +12,7 @@ import {asBindings} from "../../lib/input/types.js"
 import {DeckView} from "../../lib/views/deck/view.js"
 import {Controller} from "../../lib/input/controller.js"
 import {Sources} from "../../lib/input/sources/sources.js"
-import {autoGamepads} from "../../lib/deck/auto-gamepads.js"
+import {autoGamepads, autoProfile} from "../../lib/deck/auto-gamepads.js"
 import {PointerSource} from "../../lib/input/sources/pointer.js"
 import {KeyboardSource} from "../../lib/input/sources/keyboard.js"
 
@@ -23,6 +23,7 @@ export const setupDemoApp = () => shadowElement(() => {
 		const bindings = asBindings({use: "KeyE"})
 		return asDeck({
 			bindings,
+			maxPorts: 4,
 			kv: new Kv(),
 			profiles: new Profiles({
 				standard: {bindings, label: "⌨️standard"},
@@ -40,12 +41,12 @@ export const setupDemoApp = () => shadowElement(() => {
 		})
 	})
 
-	useMount(() => autoGamepads(deck, "gamer"))
+	useMount(() => autoGamepads(deck.hub, autoProfile(deck.profiles, "gamer")))
 	useMount(() => cycle(async() => deck.hub.encodeAll()))
 
 	return html`
 		<div class=plate>
-			${DeckView({deck, maxPorts: 4})}
+			${DeckView(deck)}
 		</div>
 	`
 })

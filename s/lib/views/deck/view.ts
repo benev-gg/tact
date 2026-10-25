@@ -10,7 +10,7 @@ import {Deck} from "../../deck/types.js"
 import {PortsView} from "../ports/view.js"
 import {BindingsView} from "../bindings/view.js"
 
-export const [DeckView, makeDeck] = shadowDuplex((options: {deck: Deck, maxPorts: number}) => {
+export const [DeckView, makeDeck] = shadowDuplex((deck: Deck) => {
 	useCss(themeCss, styleCss)
 
 	const attrs = {slot: "panel"}
@@ -22,8 +22,8 @@ export const [DeckView, makeDeck] = shadowDuplex((options: {deck: Deck, maxPorts
 			<button theme-button>ports</button>
 			<button theme-button>bindings</button>
 
-			${PortsView.with({attrs, props: [options]})}
-			${BindingsView.with({attrs, props: [options]})}
+			${PortsView.with({attrs, props: [deck]})}
+			${BindingsView.with({attrs, props: [deck]})}
 		`,
 	})
 })
