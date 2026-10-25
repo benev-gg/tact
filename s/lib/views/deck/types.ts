@@ -10,7 +10,7 @@ export type DroppyPort = {portId: PortId | null}
 
 export type Context = {
 	deck: Deck
-	dnd: loot.DragAndDrops<DraggyController, DroppyPort>
 	controllerNames: ControllerNames
+	dnd: loot.DragAndDrops<DraggyController, DroppyPort>
 }
 
