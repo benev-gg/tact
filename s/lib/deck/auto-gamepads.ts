@@ -16,7 +16,7 @@ export function autoGamepads(
 		const controller = new Controller({
 			bindings: hub.bindings,
 			source: new GamepadSource(pad),
-			handle: `${pad.gamepad.id} ${pad.gamepad.index}`,
+			handle: `${pad.gamepad.id} ${pad.gamepad.index + 1}`,
 		})
 
 		hub.plug(controller)

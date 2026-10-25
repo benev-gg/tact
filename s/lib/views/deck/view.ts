@@ -8,6 +8,9 @@ import themeCss from "../theme.css.js"
 import {Deck} from "../../deck/types.js"
 import {PortId} from "../../deck/hub.js"
 import {Controller} from "../../input/controller.js"
+import trashCanSvg from "../../icons/akar/trash-can.svg.js"
+import dragVerticalFillSvg from "../../icons/akar/drag-vertical-fill.svg.js"
+import circlePlusSvg from "../../icons/akar/circle-plus.svg.js"
 
 type DraggyController = {controller: Controller}
 type DroppyPort = {portId: PortId | null}
@@ -53,18 +56,20 @@ export const [DeckView, makeDeck] = shadowDuplex((options: {deck: Deck, maxPorts
 		<div class=deck ?data-drag-and-drop="${!!context.dnd.dragging}">
 			<div class=ports>
 				${hub.portIds.map(renderPort)}
-
 				${CardView({
 					context,
 					class: "unassigned",
-					heading: "unassigned",
+					heading: "⚪️ unassigned",
 					portId: null,
 					controllers: controllers.unassigned,
 				})}
 			</div>
 
 			${when(hub.portIds.length < maxPorts, () => html`
-				<button @click="${clickCreatePort}">new port</button>
+				<button theme-button @click="${clickCreatePort}">
+					${circlePlusSvg}
+					<span>new port</span>
+				</button>
 			`)}
 		</div>
 	`
@@ -113,9 +118,11 @@ const PortView = lightView((context: Context, portId: number, index: number) => 
 		portId,
 		controllers,
 		heading: html`
-			<span>port ${index + 1}</span>
+			<span>🟢 port ${index + 1}</span>
 			${when(hub.portIds.length > 1, () => html`
-				<button @click=${deletePort}>delete</button>
+				<button theme-button="naked angry" @click=${deletePort}>
+					${trashCanSvg}
+				</button>
 			`)}
 		`,
 	})
@@ -133,20 +140,24 @@ const ControllerView = lightView((context: Context, controller: Controller) => {
 			@dragstart="${dragzone.dragstart}"
 			@dragend="${dragzone.dragend}">
 
-			<div class=griptape></div>
+			<div class=griptape>
+				${dragVerticalFillSvg}
+			</div>
 
 			<div class=content>
 				<h4>controller ${context.controllerNames.get(controller)}</h4>
 				${given(controller.handle, handle => html`
-					<p>${handle}</p>
+					<p class=handle>${handle}</p>
 				`)}
-				<select>
-					${Array.from(deck.profiles.all()).map(([key, profile]) => html`
-						<option ?selected="${key === currentProfileKey}">
-							${profile.label}
-						</option>
-					`)}
-				</select>
+				<div class=actions>
+					<select>
+						${Array.from(deck.profiles.all()).map(([key, profile]) => html`
+							<option ?selected="${key === currentProfileKey}">
+								${profile.label}
+							</option>
+						`)}
+					</select>
+				</div>
 			</div>
 		</div>
 	`

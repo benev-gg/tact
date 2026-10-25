@@ -4,10 +4,8 @@ export default css`@layer view {
 
 :host {
 	--bg: #000;
-	--card: #8882;
-	--headers: #8883;
-	--controller: #8884;
-	--griptape: #8885;
+	--card: #7896;
+	--card-unassigned: #8884;
 
 	--draggy: rebeccapurple;
 	--droppy: cyan;
@@ -19,6 +17,7 @@ export default css`@layer view {
 }
 
 .deck {
+	user-select: none;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -28,28 +27,21 @@ export default css`@layer view {
 }
 
 .deck[data-drag-and-drop] {
-	xxxbackground: color-mix(in oklch, var(--bg), var(--droppy) 20%);
-
 	.controller[data-dragging] {
-		outline: 2px dashed color-mix(in oklch, transparent, var(--draggy) 90%);
-		background: color-mix(in oklch, var(--controller), var(--draggy) 40%);
+		opacity: 0.3;
 	}
 
 	.card[data-drop-candidate] {
 		.dropzone {
 			background: color-mix(in oklch, transparent, var(--droppy) 10%);
 			border-color: color-mix(in oklch, transparent, var(--droppy) 50%);
-			&::before {
-				content: "drop";
-				color: color-mix(in oklch, transparent, var(--droppy) 50%);
-				font-weight: bold;
-			}
 		}
 
 		&[data-dropping] {
-			xxxoutline: 2px solid color-mix(in oklch, transparent, var(--droppy) 30%);
+			background: color-mix(in oklch, var(--card), var(--droppy) 10%);
 
 			.dropzone {
+				color: color-mix(in oklch, transparent, var(--droppy) 80%);
 				background: color-mix(in oklch, transparent, var(--droppy) 20%);
 				border-color: color-mix(in oklch, transparent, var(--droppy) 90%);
 			}
@@ -58,8 +50,6 @@ export default css`@layer view {
 }
 
 .ports {
-	user-select: none;
-
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
@@ -71,18 +61,27 @@ export default css`@layer view {
 	flex-direction: column;
 
 	flex: 0 1 auto;
-	width: 20em;
+	width: 16em;
+	min-height: 16em;
 	background: var(--card);
 	border-radius: var(--round);
 	overflow: clip;
+
+	&.unassigned {
+		--card: var(--card-unassigned);
+	}
 
 	h3 {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;
 
-		background: var(--headers);
+		background: var(--card);
 		padding: var(--pad);
+	}
+
+	.handle {
+		font-size: 0.7em;
 	}
 
 	.inset {
@@ -94,23 +93,39 @@ export default css`@layer view {
 	}
 
 	.controller {
+		cursor: grab;
 		display: flex;
 		gap: var(--pad);
-		background: var(--controller);
+		background: var(--card);
 		border-radius: 0.5em;
 		overflow: clip;
 		box-shadow: var(--box-shadow);
 
-		.griptape {
-			width: 1.5em;
-			flex: 0 0 auto;
-			background: var(--griptape);
-			cursor: grab;
+		&:hover {
+			background: color-mix(in oklch, var(--card), var(--draggy) 20%);
 		}
 
 		.content {
 			flex: 1 1 auto;
 			padding: var(--pad);
+		}
+
+		.griptape {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			width: 1.5em;
+			flex: 0 0 auto;
+			background: var(--card);
+
+			svg {
+				opacity: 0.5;
+			}
+		}
+
+		.actions {
+			margin-top: var(--pad);
 		}
 	}
 
@@ -119,12 +134,17 @@ export default css`@layer view {
 		content: "";
 		width: 100%;
 		height: 5em;
-		border: 1px dashed color-mix(in oklch, transparent, currentColor 50%);
+		border: 2px dashed color-mix(in oklch, transparent, currentColor 20%);
 		border-radius: var(--round);
 
 		display: flex;
 		justify-content: center;
 		align-items: center;
+
+		&::before {
+			opacity: 0.3;
+			content: "drag controller here";
+		}
 	}
 }
 
