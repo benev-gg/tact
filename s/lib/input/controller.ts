@@ -58,6 +58,10 @@ export class Controller<B extends Bindings = any> {
 		return encodeData(this.#investigation.hash, [...this.evaluate(time)])
 	}
 
+	clear() {
+		void this.#sampler.take()
+	}
+
 	dispose() {
 		return this.#sampler.dispose()
 	}

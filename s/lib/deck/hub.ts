@@ -96,6 +96,12 @@ export class Hub<B extends Bindings = any> {
 	}
 
 	encodeAll(time = performance.now()): [portId: PortId, data: ArrayBuffer][] {
+
+		// drain and discard unused controller inputs.
+		for (const controller of this.#unassigned)
+			controller.clear()
+
+		// return tuples of port ids and the encoded input data.
 		return Array.from(this.#ports.keys()).map(portId => [
 			portId,
 			this.encode(portId, time),
