@@ -17,10 +17,10 @@ export const [DeckView, makeDeck] = shadowDuplex((options: {deck: Deck, maxPorts
 	const tabsControl = useOnce(() => new TabsControl())
 
 	return ShinyTabs.with({
-		props: [{snug: true, control: tabsControl}],
+		props: [{control: tabsControl}],
 		children: html`
-			<button>ports</button>
-			<button>bindings</button>
+			<button theme-button>ports</button>
+			<button theme-button>bindings</button>
 
 			${PortsView.with({attrs, props: [options]})}
 			${BindingsView.with({attrs, props: [options]})}
