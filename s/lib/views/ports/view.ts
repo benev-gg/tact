@@ -1,17 +1,21 @@
 
 import {html} from "lit"
 import {isHappy, when} from "@e280/stz"
-import {lightView, loot, useOnce} from "@e280/sly"
+import {loot, shadowView, useCss, useOnce} from "@e280/sly"
 
-import {CardView} from "./card.js"
-import {PortView} from "./port.js"
-import {Context} from "../types.js"
-import {Deck} from "../../../deck/types.js"
-import {ControllerNames} from "../parts/controller-names.js"
+import styleCss from "./style.css.js"
+import themeCss from "../theme.css.js"
+import circlePlusSvg from "../../icons/akar/circle-plus.svg.js"
 
-import circlePlusSvg from "../../../icons/akar/circle-plus.svg.js"
+import {Deck} from "../../deck/types.js"
+import {Context} from "../deck/types.js"
+import {PortView} from "./subviews/port.js"
+import {CardView} from "./subviews/card.js"
+import {ControllerNames} from "../deck/parts/controller-names.js"
 
-export const PortpanelView = lightView((options: {deck: Deck, maxPorts: number}) => {
+export const PortsView = shadowView((options: {deck: Deck, maxPorts: number}) => {
+	useCss(themeCss, styleCss)
+
 	const {deck, maxPorts} = options
 	const {hub} = deck
 	const controllers = hub.controllers
@@ -32,7 +36,7 @@ export const PortpanelView = lightView((options: {deck: Deck, maxPorts: number})
 	}))
 
 	return html`
-		<div slot=panel class=portpanel ?data-drag-and-drop="${!!context.dnd.dragging}">
+		<div class=plate ?data-drag-and-drop="${!!context.dnd.dragging}">
 			<div class=ports>
 				${hub.portIds.map(renderPort)}
 				${CardView({

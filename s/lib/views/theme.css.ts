@@ -1,6 +1,6 @@
 
-import {cssReset} from "@e280/sly"
 import {css} from "lit"
+import {cssReset} from "@e280/sly"
 
 export default css`
 @layer theme, view;
@@ -8,6 +8,19 @@ export default css`
 
 ${cssReset}
 
+:host {
+	--bg: #000;
+	--card: #7896;
+	--card-unassigned: #8884;
+
+	--draggy: rebeccapurple;
+	--droppy: cyan;
+
+	--round: 0.5em;
+	--pad: 0.5em;
+	--space: 1em;
+	--box-shadow: 0.1em 0.2em 0.9em #0004;
+}
 
 [theme-button] {
 	display: flex;

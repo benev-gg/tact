@@ -3,7 +3,7 @@ import {html} from "lit"
 import {given} from "@e280/stz"
 import {Content, lightView} from "@e280/sly"
 
-import {Context} from "../types.js"
+import {Context} from "../../deck/types.js"
 import {PortId} from "../../../deck/hub.js"
 import {ControllerView} from "./controller.js"
 import {Controller} from "../../../input/controller.js"
