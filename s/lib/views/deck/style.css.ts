@@ -4,16 +4,18 @@ export default css`@layer view {
 
 :host {
 	--bg: #000;
-	--card: #222;
-	--headers: #333;
-	--controller: #444;
-	--griptape: #555;
+	--card: #8882;
+	--headers: #8883;
+	--controller: #8884;
+	--griptape: #8885;
 
-	--box-shadow: 0.1em 0.2em 0.9em #0004;
+	--draggy: rebeccapurple;
+	--droppy: cyan;
 
 	--round: 0.5em;
 	--pad: 0.5em;
 	--space: 1em;
+	--box-shadow: 0.1em 0.2em 0.9em #0004;
 }
 
 .deck {
@@ -23,6 +25,36 @@ export default css`@layer view {
 	padding: var(--pad);
 	gap: var(--pad);
 	background: var(--bg);
+}
+
+.deck[data-drag-and-drop] {
+	xxxbackground: color-mix(in oklch, var(--bg), var(--droppy) 20%);
+
+	.controller[data-dragging] {
+		outline: 2px dashed color-mix(in oklch, transparent, var(--draggy) 90%);
+		background: color-mix(in oklch, var(--controller), var(--draggy) 40%);
+	}
+
+	.card[data-drop-candidate] {
+		.dropzone {
+			background: color-mix(in oklch, transparent, var(--droppy) 10%);
+			border-color: color-mix(in oklch, transparent, var(--droppy) 50%);
+			&::before {
+				content: "drop";
+				color: color-mix(in oklch, transparent, var(--droppy) 50%);
+				font-weight: bold;
+			}
+		}
+
+		&[data-dropping] {
+			xxxoutline: 2px solid color-mix(in oklch, transparent, var(--droppy) 30%);
+
+			.dropzone {
+				background: color-mix(in oklch, transparent, var(--droppy) 20%);
+				border-color: color-mix(in oklch, transparent, var(--droppy) 90%);
+			}
+		}
+	}
 }
 
 .ports {
@@ -89,6 +121,10 @@ export default css`@layer view {
 		height: 5em;
 		border: 1px dashed color-mix(in oklch, transparent, currentColor 50%);
 		border-radius: var(--round);
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 }
 
