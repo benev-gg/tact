@@ -37,7 +37,6 @@ export const CardView = lightView((o: {
 			<h3>${o.heading}</h3>
 			<div class=inset>
 				${o.controllers.map(renderController)}
-				<div class=dropzone></div>
 			</div>
 		</div>
 	`

@@ -39,6 +39,17 @@ export const PortsView = shadowView((options: {deck: Deck, maxPorts: number}) =>
 		<div class=plate ?data-drag-and-drop="${!!context.dnd.dragging}">
 			<div class=ports>
 				${hub.portIds.map(renderPort)}
+				${when(hub.portIds.length < maxPorts, () => html`
+					<div class=box>
+						<button theme-button @click="${clickCreatePort}">
+							${circlePlusSvg}
+							<span>new port</span>
+						</button>
+					</div>
+				`)}
+			</div>
+
+			<div class=ports>
 				${CardView({
 					context,
 					class: "unassigned",
@@ -47,13 +58,6 @@ export const PortsView = shadowView((options: {deck: Deck, maxPorts: number}) =>
 					controllers: controllers.unassigned,
 				})}
 			</div>
-
-			${when(hub.portIds.length < maxPorts, () => html`
-				<button theme-button @click="${clickCreatePort}">
-					${circlePlusSvg}
-					<span>new port</span>
-				</button>
-			`)}
 		</div>
 	`
 })

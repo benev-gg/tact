@@ -12,12 +12,14 @@ ${cssReset}
 	--bg: #000;
 	--card: #7896;
 	--card-unassigned: #8884;
+	--card-box: #8882;
 
 	--draggy: rebeccapurple;
 	--droppy: cyan;
 
 	--round: 0.5em;
 	--pad: 0.5em;
+	--nib: 0.2em;
 	--space: 1em;
 	--box-shadow: 0.1em 0.2em 0.9em #0004;
 }
