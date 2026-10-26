@@ -31,8 +31,8 @@ export const BindingsView = shadowView((deck: Deck) => {
 
 function renderBindings(b: Bindings): Content {
 	if (isExpression(b)) {
-		if (isNumber(b)) return html`<span>(const) ${b}</span>`
-		if (isString(b)) return html`<span>(sample) ${b}</span>`
+		if (isNumber(b)) return html`<span>${b}</span>`
+		if (isString(b)) return html`<span>${b}</span>`
 		if (isArray(b)) return html`<span>(expression)</span>`
 		return html`<span>(unknown)</span>`
 	}
