@@ -72,6 +72,16 @@ export default css`@layer view {
 	}
 
 	.controller {
+		--bg: oklch(from var(--card) 0.7 0.3 var(--hue, 0));
+		--shimmer: oklch(from var(--bg) calc(l * 1.2) c h);
+		background: color-mix(in oklch, transparent, var(--bg) 50%);
+		border: 2px solid var(--shimmer);
+		box-shadow:
+			inset 0 0 2em color-mix(in oklch, transparent, var(--shimmer)),
+			var(--box-shadow);
+	}
+
+	.controller {
 		cursor: grab;
 		display: flex;
 		align-items: center;
@@ -80,10 +90,7 @@ export default css`@layer view {
 		padding: var(--nib);
 
 		border-radius: 0.5em;
-		background: oklch(from var(--card) l 0.15 var(--hue, 0));
-
 		overflow: clip;
-		box-shadow: var(--box-shadow);
 
 		&:hover {
 			filter: brightness(110%);
