@@ -18,6 +18,12 @@ export const [DeckView, makeDeck] = shadowDuplex((deck: Deck) => {
 	const attrs = {slot: "panel"}
 	const tabsControl = useOnce(() => new TabsControl())
 
+	// TODO remove this
+	useOnce(() => {
+		if (window.location.hash.includes("bindings"))
+			tabsControl.setIndex(1)
+	})
+
 	return ShinyTabs.with({
 		props: [{control: tabsControl}],
 		children: html`

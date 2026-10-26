@@ -27,7 +27,25 @@ export const setupDemoApp = () => shadowElement(() => {
 	const colorWheel = useOnce(() => new ColorWheel())
 
 	const deck = useOnce(() => {
-		const bindings = asBindings({use: "KeyE"})
+		const bindings = asBindings({
+			interactions: {
+				use: "KeyE",
+			},
+			spatial: {
+				looking: {
+					horizontal: "KeyW",
+					vertical: "KeyS",
+				},
+				moving: {
+					forward: "KeyW",
+					backward: "KeyS",
+					leftward: "KeyA",
+					rightward: "KeyD",
+				},
+			},
+		})
+
+		const controllerInfo = new ControllerInfo()
 		const controller = new Controller({
 			bindings,
 			source: new Sources(
@@ -35,13 +53,14 @@ export const setupDemoApp = () => shadowElement(() => {
 				new PointerSource(),
 			),
 		})
-		const controllerInfo = new ControllerInfo()
+
 		controllerInfo.set(controller, {
 			icon: devicesSvg,
 			hue: colorWheel.hue,
 			name: "keyboard and mouse",
 			tooltip: "",
 		})
+
 		return asDeck({
 			bindings,
 			maxPorts: 4,

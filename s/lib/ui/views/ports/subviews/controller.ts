@@ -6,6 +6,7 @@ import dragVerticalFillSvg from "../../../icons/akar/drag-vertical-fill.svg.js"
 
 import {Context} from "../../deck/types.js"
 import {Controller} from "../../../../input/controller.js"
+import { ProfileSelectView } from "../../profile-select/view.js"
 
 export const ControllerView = lightView((context: Context, controller: Controller) => {
 	const {deck, dnd} = context
@@ -32,13 +33,9 @@ export const ControllerView = lightView((context: Context, controller: Controlle
 				<span class=name>${info.name}</span>
 			</h4>
 
-			<select>
-				${Array.from(deck.profiles.all()).map(([key, profile]) => html`
-					<option ?selected="${key === currentProfileKey}">
-						${profile.label}
-					</option>
-				`)}
-			</select>
+			${ProfileSelectView(deck, currentProfileKey, key => {
+				deck.profiles.assign(controller, key)
+			})}
 		</div>
 	`
 })
