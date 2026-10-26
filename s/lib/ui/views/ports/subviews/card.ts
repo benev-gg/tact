@@ -6,7 +6,7 @@ import {Content, lightView} from "@e280/sly"
 import {Context} from "../../deck/types.js"
 import {PortId} from "../../../deck/hub.js"
 import {ControllerView} from "./controller.js"
-import {Controller} from "../../../input/controller.js"
+import {Controller} from "../../../../input/controller.js"
 
 export const CardView = lightView((o: {
 		context: Context

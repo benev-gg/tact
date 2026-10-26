@@ -1,6 +1,6 @@
 
 import {guarantee, IdCounter} from "@e280/stz"
-import {Controller} from "../../../input/controller.js"
+import {Controller} from "../../../../input/controller.js"
 
 export class ControllerNames {
 	#id = new IdCounter()

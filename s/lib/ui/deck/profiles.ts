@@ -2,9 +2,9 @@
 import {RMap} from "@e280/strata"
 import {got, setEntries} from "@e280/stz"
 
-import {Bindings} from "../input/types.js"
+import {Bindings} from "../../input/types.js"
 import {Profile, ProfileKey} from "./types.js"
-import {Controller} from "../input/controller.js"
+import {Controller} from "../../input/controller.js"
 
 export class Profiles<B extends Bindings = any> {
 	readonly default

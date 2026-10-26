@@ -1,10 +1,10 @@
 
 import {Hub} from "./hub.js"
 import {Profiles} from "./profiles.js"
-import {Pad} from "../input/utils/pad/pad.js"
-import {Controller} from "../input/controller.js"
-import {onPad} from "../input/utils/pad/on-pad.js"
-import {GamepadSource} from "../input/sources/gamepad.js"
+import {Pad} from "../../input/utils/pad/pad.js"
+import {Controller} from "../../input/controller.js"
+import {onPad} from "../../input/utils/pad/on-pad.js"
+import {GamepadSource} from "../../input/sources/gamepad.js"
 
 export function autoGamepads(
 		hub: Hub,

@@ -2,7 +2,7 @@
 import {Kv} from "@e280/kv"
 import {Hub} from "./hub.js"
 import {Profiles} from "./profiles.js"
-import {Bindings} from "../input/types.js"
+import {Bindings} from "../../input/types.js"
 
 export type ProfileKey = string
 

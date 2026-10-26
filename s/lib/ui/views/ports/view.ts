@@ -9,8 +9,8 @@ import circlePlusSvg from "../../icons/akar/circle-plus.svg.js"
 
 import {Deck} from "../../deck/types.js"
 import {Context} from "../deck/types.js"
-import {PortView} from "./subviews/port.js"
 import {CardView} from "./subviews/card.js"
+import {PortView} from "./subviews/port.js"
 import {ControllerNames} from "../deck/parts/controller-names.js"
 
 export const PortsView = shadowView((deck: Deck) => {

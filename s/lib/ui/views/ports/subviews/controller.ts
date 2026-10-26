@@ -5,7 +5,7 @@ import {lightView} from "@e280/sly"
 import dragVerticalFillSvg from "../../../icons/akar/drag-vertical-fill.svg.js"
 
 import {Context} from "../../deck/types.js"
-import {Controller} from "../../../input/controller.js"
+import {Controller} from "../../../../input/controller.js"
 
 export const ControllerView = lightView((context: Context, controller: Controller) => {
 	const {deck, dnd} = context

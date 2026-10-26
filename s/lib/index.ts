@@ -1,9 +1,4 @@
 
-export * from "./deck/auto-gamepads.js"
-export * from "./deck/hub.js"
-export * from "./deck/profiles.js"
-export * from "./deck/types.js"
-
 export * from "./input/investigate/is-compatible.js"
 export * from "./input/sources/gamepad.js"
 export * from "./input/sources/keyboard.js"
@@ -19,5 +14,11 @@ export * from "./input/decoder.js"
 export * from "./input/expression.js"
 export * from "./input/types.js"
 
-export * from "./views/deck/view.js"
+export * from "./ui/deck/auto-gamepads.js"
+export * from "./ui/deck/hub.js"
+export * from "./ui/deck/profiles.js"
+export * from "./ui/deck/types.js"
+export * from "./ui/views/bindings/view.js"
+export * from "./ui/views/deck/view.js"
+export * from "./ui/views/ports/view.js"
 
