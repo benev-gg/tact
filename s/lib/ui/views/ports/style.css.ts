@@ -37,10 +37,6 @@ export default css`@layer view {
 	> * {
 		min-width: 0;
 		min-height: 6em;
-
-		background: var(--card);
-		border-radius: var(--round);
-		overflow: clip;
 	}
 
 	.box {
@@ -49,13 +45,7 @@ export default css`@layer view {
 		justify-content: center;
 		align-items: center;
 		padding: var(--pad);
-		background: var(--card-box);
 	}
-}
-
-.unassigned-ports {
-	width: min(100%, 24em);
-	grid-template-columns: 1fr;
 }
 
 .card {

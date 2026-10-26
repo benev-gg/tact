@@ -5,7 +5,7 @@ import {loot, shadowView, useCss, useOnce} from "@e280/sly"
 
 import styleCss from "./style.css.js"
 import themeCss from "../theme.css.js"
-import circlePlusSvg from "../../icons/akar/circle-plus.svg.js"
+import personAddSvg from "../../icons/akar/person-add.svg.js"
 
 import {Deck} from "../../deck/types.js"
 import {Context} from "../deck/types.js"
@@ -37,18 +37,16 @@ export const PortsView = shadowView((deck: Deck) => {
 			<div class=ports>
 				${hub.portIds.map(renderPort)}
 				${when(hub.portIds.length < deck.maxPorts, () => html`
-					<div class=box>
+					<div class=box theme-card=dull>
 						<button theme-button @click="${clickCreatePort}">
-							${circlePlusSvg}
+							${personAddSvg}
 							<span>add player</span>
 						</button>
 					</div>
 				`)}
-			</div>
-
-			<div class="ports unassigned-ports">
 				${CardView({
 					context,
+					themeCard: "dull",
 					class: "unassigned",
 					heading: html`<span>unassigned</span>`,
 					portId: null,

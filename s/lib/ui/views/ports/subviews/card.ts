@@ -12,6 +12,7 @@ export const CardView = lightView((o: {
 		context: Context
 		class: string
 		heading: Content
+		themeCard: string
 		portId: PortId | null
 		controllers: Controller[]
 	}) => {
@@ -27,14 +28,16 @@ export const CardView = lightView((o: {
 
 	return html`
 		<div class="card ${o.class}"
+			theme-card="${o.themeCard}"
 			?data-dropping="${dnd.hovering?.portId === o.portId && dropIsForeign}"
 			?data-drop-candidate="${dropIsForeign}"
 			@dragenter="${dropzone.dragenter}"
 			@dragleave="${dropzone.dragleave}"
 			@dragover="${dropzone.dragover}"
-			@drop="${dropzone.drop}"
-			>
+			@drop="${dropzone.drop}">
+
 			<h3>${o.heading}</h3>
+
 			<div class=inset>
 				${o.controllers.map(renderController)}
 			</div>

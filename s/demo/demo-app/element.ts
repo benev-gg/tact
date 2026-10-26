@@ -5,6 +5,9 @@ import {cycle} from "@e280/stz"
 import {shadowElement, useCss, useMount, useOnce} from "@e280/sly"
 
 import styleCss from "./style.css.js"
+import devicesSvg from "../../lib/ui/icons/akar/devices.svg.js"
+import gameControllerSvg from "../../lib/ui/icons/akar/game-controller.svg.js"
+
 import {Hub} from "../../lib/ui/deck/hub.js"
 import {asDeck} from "../../lib/ui/deck/types.js"
 import {asBindings} from "../../lib/input/types.js"
@@ -13,12 +16,10 @@ import {DeckView} from "../../lib/ui/views/deck/view.js"
 import {Controller} from "../../lib/input/controller.js"
 import {Sources} from "../../lib/input/sources/sources.js"
 import {ColorWheel} from "../../lib/ui/deck/color-wheel.js"
-import keyCapSvg from "../../lib/ui/icons/akar/key-cap.svg.js"
 import {autoGamepads} from "../../lib/ui/deck/auto-gamepads.js"
 import {PointerSource} from "../../lib/input/sources/pointer.js"
 import {KeyboardSource} from "../../lib/input/sources/keyboard.js"
 import {ControllerInfo} from "../../lib/ui/deck/controller-info.js"
-import gameControllerSvg from "../../lib/ui/icons/akar/game-controller.svg.js"
 
 export const setupDemoApp = () => shadowElement(() => {
 	useCss(styleCss)
@@ -36,7 +37,7 @@ export const setupDemoApp = () => shadowElement(() => {
 		})
 		const controllerInfo = new ControllerInfo()
 		controllerInfo.set(controller, {
-			icon: keyCapSvg,
+			icon: devicesSvg,
 			hue: colorWheel.hue,
 			name: "keyboard and mouse",
 			tooltip: "",

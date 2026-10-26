@@ -15,6 +15,10 @@ ${cssReset}
 	--card-unassigned: #8884;
 	--card-box: #8883;
 
+	--slate: #28395970;
+	--gem: #1e348c;
+	--gem-shimmer: cyan;
+
 	--draggy: rebeccapurple;
 	--droppy: cyan;
 
@@ -22,8 +26,22 @@ ${cssReset}
 	--pad: 0.5em;
 	--nib: 0.2em;
 	--space: 1em;
-	--box-shadow: 0.1em 0.2em 0.9em #0004;
+	--box-shadow: 0.1em 0.2em 1em #0006;
 	--text-shadow: 0.02em 0.04em 0.1em #000a;
+}
+
+[theme-card] {
+	--shimmer: oklch(from var(--slate) calc(l * 2) calc(c * 1.5) h);
+	background: var(--slate);
+	border: 1px solid var(--shimmer);
+	border-radius: var(--round);
+	box-shadow:
+		inset 0 0 2em color-mix(in oklch, transparent, var(--shimmer)),
+		var(--box-shadow);
+
+	&[theme-card="dull"] {
+		--slate: #4444;
+	}
 }
 
 [theme-button] {
