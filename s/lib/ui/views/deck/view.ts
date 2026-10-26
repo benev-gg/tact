@@ -19,7 +19,7 @@ export const [DeckView, makeDeck] = shadowDuplex((deck: Deck) => {
 	return ShinyTabs.with({
 		props: [{control: tabsControl}],
 		children: html`
-			<button theme-button>ports</button>
+			<button theme-button>players</button>
 			<button theme-button>bindings</button>
 
 			${PortsView.with({attrs, props: [deck]})}
