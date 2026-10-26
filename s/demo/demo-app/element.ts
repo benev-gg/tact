@@ -33,8 +33,8 @@ export const setupDemoApp = () => shadowElement(() => {
 			},
 			spatial: {
 				looking: {
-					horizontal: "KeyW",
-					vertical: "KeyS",
+					horizontal: "pointer.x",
+					vertical: "pointer.y",
 				},
 				moving: {
 					forward: "KeyW",
