@@ -50,7 +50,7 @@ export const PortsView = shadowView((deck: Deck) => {
 				${CardView({
 					context,
 					class: "unassigned",
-					heading: "⚪️ unassigned",
+					heading: html`<span>unassigned</span>`,
 					portId: null,
 					controllers: controllers.unassigned,
 				})}

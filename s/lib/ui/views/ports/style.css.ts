@@ -62,7 +62,7 @@ export default css`@layer view {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;
-		padding: var(--nib);
+		padding: var(--nib) var(--pad);
 	}
 
 	.inset {
@@ -82,13 +82,13 @@ export default css`@layer view {
 		padding: var(--nib);
 
 		border-radius: 0.5em;
-		background: oklch(from var(--card) l 0.2 var(--hue, 0));
+		background: oklch(from var(--card) l 0.15 var(--hue, 0));
 
 		overflow: clip;
 		box-shadow: var(--box-shadow);
 
 		&:hover {
-			filter: brightness(130%);
+			filter: brightness(110%);
 		}
 
 		.griptape {

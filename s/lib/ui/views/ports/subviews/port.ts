@@ -19,7 +19,7 @@ export const PortView = lightView((context: Context, portId: number, index: numb
 		controllers,
 		class: "port",
 		heading: html`
-			<span>🟢 port ${index + 1}</span>
+			<span>port ${index + 1}</span>
 			${when(hub.portIds.length > 1, () => html`
 				<button theme-button="naked angry" @click=${deletePort}>
 					${xSmallSvg}
