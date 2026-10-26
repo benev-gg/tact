@@ -25,14 +25,17 @@ export default css`@layer view {
 }
 
 .ports {
-	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
+	display: grid;
+	grid-template-columns: repeat(
+		auto-fit,
+		minmax(min(100%, 20em), 1fr)
+	);
+
+	width: min(100%, calc(48em + var(--pad)));
 	gap: var(--pad);
 
 	> * {
-		flex: 0 1 auto;
-		width: 24em;
+		min-width: 0;
 		min-height: 6em;
 
 		background: var(--card);
@@ -48,6 +51,11 @@ export default css`@layer view {
 		padding: var(--pad);
 		background: var(--card-box);
 	}
+}
+
+.unassigned-ports {
+	width: min(100%, 24em);
+	grid-template-columns: 1fr;
 }
 
 .card {

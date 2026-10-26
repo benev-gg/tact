@@ -40,13 +40,13 @@ export const PortsView = shadowView((deck: Deck) => {
 					<div class=box>
 						<button theme-button @click="${clickCreatePort}">
 							${circlePlusSvg}
-							<span>new port</span>
+							<span>add player</span>
 						</button>
 					</div>
 				`)}
 			</div>
 
-			<div class=ports>
+			<div class="ports unassigned-ports">
 				${CardView({
 					context,
 					class: "unassigned",

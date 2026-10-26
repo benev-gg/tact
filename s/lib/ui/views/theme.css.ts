@@ -13,7 +13,7 @@ ${cssReset}
 	--bg: #000;
 	--card: #7896;
 	--card-unassigned: #8884;
-	--card-box: #8882;
+	--card-box: #8883;
 
 	--draggy: rebeccapurple;
 	--droppy: cyan;
