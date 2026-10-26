@@ -38,11 +38,11 @@ export default template(import.meta.url, async orb => html`
 				<div>
 					<blockquote>"from keypress to couch co-op"</blockquote>
 					<p>
-						<a href="./gamepad/">gamepad visualizer</a>.
-					</p>
-					<p>
-						<a href="https://github.com/benev-gg/tact">github</a>.
-						<a href="https://benev.gg/">benev.gg</a>.
+						<a href="./gamepad/">gamepad visualizer</a>
+						—
+						<a href="https://github.com/benev-gg/tact">github</a>
+						—
+						<a href="https://benev.gg/">benev.gg</a>
 					</p>
 				</div>
 			</header>

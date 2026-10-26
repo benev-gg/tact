@@ -36,14 +36,16 @@ export const PortsView = shadowView((deck: Deck) => {
 		<div class=plate ?data-drag-and-drop="${!!context.dnd.dragging}">
 			<div class=ports>
 				${hub.portIds.map(renderPort)}
+
 				${when(hub.portIds.length < deck.maxPorts, () => html`
 					<div class=box theme-card=dull>
-						<button theme-button @click="${clickCreatePort}">
+						<button theme-button=naked @click="${clickCreatePort}">
 							${personAddSvg}
 							<span>add player</span>
 						</button>
 					</div>
 				`)}
+
 				${CardView({
 					context,
 					themeCard: "dull",

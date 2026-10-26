@@ -45,6 +45,19 @@ export default css`@layer view {
 		justify-content: center;
 		align-items: center;
 		padding: var(--pad);
+
+		border-style: dashed;
+		background: transparent;
+		box-shadow: none;
+
+		button {
+			display: flex;
+			flex-direction: column;
+			svg {
+				width: 2.5em;
+				height: 2.5em;
+			}
+		}
 	}
 }
 
