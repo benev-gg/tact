@@ -9,6 +9,7 @@ export default css`
 ${cssReset}
 
 :host {
+	--text: #fffc;
 	--bg: #000;
 	--card: #7896;
 	--card-unassigned: #8884;
@@ -22,6 +23,7 @@ ${cssReset}
 	--nib: 0.2em;
 	--space: 1em;
 	--box-shadow: 0.1em 0.2em 0.9em #0004;
+	--text-shadow: 0.02em 0.04em 0.1em #000a;
 }
 
 [theme-button] {

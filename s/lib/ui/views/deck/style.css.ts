@@ -4,6 +4,8 @@ export default css`@layer view {
 
 :host {
 	display: block;
+	color: var(--text);
+	text-shadow: var(--text-shadow);
 }
 
 [view="shiny-tabs"] {

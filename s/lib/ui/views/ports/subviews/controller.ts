@@ -11,9 +11,13 @@ export const ControllerView = lightView((context: Context, controller: Controlle
 	const {deck, dnd} = context
 	const dragzone = dnd.dragzone(() => ({controller}))
 	const currentProfileKey = deck.profiles.query(controller)
+	const info = deck.controllerInfo.get(controller)
+
+	const style = `--hue: ${info.hue};`
 
 	return html`
 		<div class=controller
+			style="${style}"
 			?data-dragging="${dnd.dragging?.controller === controller}"
 			draggable="${dragzone.draggable}"
 			@dragstart="${dragzone.dragstart}"
@@ -23,7 +27,10 @@ export const ControllerView = lightView((context: Context, controller: Controlle
 				${dragVerticalFillSvg}
 			</div>
 
-			<h4>${controller.handle ?? `controller ${context.controllerNames.get(controller)}`}</h4>
+			<h4 class=label title="${info.tooltip}">
+				<span class=icon>${info.icon}</span>
+				<span class=name>${info.name}</span>
+			</h4>
 
 			<select>
 				${Array.from(deck.profiles.all()).map(([key, profile]) => html`

@@ -14,7 +14,7 @@ export default css`@layer view {
 
 .plate[data-drag-and-drop] {
 	.card[data-drop-candidate] {
-		outline: 2px dashed color-mix(in oklch, transparent, var(--droppy) 30%);
+		outline: 2px dashed color-mix(in oklch, transparent, var(--droppy) 80%);
 		background: color-mix(in oklch, var(--card), var(--droppy) 20%);
 
 		&[data-dropping] {
@@ -32,7 +32,8 @@ export default css`@layer view {
 
 	> * {
 		flex: 0 1 auto;
-		width: 36em;
+		width: 24em;
+		min-height: 6em;
 
 		background: var(--card);
 		border-radius: var(--round);
@@ -81,12 +82,13 @@ export default css`@layer view {
 		padding: var(--nib);
 
 		border-radius: 0.5em;
-		background: var(--card);
+		background: oklch(from var(--card) l 0.2 var(--hue, 0));
+
 		overflow: clip;
 		box-shadow: var(--box-shadow);
 
 		&:hover {
-			background: color-mix(in oklch, var(--card), var(--draggy) 20%);
+			filter: brightness(130%);
 		}
 
 		.griptape {
@@ -102,10 +104,32 @@ export default css`@layer view {
 			}
 		}
 
-		h4 {
+		.label {
+			display: flex;
+			align-items: center;
+			gap: var(--pad);
+			min-width: 0;
+
 			flex: 1 1 auto;
 			font-size: 1em;
 			font-weight: normal;
+
+			.icon {
+				display: flex;
+				flex: 0 0 auto;
+				svg {
+					width: 2em;
+					height: 2em;
+				}
+			}
+
+			.name {
+				min-width: 0;
+				line-height: 1.1;
+				font-size: 0.7em;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
 		}
 
 		select {

@@ -11,7 +11,6 @@ import {Deck} from "../../deck/types.js"
 import {Context} from "../deck/types.js"
 import {CardView} from "./subviews/card.js"
 import {PortView} from "./subviews/port.js"
-import {ControllerNames} from "../deck/parts/controller-names.js"
 
 export const PortsView = shadowView((deck: Deck) => {
 	useCss(themeCss, styleCss)
@@ -23,7 +22,6 @@ export const PortsView = shadowView((deck: Deck) => {
 
 	const context: Context = useOnce(() => ({
 		deck,
-		controllerNames: new ControllerNames(),
 		dnd: new loot.DragAndDrops({
 			acceptDrop(_event, draggy, droppy) {
 				if (isHappy(droppy.portId))
