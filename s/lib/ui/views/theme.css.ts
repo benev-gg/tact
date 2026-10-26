@@ -10,7 +10,7 @@ ${cssReset}
 
 :host {
 	--text: #fffc;
-	--bg: #000;
+	--bg: transparent;
 	--card: #7896;
 	--card-unassigned: #8884;
 	--card-box: #8883;

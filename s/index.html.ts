@@ -15,7 +15,7 @@ export default template(import.meta.url, async orb => html`
 			<meta charset="utf-8"/>
 			<meta name="viewport" content="width=device-width,initial-scale=1"/>
 			<meta name="darkreader-lock"/>
-			<style>@layer base{html{background:#000}}</style>
+			<style>@layer base{html{background:#111}}</style>
 
 			<link rel="icon" href="${dataSvgEmoji("🎮")}"/>
 			<link rel="stylesheet" href="${orb.hashurl("demo/main.css")}"/>

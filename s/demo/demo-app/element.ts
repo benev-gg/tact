@@ -12,13 +12,13 @@ import {Profiles} from "../../lib/ui/deck/profiles.js"
 import {DeckView} from "../../lib/ui/views/deck/view.js"
 import {Controller} from "../../lib/input/controller.js"
 import {Sources} from "../../lib/input/sources/sources.js"
+import {ColorWheel} from "../../lib/ui/deck/color-wheel.js"
 import keyCapSvg from "../../lib/ui/icons/akar/key-cap.svg.js"
 import {autoGamepads} from "../../lib/ui/deck/auto-gamepads.js"
 import {PointerSource} from "../../lib/input/sources/pointer.js"
 import {KeyboardSource} from "../../lib/input/sources/keyboard.js"
 import {ControllerInfo} from "../../lib/ui/deck/controller-info.js"
 import gameControllerSvg from "../../lib/ui/icons/akar/game-controller.svg.js"
-import { ColorWheel } from "../../lib/ui/deck/color-wheel.js"
 
 export const setupDemoApp = () => shadowElement(() => {
 	useCss(styleCss)
