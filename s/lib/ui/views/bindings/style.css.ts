@@ -35,6 +35,8 @@ export default css`@layer view {
 		display: flex;
 		margin-left: 0.5em;
 		border-bottom: 1px dashed var(--subtle);
+		flex-wrap: wrap;
+		gap: 0 var(--pad);
 
 		> strong {
 			font-weight: normal;

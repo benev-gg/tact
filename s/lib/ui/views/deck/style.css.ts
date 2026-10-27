@@ -4,8 +4,7 @@ export default css`@layer view {
 
 :host {
 	display: block;
-	width: 50em;
-	max-width: 100%;
+	width: min(50em, 100%);
 
 	color: var(--text);
 	text-shadow: var(--text-shadow);
