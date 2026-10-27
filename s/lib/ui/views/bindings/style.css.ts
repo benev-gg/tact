@@ -34,6 +34,7 @@ export default css`@layer view {
 
 	.expression {
 		display: flex;
+		align-items: center;
 		margin-left: 0.5em;
 		border-bottom: 1px dashed var(--subtle);
 		flex-wrap: wrap;
@@ -48,6 +49,15 @@ export default css`@layer view {
 			input { width: 8em; }
 			&.number { color: lime; }
 			&.string { color: yellow; }
+		}
+
+		.bracket {
+			display: flex;
+			align-items: center;
+			gap: var(--pad);
+			padding: 0 var(--nib);
+			--slate: #8881;
+			box-shadow: 0.1em 0.2em 0.5em #0002;
 		}
 	}
 

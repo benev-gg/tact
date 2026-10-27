@@ -12,7 +12,7 @@ export type Expression = (
 	| ["since", string] // get change in value since previous frame.
 
 	// logic
-	| ["if", condition: Expression, yes: Expression, no?: Expression]
+	| ["if", condition: Expression, yes: Expression, no?: Expression | null]
 
 	// combiners
 	| ["min", ...Expression[]]

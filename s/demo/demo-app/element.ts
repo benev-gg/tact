@@ -33,8 +33,8 @@ export const setupDemoApp = () => shadowElement(() => {
 			},
 			spatial: {
 				looking: {
-					horizontal: "pointer.x",
-					vertical: "pointer.y",
+					horizontal: ["+", ["sum", "pointer.x"], ["*", ["dt"], "gamepad.axis.1"]],
+					vertical: ["+", ["sum", "pointer.y"], ["*", ["dt"], "gamepad.axis.2"]],
 				},
 				moving: {
 					forward: "KeyW",

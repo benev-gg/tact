@@ -1,13 +1,13 @@
 
 import {html} from "lit"
-import {lightView} from "@e280/sly"
-import {isArray, isNumber, isString} from "@e280/stz"
+import {Content, lightView} from "@e280/sly"
+import {isArray, isHappy, isNumber, isString} from "@e280/stz"
 import {Expression} from "../../../../input/expression.js"
 
 export const ExpressionView = lightView((
 		expression: Expression,
 		update: (expression: Expression) => void,
-	) => {
+	): Content => {
 
 	if (expression === null)
 		return html`
@@ -42,7 +42,23 @@ export const ExpressionView = lightView((
 			</div>
 		`
 
+
 	if (isArray(expression))
-		return html`<div class=array>(expression)</div>`
+		return html`
+			<div class=bracket theme-card>
+				<strong>${expression[0]}</strong>
+				${expression.slice(1).map((e, i) => {
+					if (!isHappy(e)) return null
+					return ExpressionView(e, fresh => {
+						const clone = structuredClone(expression) as any
+						clone[i + 1] = fresh
+						update(clone)
+					})
+				})}
+			</div>
+		`
+
+	else
+		throw new Error("unknown expression")
 })
 

@@ -1,6 +1,6 @@
 
 import {remap} from "@benev/math"
-import {arraylimit, guarantee, isNumber, isString} from "@e280/stz"
+import {arraylimit, guarantee, isHappy, isNumber, isString} from "@e280/stz"
 
 import {isDown} from "../utils/is-down.js"
 import {EvaluationContext} from "./context.js"
@@ -75,7 +75,7 @@ export function evaluate(
 			const [, condition, yes, no] = expression
 			return e(condition)
 				? e(yes)
-				: (no ? e(no) : 0)
+				: (isHappy(no) ? e(no) : 0)
 		}
 
 		case "min":
