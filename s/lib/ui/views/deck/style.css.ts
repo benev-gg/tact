@@ -4,8 +4,16 @@ export default css`@layer view {
 
 :host {
 	display: block;
+	width: 50em;
+	max-width: 100%;
+
 	color: var(--text);
 	text-shadow: var(--text-shadow);
+}
+
+.deck {
+	padding: var(--pad);
+	background: color-mix(in oklch, transparent, var(--slate) 30%);
 }
 
 [view="shiny-tabs"] {
@@ -29,6 +37,7 @@ export default css`@layer view {
 	&::part(panels) {
 		display: block;
 		width: 100%;
+		margin-top: var(--pad);
 	}
 
 	button {

@@ -7,14 +7,28 @@ export default css`@layer view {
 	--prime: #75dc66;
 }
 
+.plate {
+	display: flex;
+	flex-direction: column;
+	gap: var(--nib);
+}
+
+.topbar {
+	display: flex;
+	justify-content: end;
+}
+
 .bindings {
 	user-select: none;
 	cursor: default;
+	padding: var(--space);
 
 	summary {
 		font-weight: bold;
 		font-size: 1.2em;
 		color: var(--prime);
+		&:is(:hover, :focus-visible) { filter: brightness(120%); }
+		&:active { filter: brightness(90%); }
 	}
 
 	.expression {

@@ -7,7 +7,6 @@ export default css`@layer view {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding: var(--pad);
 	gap: var(--pad);
 	background: var(--bg);
 }

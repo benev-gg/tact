@@ -24,22 +24,26 @@ export const [DeckView, makeDeck] = shadowDuplex((deck: Deck) => {
 			tabsControl.setIndex(1)
 	})
 
-	return ShinyTabs.with({
-		props: [{control: tabsControl}],
-		children: html`
-			<button theme-button>
-				${peopleGroupSvg}
-				<span>players</span>
-			</button>
+	return html`
+		<div class=deck theme-card>
+			${ShinyTabs.with({
+				props: [{control: tabsControl}],
+				children: html`
+					<button theme-button>
+						${peopleGroupSvg}
+						<span>players</span>
+					</button>
 
-			<button theme-button>
-				${settingsHorizontalSvg}
-				<span>bindings</span>
-			</button>
+					<button theme-button>
+						${settingsHorizontalSvg}
+						<span>bindings</span>
+					</button>
 
-			${PortsView.with({attrs, props: [deck]})}
-			${BindingsView.with({attrs, props: [deck]})}
-		`,
-	})
+					${PortsView.with({attrs, props: [deck]})}
+					${BindingsView.with({attrs, props: [deck]})}
+				`,
+			})}
+		</div>
+	`
 })
 
