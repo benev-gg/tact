@@ -27,7 +27,15 @@ export const ExpressionView = lightView((
 		`
 
 	if (isString(expression))
-		return html`<div class=string>${expression}</div>`
+		return html`
+			<div class=string>
+				<input type=text value="${expression}" @change="${(event: Event) => {
+					const input = event.currentTarget as HTMLInputElement
+					const value = input.value
+					update(value)
+				}}"/>
+			</div>
+		`
 
 	if (isArray(expression))
 		return html`<div class=array>(expression)</div>`

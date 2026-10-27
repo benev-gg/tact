@@ -24,6 +24,7 @@ export default css`@layer view {
 	padding: var(--space);
 
 	summary {
+		width: max-content;
 		font-weight: bold;
 		font-size: 1.2em;
 		color: var(--prime);
