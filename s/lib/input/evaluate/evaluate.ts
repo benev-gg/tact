@@ -13,6 +13,9 @@ export function evaluate(
 
 	const e = (expression: Expression) => evaluate(context, expression)
 
+	if (expression === null)
+		return 0
+
 	if (isNumber(expression))
 		return expression
 

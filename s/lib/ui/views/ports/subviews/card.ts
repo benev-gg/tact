@@ -12,7 +12,7 @@ export const CardView = lightView((o: {
 		context: Context
 		class: string
 		heading: Content
-		themeCard: string
+		themeCard?: string
 		portId: PortId | null
 		controllers: Controller[]
 	}) => {
@@ -28,7 +28,7 @@ export const CardView = lightView((o: {
 
 	return html`
 		<div class="card ${o.class}"
-			theme-card="${o.themeCard}"
+			theme-card="${o.themeCard ?? ""}"
 			?data-dropping="${dnd.hovering?.portId === o.portId && dropIsForeign}"
 			?data-drop-candidate="${dropIsForeign}"
 			@dragenter="${dropzone.dragenter}"

@@ -1,5 +1,6 @@
 
 export type Expression = (
+	| null
 	| number // constants for doing math.
 
 	// samplers

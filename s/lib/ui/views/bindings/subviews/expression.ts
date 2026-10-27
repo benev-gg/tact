@@ -9,6 +9,11 @@ export const ExpressionView = lightView((
 		update: (expression: Expression) => void,
 	) => {
 
+	if (expression === null)
+		return html`
+			<div class=null>unset</div>
+		`
+
 	if (isNumber(expression))
 		return html`
 			<div class=number>

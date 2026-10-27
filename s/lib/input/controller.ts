@@ -9,7 +9,7 @@ import {Bindings, InputData, Intent, Rebindings, Source} from "./types.js"
 
 export class Controller<B extends Bindings = any> {
 	#sampler
-	#bindings
+	#bindings: Rebindings<B>
 	#investigation
 	#context
 
