@@ -10,12 +10,12 @@ export default css`@layer view {
 .plate {
 	display: flex;
 	flex-direction: column;
-	gap: var(--nib);
 }
 
 .topbar {
 	display: flex;
-	justify-content: end;
+	justify-content: center;
+	padding: var(--pad);
 }
 
 .bindings {

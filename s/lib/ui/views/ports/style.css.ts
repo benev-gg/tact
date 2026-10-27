@@ -91,6 +91,11 @@ export default css`@layer view {
 		box-shadow:
 			inset 0 0 2em color-mix(in oklch, transparent, var(--shimmer)),
 			var(--box-shadow);
+
+		&:hover {
+			background: color-mix(in oklch, transparent, var(--bg) 70%);
+			filter: brightness(120%);
+		}
 	}
 
 	.controller {
@@ -103,10 +108,6 @@ export default css`@layer view {
 
 		border-radius: 0.5em;
 		overflow: clip;
-
-		&:hover {
-			filter: brightness(110%);
-		}
 
 		.griptape {
 			display: flex;

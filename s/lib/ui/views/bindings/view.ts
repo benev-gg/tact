@@ -17,12 +17,11 @@ export const BindingsView = shadowView((deck: Deck) => {
 	const profile = deck.profiles.get($profileKey())
 
 	return html`
-		<div class=plate>
+		<div class=plate theme-card>
 			<header class=topbar>
 				${ProfileSelectView(deck, $profileKey(), $profileKey)}
 			</header>
-
-			<div class=bindings theme-card>
+			<div class=bindings>
 				${renderBindings(profile.bindings)}
 			</div>
 		</div>
