@@ -16,8 +16,8 @@ export type Deck<B extends Bindings = any> = {
 	kv: Kv
 	hub: Hub<B>
 	bindings: B
-	profiles: Profiles<B>
 	maxPorts: number
+	profiles: Profiles<B>
 	controllerInfo: ControllerInfo
 }
 
