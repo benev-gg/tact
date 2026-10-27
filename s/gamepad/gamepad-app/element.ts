@@ -41,6 +41,9 @@ export const GamepadApp = shadowElement(() => {
 		</li>
 	`
 
+	const sortSamples = (a: [string, number], b: [string, number]) =>
+		a[0].localeCompare(b[0])
+
 	return html`
 		<div class=plate>
 			${connected.size > 0 ? [...connected].map(({samples, source: {gamepad}}) => html`
@@ -49,14 +52,18 @@ export const GamepadApp = shadowElement(() => {
 					<div class=stats>
 						<span>index ${gamepad.index}</span>
 						<span>connected ${gamepad.connected ? "yes" : "no"}</span>
-						<span>mapping ${gamepad.mapping}</span>
+						<span>mapping "${gamepad.mapping}"</span>
 						<span>vibrationActuator ${gamepad.vibrationActuator ? "yes" : "no"}</span>
 					</div>
 					<ul>
-						${[...samples].filter(([code]) => code.startsWith("gamepad.button")).map(renderSample)}
+						${[...samples]
+							.sort(sortSamples)
+							.filter(([code]) => code.startsWith("gamepad.button")).map(renderSample)}
 					</ul>
 					<ul>
-						${[...samples].filter(([code]) => code.startsWith("gamepad.axis")).map(renderSample)}
+						${[...samples]
+							.sort(sortSamples)
+							.filter(([code]) => code.startsWith("gamepad.axis")).map(renderSample)}
 					</ul>
 				</div>
 			`) : html`
