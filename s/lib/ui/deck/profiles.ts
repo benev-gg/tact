@@ -39,6 +39,19 @@ export class Profiles<B extends Bindings = any> {
 		this.#assignments.set(controller, profileKey)
 	}
 
+	/** updating the bindings of a profile key. */
+	updateBindings(profileKey: ProfileKey, bindings: B) {
+		const staleProfile = this.get(profileKey)
+		const freshProfile = {...staleProfile, bindings}
+
+		this.#custom.set(profileKey, freshProfile)
+
+		for (const [controller, controllerKey] of this.#assignments) {
+			if (controllerKey === profileKey)
+				controller.bindings = freshProfile.bindings
+		}
+	}
+
 	*custom() {
 		yield* this.#custom
 	}

@@ -42,8 +42,11 @@ export default css`@layer view {
 			font-weight: normal;
 		}
 
-		> span {
+		> div {
 			margin-left: auto;
+			input { width: 8em; }
+			&.number { color: lime; }
+			&.string { color: yellow; }
 		}
 	}
 

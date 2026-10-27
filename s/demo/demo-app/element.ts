@@ -29,7 +29,7 @@ export const setupDemoApp = () => shadowElement(() => {
 	const deck = useOnce(() => {
 		const bindings = asBindings({
 			interactions: {
-				use: "KeyE",
+				use: 123,
 			},
 			spatial: {
 				looking: {
