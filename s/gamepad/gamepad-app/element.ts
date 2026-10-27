@@ -35,7 +35,7 @@ export const GamepadApp = shadowElement(() => {
 	}))
 
 	const renderSample = ([code, value]: [string, number]) => html`
-		<li style="${`--percent: ${value * 100}%;`}">
+		<li ?data-neg="${value < 0}" style="${`--percent: ${Math.abs(value) * 100}%;`}">
 			<span>${code}</span>
 			<span>${value.toFixed(3)}</span>
 		</li>

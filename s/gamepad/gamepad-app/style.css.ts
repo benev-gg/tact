@@ -57,8 +57,12 @@ export default css`
 				display: block;
 				content: "";
 				inset: 0;
-				background: #f004;
+				background: #08f4;
 				width: var(--percent);
+			}
+
+			&[data-neg]::before {
+				background: #f004;
 			}
 
 			> span {
