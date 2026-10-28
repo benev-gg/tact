@@ -40,16 +40,21 @@ export default css`@layer view {
 		flex-wrap: wrap;
 		gap: 0 var(--pad);
 
+		min-height: 2.3em;
+
 		> strong {
 			font-weight: normal;
 		}
 
 		> div {
 			margin-left: auto;
+
 			input {
-				width: 8em;
 				font: inherit;
 				color: inherit;
+
+				width: 12em;
+				font-size: 0.7em;
 			}
 		}
 
@@ -78,7 +83,6 @@ export default css`@layer view {
 	.children {
 		display: flex;
 		flex-direction: column;
-		gap: var(--nib);
 
 		margin-left: 0.3em;
 		padding-left: 0.5em;

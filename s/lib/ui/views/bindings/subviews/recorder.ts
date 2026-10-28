@@ -6,12 +6,22 @@ import keyCapSvg from "../../../icons/akar/key-cap.svg.js"
 import {Expression} from "../../../../input/expression.js"
 import {captureKeyChord} from "../parts/capture-key-chord.js"
 import backspaceSvg from "../../../icons/akar/backspace.svg.js"
+import { disposer } from "@e280/stz"
+import { captureGamepadChord } from "../parts/capture-gamepad-chord.js"
 
 export const RecorderView = lightView((update: (e: Expression) => void, reset: () => void, content: Content) => {
 	const $recording = useSignal<null | (() => void)>(null)
 
 	const removeRecording = () => $recording(null)
-	const startRecording = () => $recording(captureKeyChord(update, removeRecording))
+
+	const startRecording = () => {
+		const {dispose, schedule} = disposer()
+		schedule(removeRecording)
+		schedule(captureKeyChord(update, dispose))
+		schedule(captureGamepadChord(update, dispose))
+		$recording(dispose)
+	}
+
 	const haltRecording = () => {
 		$recording()?.()
 		removeRecording()
