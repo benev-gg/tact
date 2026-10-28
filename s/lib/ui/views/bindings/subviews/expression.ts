@@ -21,7 +21,7 @@ export const ExpressionView = lightView((
 				<input
 					type=number
 					step=any
-					value="${expression}"
+					.value="${expression}"
 					@change="${(event: Event) => {
 						const input = event.currentTarget as HTMLInputElement
 						const value = input.valueAsNumber
