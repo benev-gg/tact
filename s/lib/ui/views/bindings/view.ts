@@ -1,17 +1,18 @@
 
 import {html} from "lit"
+import {given, when} from "@e280/stz"
 import {shadowDuplex, useCss, useSignal} from "@e280/sly"
 
 import styleCss from "./style.css.js"
 import themeCss from "../theme.css.js"
 
+import copySvg from "../../icons/akar/copy.svg.js"
+import trashCanSvg from "../../icons/akar/trash-can.svg.js"
+
 import {Deck} from "../../deck/types.js"
 import {Bindings} from "../../../input/types.js"
 import {renderBindings} from "./parts/render-bindings.js"
 import {ProfileSelectView} from "../profile-select/view.js"
-import trashCanSvg from "../../icons/akar/trash-can.svg.js"
-import copySvg from "../../icons/akar/copy.svg.js"
-import { given, when } from "@e280/stz"
 
 export const [BindingsView, makeBindingsElement] = shadowDuplex((deck: Deck) => {
 	useCss(themeCss, styleCss)
@@ -21,8 +22,15 @@ export const [BindingsView, makeBindingsElement] = shadowDuplex((deck: Deck) => 
 	const profile = profiles.get($profileKey())
 	const isReadonly = profiles.stock.has($profileKey())
 
-	const updateBindings = (profileKey: string, bindings: Bindings) =>
-		profiles.update(profileKey, {bindings})
+	const updateBindings = (bindings: Bindings) => {
+		let key = $profileKey()
+
+		if (profiles.stock.has(key))
+			key = profiles.clone(key)
+
+		profiles.update(key, {bindings})
+		$profileKey(key)
+	}
 
 	const updateLabel = (profileKey: string, label: string) =>
 		profiles.update(profileKey, {label})
@@ -71,10 +79,10 @@ export const [BindingsView, makeBindingsElement] = shadowDuplex((deck: Deck) => 
 
 			<div class=bindings>
 				${renderBindings(
-					isReadonly,
+					false,
 					profile.bindings,
 					structuredClone(deck.bindings),
-					b => updateBindings($profileKey(), b),
+					updateBindings,
 				)}
 			</div>
 		</div>
