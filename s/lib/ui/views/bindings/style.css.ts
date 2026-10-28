@@ -42,6 +42,10 @@ export default css`@layer view {
 
 		min-height: 2.3em;
 
+		&:last-of-type {
+			margin-bottom: calc(var(--space) * 2);
+		}
+
 		> strong {
 			font-weight: normal;
 		}
@@ -85,7 +89,6 @@ export default css`@layer view {
 		margin-left: 0.3em;
 		padding-left: 0.5em;
 		border-left: 1px solid var(--subtle);
-		padding-bottom: calc(var(--space) * 2);
 	}
 
 	.expression .recorder {
