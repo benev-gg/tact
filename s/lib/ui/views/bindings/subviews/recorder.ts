@@ -9,6 +9,7 @@ import backspaceSvg from "../../../icons/akar/backspace.svg.js"
 import {Expression} from "../../../../input/expression.js"
 import {captureKeyChord} from "../parts/capture-key-chord.js"
 import {captureGamepadChord} from "../parts/capture-gamepad-chord.js"
+import {capturePointerChord} from "../parts/capture-pointer-chord.js"
 
 export const RecorderView = lightView((update: (e: Expression) => void, reset: () => void, content: Content) => {
 	const $recording = useSignal<null | (() => void)>(null)
@@ -20,6 +21,7 @@ export const RecorderView = lightView((update: (e: Expression) => void, reset: (
 		schedule(removeRecording)
 		schedule(captureKeyChord(update, dispose))
 		schedule(captureGamepadChord(update, dispose))
+		schedule(capturePointerChord(update, dispose))
 		$recording(dispose)
 	}
 
@@ -45,6 +47,7 @@ export const RecorderView = lightView((update: (e: Expression) => void, reset: (
 			${content}
 
 			<button
+				class=record
 				theme-button=naked
 				title="record a keypress"
 				@click=${toggleRecording}>
