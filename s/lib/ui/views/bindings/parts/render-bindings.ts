@@ -7,6 +7,7 @@ import {ExpressionView} from "../subviews/expression.js"
 import {isExpression} from "../../../../input/investigate/is-expression.js"
 
 export function renderBindings(
+		isReadonly: boolean,
 		bindings: Bindings,
 		original: Bindings,
 		update: (b: Bindings) => void,
@@ -17,12 +18,13 @@ export function renderBindings(
 
 	return Object.entries(bindings).map(([key, child]) => (
 		isExpression(child)
-			? renderExpression(bindings, original as any, update, key)
-			: renderGroup(bindings, original as any, update, key)
+			? renderExpression(isReadonly, bindings, original as any, update, key)
+			: renderGroup(isReadonly, bindings, original as any, update, key)
 	))
 }
 
 function renderGroup(
+		isReadonly: boolean,
 		bindings: Record<string, Bindings>,
 		original: Record<string, Bindings>,
 		update: (b: Bindings) => void,
@@ -34,6 +36,7 @@ function renderGroup(
 			<summary>${key}</summary>
 			<div class=children>
 				${renderBindings(
+					isReadonly,
 					bindings[key],
 					original[key],
 					fresh => update({...bindings, [key]: fresh}),
@@ -44,6 +47,7 @@ function renderGroup(
 }
 
 function renderExpression(
+		isReadonly: boolean,
 		bindings: Record<string, Bindings>,
 		original: Record<string, Bindings>,
 		update: (b: Bindings) => void,
@@ -56,7 +60,7 @@ function renderExpression(
 	return html`
 		<div class=expression>
 			<strong>${key}</strong>
-			${RecorderView(up, reset, renderBindings(bindings[key], original[key], up))}
+			${RecorderView(up, reset, renderBindings(isReadonly, bindings[key], original[key], up))}
 		</div>
 	`
 }

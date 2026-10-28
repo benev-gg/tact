@@ -7,9 +7,14 @@ import {ControllerInfo} from "./controller-info.js"
 
 export type ProfileKey = string
 
-export type Profile<B extends Bindings> = {
+export type Profile<B extends Bindings = any> = {
 	label: string
 	bindings: B
+	basedOn?: string
+}
+
+export type ProfilesData = {
+	custom: [ProfileKey, Profile][],
 }
 
 export type Deck<B extends Bindings = any> = {

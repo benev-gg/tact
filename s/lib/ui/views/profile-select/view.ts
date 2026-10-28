@@ -20,7 +20,16 @@ export const ProfileSelectView = shadowView((
 
 	return html`
 		<select @change=${handleChange}>
-			${Array.from(deck.profiles.all()).map(([key, profile]) => html`
+			${Array.from(deck.profiles.stock).map(([key, profile]) => html`
+				<option
+					value="${key}"
+					?selected="${key === currentProfileKey}">
+					[stock]
+					${profile.label}
+				</option>
+			`)}
+
+			${Array.from(deck.profiles.custom).map(([key, profile]) => html`
 				<option
 					value="${key}"
 					?selected="${key === currentProfileKey}">

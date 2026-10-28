@@ -9,8 +9,16 @@ export default css`@layer view {
 
 .topbar {
 	display: flex;
-	justify-content: center;
+	flex-wrap: wrap;
 	padding: var(--pad);
+
+	.tools {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--pad);
+		flex: 1 1 auto;
+		justify-content: end;
+	}
 }
 
 .bindings, .group {
