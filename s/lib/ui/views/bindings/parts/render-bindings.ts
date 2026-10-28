@@ -2,7 +2,7 @@
 import {html} from "lit"
 import {Content} from "@e280/sly"
 import {Bindings} from "../../../../input/types.js"
-import {RecordingView} from "../subviews/recording.js"
+import {RecorderView} from "../subviews/recorder.js"
 import {ExpressionView} from "../subviews/expression.js"
 import {isExpression} from "../../../../input/investigate/is-expression.js"
 
@@ -56,7 +56,7 @@ function renderExpression(
 	return html`
 		<div class=expression>
 			<strong>${key}</strong>
-			${RecordingView(up, reset, renderBindings(bindings[key], original[key], up))}
+			${RecorderView(up, reset, renderBindings(bindings[key], original[key], up))}
 		</div>
 	`
 }

@@ -86,7 +86,7 @@ export default css`@layer view {
 		padding-bottom: var(--pad);
 	}
 
-	.expression .recordable {
+	.expression .recorder {
 		display: flex;
 		gap: var(--pad);
 
