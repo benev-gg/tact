@@ -49,7 +49,9 @@ export const ExpressionView = lightView((
 		`
 		return html`
 			<div class=bracket>
-				<strong>${expression[0]}</strong>
+				${expression[0] === "*" ? null : html`
+					<strong>${expression[0]}</strong>
+				`}
 				${expression.slice(1).map((e, i) => {
 					return ExpressionView(e ?? null, fresh => {
 						const clone = structuredClone(expression) as any
