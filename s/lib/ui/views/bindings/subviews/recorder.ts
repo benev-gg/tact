@@ -12,7 +12,13 @@ import {captureKeyChord} from "../parts/capture-key-chord.js"
 import {captureGamepadChord} from "../parts/capture-gamepad-chord.js"
 import {capturePointerChord} from "../parts/capture-pointer-chord.js"
 
-export const RecorderView = lightView((update: (e: Expression) => void, reset: () => void, content: Content) => {
+export const RecorderView = lightView((
+		isReadonly: boolean,
+		update: (e: Expression) => void,
+		reset: () => void,
+		content: Content,
+	) => {
+
 	const $recording = useSignal<null | (() => void)>(null)
 
 	const removeRecording = () => $recording(null)
@@ -46,23 +52,24 @@ export const RecorderView = lightView((update: (e: Expression) => void, reset: (
 	return html`
 		<div class=recorder ?data-recording="${!!$recording()}">
 			${content}
+			${isReadonly ? null : html`
+				<button
+					class=record
+					theme-button=naked
+					title="record a keypress"
+					@click=${toggleRecording}>
+					${$recording()
+						? crossSvg
+						: keyCapSvg}
+				</button>
 
-			<button
-				class=record
-				theme-button=naked
-				title="record a keypress"
-				@click=${toggleRecording}>
-				${$recording()
-					? crossSvg
-					: keyCapSvg}
-			</button>
-
-			<button
-				theme-button=naked
-				title="reset to default"
-				@click=${haltAndReset}>
-				${backspaceSvg}
-			</button>
+				<button
+					theme-button=naked
+					title="reset to default"
+					@click=${haltAndReset}>
+					${backspaceSvg}
+				</button>
+			`}
 		</div>
 	`
 })

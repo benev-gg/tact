@@ -10,7 +10,24 @@ export default css`@layer view {
 .topbar {
 	display: flex;
 	flex-wrap: wrap;
-	padding: var(--pad);
+	align-items: center;
+	padding: var(--pad) var(--space);
+
+	[view="profile-select"] {
+		font-size: 1.2em;
+	}
+
+	.corner {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--pad);
+
+		p {
+			opacity: 0.5;
+			font-style: italic;
+		}
+	}
 
 	.tools {
 		display: flex;
@@ -48,7 +65,7 @@ export default css`@layer view {
 		flex-wrap: wrap;
 		gap: 0 var(--pad);
 
-		min-height: 2.3em;
+		min-height: 2.4em;
 
 		&:last-of-type {
 			margin-bottom: calc(var(--space) * 2);

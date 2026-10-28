@@ -1,6 +1,6 @@
 
 import {html} from "lit"
-import {shadowView, useCss} from "@e280/sly"
+import {shadowView, useCss, useName} from "@e280/sly"
 import styleCss from "./style.css.js"
 import themeCss from "../theme.css.js"
 import {Deck} from "../../deck/types.js"
@@ -11,6 +11,7 @@ export const ProfileSelectView = shadowView((
 		onChange: (key: string) => void,
 	) => {
 
+	useName("profile-select")
 	useCss(themeCss, styleCss)
 
 	function handleChange(event: Event) {

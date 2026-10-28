@@ -7,6 +7,7 @@ import {Expression} from "../../../../input/expression.js"
 import xSmallSvg from "../../../icons/akar/x-small.svg.js"
 
 export const ExpressionView = lightView((
+		isReadonly: boolean,
 		expression: Expression,
 		update: (expression: Expression) => void,
 	): Content => {
@@ -23,6 +24,7 @@ export const ExpressionView = lightView((
 					type=number
 					step=any
 					.value="${expression}"
+					?readonly="${isReadonly}"
 					@change="${(event: Event) => {
 						const input = event.currentTarget as HTMLInputElement
 						const value = input.valueAsNumber
@@ -35,7 +37,11 @@ export const ExpressionView = lightView((
 
 	if (isString(expression))
 		return html`
-			<input type=text .value="${expression}" @change="${(event: Event) => {
+			<input
+				type=text
+				.value="${expression}"
+				?readonly="${isReadonly}"
+				@change="${(event: Event) => {
 				const input = event.currentTarget as HTMLInputElement
 				const value = input.value
 				update(value)
@@ -49,7 +55,7 @@ export const ExpressionView = lightView((
 					? "unmodified"
 					: expression.slice(1).join("+")}
 
-				${expression.slice(1).length > 0
+				${!isReadonly && expression.slice(1).length > 0
 					? html`
 						<button
 							theme-button=naked
@@ -65,7 +71,7 @@ export const ExpressionView = lightView((
 					<strong>${expression[0]}</strong>
 				`}
 				${expression.slice(1).map((e, i) => {
-					return ExpressionView(e ?? null, fresh => {
+					return ExpressionView(isReadonly, e ?? null, fresh => {
 						const clone = structuredClone(expression) as any
 						clone[i + 1] = fresh
 						update(clone)

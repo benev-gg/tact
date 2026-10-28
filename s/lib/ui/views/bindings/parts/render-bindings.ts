@@ -14,7 +14,7 @@ export function renderBindings(
 	): Content {
 
 	if (isExpression(bindings))
-		return ExpressionView(bindings, update)
+		return ExpressionView(isReadonly, bindings, update)
 
 	return Object.entries(bindings).map(([key, child]) => (
 		isExpression(child)
@@ -60,7 +60,7 @@ function renderExpression(
 	return html`
 		<div class=expression>
 			<strong>${key}</strong>
-			${RecorderView(up, reset, renderBindings(isReadonly, bindings[key], original[key], up))}
+			${RecorderView(isReadonly, up, reset, renderBindings(isReadonly, bindings[key], original[key], up))}
 		</div>
 	`
 }
