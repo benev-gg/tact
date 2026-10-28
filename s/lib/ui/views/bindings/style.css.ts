@@ -58,14 +58,6 @@ export default css`@layer view {
 			flex-wrap: wrap;
 			align-items: stretch;
 			gap: var(--nib);
-
-			button {
-				padding: 0 var(--pad);
-			}
-
-			&[data-recording] {
-				color: var(--prime);
-			}
 		}
 
 		.bracket {
@@ -92,6 +84,15 @@ export default css`@layer view {
 		padding-left: 0.5em;
 		border-left: 1px solid var(--subtle);
 		padding-bottom: var(--pad);
+	}
+
+	.expression .recordable {
+		display: flex;
+		gap: var(--pad);
+
+		&[data-recording] {
+			color: var(--prime);
+		}
 	}
 }
 

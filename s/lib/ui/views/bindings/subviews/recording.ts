@@ -4,6 +4,7 @@ import {ev} from "@e280/stz"
 import {Content, lightView, useSignal} from "@e280/sly"
 
 import keyCapSvg from "../../../icons/akar/key-cap.svg.js"
+import backspaceSvg from "../../../icons/akar/backspace.svg.js"
 import {Expression} from "../../../../input/expression.js"
 
 const mod = (code: string) => {
@@ -60,7 +61,7 @@ function captureNextKey(update: (code: Expression) => void, onDone: () => void) 
 	return halt
 }
 
-export const RecordingView = lightView((update: (e: Expression) => void, content: Content) => {
+export const RecordingView = lightView((update: (e: Expression) => void, reset: () => void, content: Content) => {
 	const $recording = useSignal<null | (() => void)>(null)
 
 	const stopRecording = () => $recording(null)
@@ -78,8 +79,18 @@ export const RecordingView = lightView((update: (e: Expression) => void, content
 		<div class=recordable ?data-recording="${!!$recording()}">
 			${content}
 
-			<button theme-button @click=${toggleRecording}>
+			<button
+				theme-button=naked
+				title="record a keypress"
+				@click=${toggleRecording}>
 				${keyCapSvg}
+			</button>
+
+			<button
+				theme-button=naked
+				title="reset to default"
+				@click=${reset}>
+				${backspaceSvg}
 			</button>
 		</div>
 	`

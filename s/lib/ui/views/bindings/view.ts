@@ -30,6 +30,7 @@ export const BindingsView = shadowView((deck: Deck) => {
 			<div class=bindings>
 				${renderBindings(
 					profile.bindings,
+					structuredClone(deck.bindings),
 					b => updateBindings($profileKey(), b),
 				)}
 			</div>
