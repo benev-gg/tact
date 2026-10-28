@@ -59,7 +59,7 @@ export const [BindingsView, makeBindingsElement] = shadowDuplex((deck: Deck) => 
 						</button>
 					`}
 
-					${when(isReadonly, () => html`<p>stock profile is readonly.</p>`)}
+					${when(isReadonly, () => html`<p>this stock profile is readonly.</p>`)}
 					${given(profile.basedOn, basedOn => html`<p>based on ${profiles.get(basedOn).label}</p>`)}
 				</div>
 

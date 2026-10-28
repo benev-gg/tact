@@ -25,7 +25,6 @@ export const ProfileSelectView = shadowView((
 				<option
 					value="${key}"
 					?selected="${key === currentProfileKey}">
-					[stock]
 					${profile.label}
 				</option>
 			`)}

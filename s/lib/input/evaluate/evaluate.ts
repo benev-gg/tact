@@ -118,6 +118,14 @@ export function evaluate(
 		case "!!":
 			return +(e(expression[1]) !== 0)
 
+		case "-": {
+			const [, first, ...rest] = expression
+			if (rest.length === 0) return -e(first)
+			let value = e(first)
+			for (const neg of rest) value -= e(neg)
+			return value
+		}
+
 		case "clamp": {
 			const [, min, max, expr] = expression
 			const value = e(expr)

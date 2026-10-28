@@ -33,8 +33,8 @@ export const setupDemoApp = () => shadowElement(() => {
 			},
 			spatial: {
 				looking: {
-					horizontal: ["sum", "pointer.x"],
-					vertical: ["sum", "pointer.y"],
+					horizontal: ["*", ["sum", "pointer.x"], 800],
+					vertical: ["*", ["sum", "pointer.y"], 800],
 				},
 				moving: {
 					forward: "KeyW",
@@ -68,9 +68,41 @@ export const setupDemoApp = () => shadowElement(() => {
 			kv: new Kv(),
 			hub: new Hub(bindings).plug(controller),
 			profiles: new Profiles({
-				standard: {bindings, label: "⌨️standard"},
-				gamer: {bindings, label: "🎮gamer"},
-				micro: {bindings, label: "🦠micro"},
+				standard: {label: "⌨️standard", bindings},
+				gamer: {label: "🎮gamer", bindings: {
+					interactions: {
+						use: "gamepad.1",
+					},
+					spatial: {
+						looking: {
+							horizontal: ["*", ["dt"], "gamepad.axis.3", 100],
+							vertical: ["*", ["dt"], "gamepad.axis.4", 100],
+						},
+						moving: {
+							forward: ["remap", 0, -1, 0, 1, "gamepad.axis.2"],
+							backward: ["remap", 0, 1, 0, 1, "gamepad.axis.2"],
+							leftward: ["remap", 0, -1, 0, 1, "gamepad.axis.1"],
+							rightward: ["remap", 0, 1, 0, 1, "gamepad.axis.1"],
+						},
+					},
+				}},
+				micro: {label: "🦠micro", bindings: {
+					interactions: {
+						use: ["*", "gamepad.5", "gamepad.6"],
+					},
+					spatial: {
+						looking: {
+							horizontal: ["*", ["dt"], ["+", "gamepad.1", ["-", "gamepad.4"]], 100],
+							vertical: ["*", ["dt"], ["+", "gamepad.2", ["-", "gamepad.3"]], 100],
+						},
+						moving: {
+							forward: ["remap", 0, -1, 0, 1, "gamepad.axis.2"],
+							backward: ["remap", 0, 1, 0, 1, "gamepad.axis.2"],
+							leftward: ["remap", 0, -1, 0, 1, "gamepad.axis.1"],
+							rightward: ["remap", 0, 1, 0, 1, "gamepad.axis.1"],
+						},
+					},
+				}},
 			}),
 		})
 	})

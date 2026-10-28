@@ -32,6 +32,7 @@ export type Expression = (
 	// transforms
 	| ["!", Expression]
 	| ["!!", Expression]
+	| ["-", Expression, ...Expression[]]
 	| ["clamp", low: Expression | null, high: Expression | null, subject: Expression]
 	| ["remap", inLow: Expression, inHigh: Expression, outLow: Expression, outHigh: Expression, subject: Expression]
 

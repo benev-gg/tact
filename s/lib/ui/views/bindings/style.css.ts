@@ -82,6 +82,10 @@ export default css`@layer view {
 				font: inherit;
 				color: inherit;
 				width: 8em;
+
+				&[type="number"] {
+					width: 5em;
+				}
 			}
 		}
 
@@ -94,7 +98,7 @@ export default css`@layer view {
 
 		.bracket {
 			align-items: center;
-			gap: var(--nib) var(--pad);
+			gap: var(--nib);
 			padding: 2px var(--nib);
 			background: color-mix(in oklch, #aaa2, var(--slate) 80%);
 			box-shadow: 0.1em 0.2em 0.5em #0002;
