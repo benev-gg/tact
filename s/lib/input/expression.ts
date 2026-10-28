@@ -19,6 +19,7 @@ export type Expression = (
 	| ["max", ...Expression[]]
 	| ["+", ...Expression[]]
 	| ["*", ...Expression[]]
+	| ["mod", ...("shift" | "ctrl" | "meta" | "alt")[]]
 
 	// comparisons
 	| ["==", Expression, Expression]

@@ -187,6 +187,24 @@ export function evaluate(
 			return 0
 		}
 
+		case "mod": {
+			const [, ...modifiers] = expression
+			const down = (code: string) =>
+				isDown(context.latestValues.get(code) ?? 0)
+
+			const shift = down("ShiftLeft") || down("ShiftRight")
+			const ctrl = down("ControlLeft") || down("ControlRight")
+			const alt = down("AltLeft") || down("AltRight")
+			const meta = down("MetaLeft") || down("MetaRight")
+
+			if (modifiers.includes("shift") !== shift) return 0
+			if (modifiers.includes("ctrl") !== ctrl) return 0
+			if (modifiers.includes("alt") !== alt) return 0
+			if (modifiers.includes("meta") !== meta) return 0
+
+			return 1
+		}
+
 		default:
 			throw new Error("unknown expression")
 	}
