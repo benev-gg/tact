@@ -56,7 +56,7 @@ export default css`@layer view {
 			input {
 				font: inherit;
 				color: inherit;
-				width: 12em;
+				width: 8em;
 			}
 		}
 

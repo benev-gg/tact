@@ -23,7 +23,7 @@ export function captureGamepadChord(
 		sourceSet.add(source)
 
 		source.onSample(sample => {
-			if (sample.code === "gamepad.button.any")
+			if (sample.code === "gamepad.any")
 				return undefined
 
 			if (sample.value > 0.9) {

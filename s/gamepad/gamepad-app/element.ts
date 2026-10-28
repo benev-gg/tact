@@ -58,7 +58,7 @@ export const GamepadApp = shadowElement(() => {
 					<ul>
 						${[...samples]
 							.sort(sortSamples)
-							.filter(([code]) => code.startsWith("gamepad.button")).map(renderSample)}
+							.filter(([code]) => !code.startsWith("gamepad.axis")).map(renderSample)}
 					</ul>
 					<ul>
 						${[...samples]

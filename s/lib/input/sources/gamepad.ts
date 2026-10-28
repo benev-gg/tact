@@ -32,19 +32,17 @@ export class GamepadSource extends PlainSource {
 		let any = 0
 
 		for (const [index, button] of gamepad.buttons.entries()) {
-			const i = index + 1
 			const value = button.value
-			this.#publish(`gamepad.button.${i}`, value)
+			this.#publish(`gamepad.${index + 1}`, value)
 			any = Math.max(any, value)
 		}
 
-		this.#publish("gamepad.button.any", any >= 0.9 ? 1 : 0)
+		this.#publish("gamepad.any", any >= 0.9 ? 1 : 0)
 	}
 
 	#pollAxes(gamepad: Gamepad) {
 		for (const [index, value] of gamepad.axes.entries()) {
-			const i = index + 1
-			this.#publish(`gamepad.axis.${i}`, value)
+			this.#publish(`gamepad.axis.${index + 1}`, value)
 		}
 	}
 }
