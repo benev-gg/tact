@@ -38,7 +38,9 @@ function captureNextKey(update: (code: Expression) => void, onDone: () => void) 
 					else codes.add(code)
 				}
 
-				if (codes.size === 0)
+				if (seen.size === 0)
+					void 0
+				else if (codes.size === 0)
 					update(["*", ...seen])
 				else if (mods.size > 0)
 					update(["*", ["mod", ...mods as any], ...codes])
@@ -76,6 +78,11 @@ export const RecordingView = lightView((update: (e: Expression) => void, reset: 
 		else startRecording()
 	}
 
+	function haltAndReset() {
+		haltRecording()
+		reset()
+	}
+
 	useUnmount(haltRecording)
 
 	return html`
@@ -92,7 +99,7 @@ export const RecordingView = lightView((update: (e: Expression) => void, reset: 
 			<button
 				theme-button=naked
 				title="reset to default"
-				@click=${reset}>
+				@click=${haltAndReset}>
 				${backspaceSvg}
 			</button>
 		</div>
