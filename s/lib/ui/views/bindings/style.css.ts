@@ -96,7 +96,7 @@ export default css`@layer view {
 		gap: var(--pad);
 
 		&[data-recording] {
-			color: var(--prime);
+			color: var(--recording);
 		}
 	}
 }

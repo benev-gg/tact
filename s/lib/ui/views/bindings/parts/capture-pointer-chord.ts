@@ -14,26 +14,23 @@ export function capturePointerChord(
 	const held = new Set<string>()
 	const seen = new Set<string>()
 
-	const isControl = (event: MouseEvent) =>
-		event.composedPath().some(target =>
+	const isControl = (event: MouseEvent) => {
+		return event.composedPath().some(target =>
 			target instanceof Element &&
 			target.matches("button.record")
 		)
+	}
 
 	schedule(ev(window, {
 		blur: () => dispose(),
+		auxclick: (event: MouseEvent) => event.preventDefault(),
 
 		mousedown: (event: MouseEvent) => {
 			if (isControl(event)) return
 			event.preventDefault()
-
 			const code = mouseButton(event.button)
 			held.add(code)
 			seen.add(code)
-		},
-
-		auxclick: (event: MouseEvent) => {
-			event.preventDefault()
 		},
 
 		mouseup: (event: MouseEvent) => {
@@ -55,3 +52,4 @@ export function capturePointerChord(
 
 	return dispose
 }
+

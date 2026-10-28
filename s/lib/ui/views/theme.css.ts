@@ -21,6 +21,7 @@ ${cssReset}
 
 	--subtle: #fff2;
 	--prime: #75dc66;
+	--recording: yellow;
 
 	--draggy: rebeccapurple;
 	--droppy: cyan;

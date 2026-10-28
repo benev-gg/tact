@@ -6,6 +6,7 @@ import {Content, lightView, useSignal, useUnmount} from "@e280/sly"
 import keyCapSvg from "../../../icons/akar/key-cap.svg.js"
 import backspaceSvg from "../../../icons/akar/backspace.svg.js"
 
+import crossSvg from "../../../icons/akar/cross.svg.js"
 import {Expression} from "../../../../input/expression.js"
 import {captureKeyChord} from "../parts/capture-key-chord.js"
 import {captureGamepadChord} from "../parts/capture-gamepad-chord.js"
@@ -51,7 +52,9 @@ export const RecorderView = lightView((update: (e: Expression) => void, reset: (
 				theme-button=naked
 				title="record a keypress"
 				@click=${toggleRecording}>
-				${keyCapSvg}
+				${$recording()
+					? crossSvg
+					: keyCapSvg}
 			</button>
 
 			<button
