@@ -42,8 +42,8 @@ export const ExpressionView = lightView((
 			}}"/>
 		`
 
-	if (isArray(expression)) {
-		if (expression[0] === "mod") return html`
+	if (isArray(expression))
+		return (expression[0] === "mod") ? html`
 			<div class="bracket mod">
 				${expression.slice(1).length === 0
 					? "unmodified"
@@ -59,8 +59,7 @@ export const ExpressionView = lightView((
 					`
 					: null}
 			</div>
-		`
-		return html`
+		` : html`
 			<div class=bracket>
 				${expression[0] === "*" ? null : html`
 					<strong>${expression[0]}</strong>
@@ -74,7 +73,6 @@ export const ExpressionView = lightView((
 				})}
 			</div>
 		`
-	}
 
 	else
 		throw new Error("unknown expression")
