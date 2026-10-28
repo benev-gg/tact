@@ -1,13 +1,14 @@
 
 import {html} from "lit"
+import {disposer} from "@e280/stz"
 import {Content, lightView, useSignal, useUnmount} from "@e280/sly"
 
 import keyCapSvg from "../../../icons/akar/key-cap.svg.js"
+import backspaceSvg from "../../../icons/akar/backspace.svg.js"
+
 import {Expression} from "../../../../input/expression.js"
 import {captureKeyChord} from "../parts/capture-key-chord.js"
-import backspaceSvg from "../../../icons/akar/backspace.svg.js"
-import { disposer } from "@e280/stz"
-import { captureGamepadChord } from "../parts/capture-gamepad-chord.js"
+import {captureGamepadChord} from "../parts/capture-gamepad-chord.js"
 
 export const RecorderView = lightView((update: (e: Expression) => void, reset: () => void, content: Content) => {
 	const $recording = useSignal<null | (() => void)>(null)

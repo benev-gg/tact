@@ -1,9 +1,11 @@
 
 import {html} from "lit"
 import {Content, lightView} from "@e280/sly"
-import {isArray, isHappy, isNumber, isString} from "@e280/stz"
+import {isArray, isHappy, isNumber, isString, when} from "@e280/stz"
 
 import {Expression} from "../../../../input/expression.js"
+import crossSvg from "../../../icons/akar/cross.svg.js"
+import xSmallSvg from "../../../icons/akar/x-small.svg.js"
 
 export const ExpressionView = lightView((
 		expression: Expression,
@@ -44,7 +46,19 @@ export const ExpressionView = lightView((
 	if (isArray(expression)) {
 		if (expression[0] === "mod") return html`
 			<div class="bracket mod">
-				${expression.slice(1).join("+")}
+				${expression.slice(1).length === 0
+					? "unmodified"
+					: expression.slice(1).join("+")}
+
+				${expression.slice(1).length > 0
+					? html`
+						<button
+							theme-button=naked
+							@click="${() => update([expression[0]])}">
+							${xSmallSvg}
+						</button>
+					`
+					: null}
 			</div>
 		`
 		return html`

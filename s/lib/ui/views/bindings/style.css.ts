@@ -52,9 +52,7 @@ export default css`@layer view {
 			input {
 				font: inherit;
 				color: inherit;
-
 				width: 12em;
-				font-size: 0.7em;
 			}
 		}
 
@@ -87,7 +85,7 @@ export default css`@layer view {
 		margin-left: 0.3em;
 		padding-left: 0.5em;
 		border-left: 1px solid var(--subtle);
-		padding-bottom: var(--pad);
+		padding-bottom: calc(var(--space) * 2);
 	}
 
 	.expression .recorder {
