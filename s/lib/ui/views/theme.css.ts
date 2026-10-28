@@ -19,6 +19,9 @@ ${cssReset}
 	--gem: #1e348c;
 	--gem-shimmer: cyan;
 
+	--subtle: #fff2;
+	--prime: #75dc66;
+
 	--draggy: rebeccapurple;
 	--droppy: cyan;
 
@@ -49,6 +52,7 @@ ${cssReset}
 	align-items: center;
 	justify-content: center;
 	font: inherit;
+	color: inherit;
 
 	cursor: pointer;
 	opacity: 0.8;

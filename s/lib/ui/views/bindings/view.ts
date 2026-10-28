@@ -1,6 +1,5 @@
 
 import {html} from "lit"
-import {debounce} from "@e280/stz"
 import {shadowView, useCss, useOnce, useSignal} from "@e280/sly"
 
 import styleCss from "./style.css.js"
@@ -17,9 +16,9 @@ export const BindingsView = shadowView((deck: Deck) => {
 	const profile = deck.profiles.get($profileKey())
 
 	const updateBindings = useOnce(() =>
-		debounce(200, (profileKey: string, bindings: Bindings) => {
+		(profileKey: string, bindings: Bindings) => {
 			deck.profiles.updateBindings(profileKey, bindings)
-		})
+		}
 	)
 
 	return html`

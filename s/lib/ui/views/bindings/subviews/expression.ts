@@ -2,6 +2,8 @@
 import {html} from "lit"
 import {Content, lightView} from "@e280/sly"
 import {isArray, isHappy, isNumber, isString} from "@e280/stz"
+
+import {StringView} from "./string-view.js"
 import {Expression} from "../../../../input/expression.js"
 
 export const ExpressionView = lightView((
@@ -9,7 +11,7 @@ export const ExpressionView = lightView((
 		update: (expression: Expression) => void,
 	): Content => {
 
-	if (expression === null)
+	if (!isHappy(expression))
 		return html`
 			<div class=null>unset</div>
 		`
@@ -32,24 +34,14 @@ export const ExpressionView = lightView((
 		`
 
 	if (isString(expression))
-		return html`
-			<div class=string>
-				<input type=text value="${expression}" @change="${(event: Event) => {
-					const input = event.currentTarget as HTMLInputElement
-					const value = input.value
-					update(value)
-				}}"/>
-			</div>
-		`
-
+		return StringView(expression, update)
 
 	if (isArray(expression))
 		return html`
 			<div class=bracket theme-card>
 				<strong>${expression[0]}</strong>
 				${expression.slice(1).map((e, i) => {
-					if (!isHappy(e)) return null
-					return ExpressionView(e, fresh => {
+					return ExpressionView(e ?? null, fresh => {
 						const clone = structuredClone(expression) as any
 						clone[i + 1] = fresh
 						update(clone)
