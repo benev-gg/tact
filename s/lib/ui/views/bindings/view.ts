@@ -81,7 +81,7 @@ export const [BindingsView, makeBindingsElement] = shadowDuplex((deck: Deck) => 
 				${renderBindings(
 					false,
 					profile.bindings,
-					structuredClone(deck.bindings),
+					profiles.get(profile.basedOn).bindings,
 					updateBindings,
 				)}
 			</div>
