@@ -50,6 +50,7 @@ export default css`@layer view {
 	padding: var(--space);
 
 	summary {
+		color: var(--prime);
 		width: max-content;
 		font-weight: bold;
 		font-size: 1.2em;

@@ -5,7 +5,7 @@ import {shadowDuplex, useCss, useOnce} from "@e280/sly"
 
 import styleCss from "./style.css.js"
 import themeCss from "../theme.css.js"
-import peopleGroupSvg from "../../icons/akar/people-group.svg.js"
+import gameControllerSvg from "../../icons/akar/game-controller.svg.js"
 import settingsHorizontalSvg from "../../icons/akar/settings-horizontal.svg.js"
 
 import {Deck} from "../../deck/types.js"
@@ -30,8 +30,8 @@ export const [DeckView, makeDeckElement] = shadowDuplex((deck: Deck) => {
 				props: [{control: tabsControl}],
 				children: html`
 					<button theme-button>
-						${peopleGroupSvg}
-						<span>players</span>
+						${gameControllerSvg}
+						<span>controllers</span>
 					</button>
 
 					<button theme-button>

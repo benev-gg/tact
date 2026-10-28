@@ -20,7 +20,8 @@ ${cssReset}
 	--gem-shimmer: cyan;
 
 	--subtle: #fff2;
-	--prime: #75dc66;
+	--prime: #66b0dc;
+	--bravo: #75dc66;
 	--recording: yellow;
 
 	--draggy: rebeccapurple;
