@@ -1,7 +1,7 @@
 
 import {html} from "lit"
 import {ev} from "@e280/stz"
-import {Content, lightView, useSignal} from "@e280/sly"
+import {Content, lightView, useSignal, useUnmount} from "@e280/sly"
 
 import keyCapSvg from "../../../icons/akar/key-cap.svg.js"
 import backspaceSvg from "../../../icons/akar/backspace.svg.js"
@@ -64,16 +64,19 @@ function captureNextKey(update: (code: Expression) => void, onDone: () => void) 
 export const RecordingView = lightView((update: (e: Expression) => void, reset: () => void, content: Content) => {
 	const $recording = useSignal<null | (() => void)>(null)
 
-	const stopRecording = () => $recording(null)
-	const startRecording = () => $recording(captureNextKey(update, stopRecording))
+	const removeRecording = () => $recording(null)
+	const startRecording = () => $recording(captureNextKey(update, removeRecording))
+	const haltRecording = () => {
+		$recording()?.()
+		removeRecording()
+	}
 
 	function toggleRecording() {
-		if ($recording()) {
-			$recording()?.()
-			stopRecording()
-		}
+		if ($recording()) haltRecording()
 		else startRecording()
 	}
+
+	useUnmount(haltRecording)
 
 	return html`
 		<div class=recordable ?data-recording="${!!$recording()}">
