@@ -29,12 +29,12 @@ export const setupDemoApp = () => shadowElement(() => {
 	const deck = useOnce(() => {
 		const bindings = asBindings({
 			interactions: {
-				use: 123,
+				use: "KeyE",
 			},
 			spatial: {
 				looking: {
-					horizontal: ["+", ["sum", "pointer.x"], ["*", ["dt"], "gamepad.axis.1"]],
-					vertical: ["+", ["sum", "pointer.y"], ["*", ["dt"], "gamepad.axis.2"]],
+					horizontal: ["sum", "pointer.x"],
+					vertical: ["sum", "pointer.y"],
 				},
 				moving: {
 					forward: "KeyW",

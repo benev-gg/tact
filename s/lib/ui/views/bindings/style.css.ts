@@ -13,6 +13,12 @@ export default css`@layer view {
 	padding: var(--pad);
 }
 
+.bindings, .group {
+	display: flex;
+	flex-direction: column;
+	gap: var(--nib);
+}
+
 .bindings {
 	user-select: none;
 	cursor: default;
@@ -28,7 +34,7 @@ export default css`@layer view {
 
 	.expression {
 		display: flex;
-		align-items: center;
+		align-items: end;
 		margin-left: 0.5em;
 		border-bottom: 1px dashed var(--subtle);
 		flex-wrap: wrap;
@@ -47,8 +53,9 @@ export default css`@layer view {
 			}
 		}
 
-		.string {
+		div {
 			display: flex;
+			flex-wrap: wrap;
 			align-items: stretch;
 			gap: var(--nib);
 
@@ -62,20 +69,25 @@ export default css`@layer view {
 		}
 
 		.bracket {
-			display: flex;
-			flex-wrap: wrap;
 			align-items: center;
 			gap: var(--nib) var(--pad);
-			padding: 0 var(--nib);
-			--slate: #8881;
+			padding: 2px var(--nib);
+			background: color-mix(in oklch, #aaa2, var(--slate) 80%);
 			box-shadow: 0.1em 0.2em 0.5em #0002;
+			border: 1px solid #fff4;
+			border-radius: 0.2em;
 		}
 	}
 
 	.children {
+		display: flex;
+		flex-direction: column;
+		gap: var(--nib);
+
 		margin-left: 0.3em;
 		padding-left: 0.5em;
 		border-left: 1px solid var(--subtle);
+		padding-bottom: var(--pad);
 	}
 }
 

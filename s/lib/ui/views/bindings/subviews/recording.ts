@@ -1,10 +1,9 @@
 
 import {html} from "lit"
 import {ev} from "@e280/stz"
-import {lightView, useSignal} from "@e280/sly"
+import {Content, lightView, useSignal} from "@e280/sly"
 
 import keyCapSvg from "../../../icons/akar/key-cap.svg.js"
-
 import {Expression} from "../../../../input/expression.js"
 
 function captureNextKey(update: (code: Expression) => void, onDone: () => void) {
@@ -22,7 +21,7 @@ function captureNextKey(update: (code: Expression) => void, onDone: () => void) 
 	return halt
 }
 
-export const StringView = lightView((expression: string, update: (e: Expression) => void) => {
+export const RecordingView = lightView((update: (e: Expression) => void, content: Content) => {
 	const $recording = useSignal<null | (() => void)>(null)
 
 	const stopRecording = () => $recording(null)
@@ -37,12 +36,8 @@ export const StringView = lightView((expression: string, update: (e: Expression)
 	}
 
 	return html`
-		<div class=string ?data-recording="${!!$recording()}">
-			<input type=text .value="${expression}" @change="${(event: Event) => {
-				const input = event.currentTarget as HTMLInputElement
-				const value = input.value
-				update(value)
-			}}"/>
+		<div class=recordable ?data-recording="${!!$recording()}">
+			${content}
 
 			<button theme-button @click=${toggleRecording}>
 				${keyCapSvg}
