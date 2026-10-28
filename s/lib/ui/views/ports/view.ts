@@ -1,7 +1,7 @@
 
 import {html} from "lit"
 import {isHappy, when} from "@e280/stz"
-import {loot, shadowView, useCss, useOnce} from "@e280/sly"
+import {loot, shadowDuplex, useCss, useOnce} from "@e280/sly"
 
 import styleCss from "./style.css.js"
 import themeCss from "../theme.css.js"
@@ -12,7 +12,7 @@ import {Context} from "../deck/types.js"
 import {CardView} from "./subviews/card.js"
 import {PortView} from "./subviews/port.js"
 
-export const PortsView = shadowView((deck: Deck) => {
+export const [PortsView, makePortsElement] = shadowDuplex((deck: Deck) => {
 	useCss(themeCss, styleCss)
 
 	const {hub} = deck

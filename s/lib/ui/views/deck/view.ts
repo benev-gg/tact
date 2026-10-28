@@ -12,7 +12,7 @@ import {Deck} from "../../deck/types.js"
 import {PortsView} from "../ports/view.js"
 import {BindingsView} from "../bindings/view.js"
 
-export const [DeckView, makeDeck] = shadowDuplex((deck: Deck) => {
+export const [DeckView, makeDeckElement] = shadowDuplex((deck: Deck) => {
 	useCss(themeCss, styleCss)
 
 	const attrs = {slot: "panel"}

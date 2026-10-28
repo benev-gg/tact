@@ -1,6 +1,6 @@
 
 import {html} from "lit"
-import {shadowView, useCss, useOnce, useSignal} from "@e280/sly"
+import {shadowDuplex, useCss, useOnce, useSignal} from "@e280/sly"
 
 import styleCss from "./style.css.js"
 import themeCss from "../theme.css.js"
@@ -10,7 +10,7 @@ import {Bindings} from "../../../input/types.js"
 import {renderBindings} from "./parts/render-bindings.js"
 import {ProfileSelectView} from "../profile-select/view.js"
 
-export const BindingsView = shadowView((deck: Deck) => {
+export const [BindingsView, makeBindingsElement] = shadowDuplex((deck: Deck) => {
 	useCss(themeCss, styleCss)
 	const $profileKey = useSignal(deck.profiles.default)
 	const profile = deck.profiles.get($profileKey())
