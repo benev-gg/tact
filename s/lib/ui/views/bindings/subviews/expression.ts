@@ -43,6 +43,11 @@ export const ExpressionView = lightView((
 		`)
 
 	if (isArray(expression)) {
+		if (expression[0] === "mod") return html`
+			<div class="bracket mod">
+				${expression.slice(1).map(e => html`<span>${e}</span>`)}
+			</div>
+		`
 		const rend = expression[0] === "*"
 			? (c: Content) => RecordingView(update, c)
 			: (c: Content) => c

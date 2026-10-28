@@ -76,6 +76,10 @@ export default css`@layer view {
 			box-shadow: 0.1em 0.2em 0.5em #0002;
 			border: 1px solid #fff4;
 			border-radius: 0.2em;
+
+			&.mod {
+				gap: var(--nib);
+			}
 		}
 	}
 
