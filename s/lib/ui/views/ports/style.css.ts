@@ -10,14 +10,14 @@ export default css`@layer view {
 	gap: var(--pad);
 }
 
-.plate[data-drag-and-drop] {
-	.card[data-drop-candidate] {
+[data-drag-and-drop] {
+	.port[data-drop-candidate] {
 		outline: 2px dashed color-mix(in oklch, transparent, var(--droppy) 80%);
-		background: color-mix(in oklch, var(--card), var(--droppy) 20%);
+		background: color-mix(in oklch, var(--slate), var(--droppy) 20%);
 
 		&[data-dropping] {
 			outline: 2px solid var(--droppy);
-			background: color-mix(in oklch, var(--card), var(--droppy) 50%);
+			background: color-mix(in oklch, var(--slate), var(--droppy) 50%);
 		}
 	}
 }
@@ -34,12 +34,15 @@ export default css`@layer view {
 
 	> * {
 		min-width: 0;
-		min-height: 6em;
+		min-height: 7em;
 	}
+}
 
-	.box {
-		display: flex;
-		flex-direction: column;
+.port {
+	display: flex;
+	flex-direction: column;
+
+	&.new {
 		justify-content: center;
 		align-items: center;
 		padding: var(--pad);
@@ -59,11 +62,6 @@ export default css`@layer view {
 			}
 		}
 	}
-}
-
-.card {
-	display: flex;
-	flex-direction: column;
 
 	h3 {
 		display: flex;
@@ -72,7 +70,7 @@ export default css`@layer view {
 		padding: var(--nib) var(--pad);
 	}
 
-	.inset {
+	.controllerlist {
 		display: flex;
 		flex: 1 1 auto;
 		flex-direction: column;

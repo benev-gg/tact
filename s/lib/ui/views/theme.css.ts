@@ -12,9 +12,8 @@ ${cssReset}
 	--bg: #1b1a18;
 	--text: #fffc;
 	--prime: #fb0;
-	--draggy: rebeccapurple;
-	--droppy: cyan;
-	--recording: var(--prime);
+	--droppy: oklch(from var(--prime) l c calc(h + 100));
+	--recording: oklch(from var(--prime) l c calc(h + 100));
 
 	--round: 0.5em;
 	--pad: 0.5em;

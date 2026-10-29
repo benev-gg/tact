@@ -8,9 +8,10 @@ import themeCss from "../theme.css.js"
 import personAddSvg from "../../icons/akar/person-add.svg.js"
 
 import {Deck} from "../../deck/types.js"
-import {Context} from "../deck/types.js"
-import {CardView} from "./subviews/card.js"
 import {PortView} from "./subviews/port.js"
+import {DropcardView} from "./subviews/dropcard.js"
+import {ControllerView} from "./subviews/controller.js"
+import {Context, droppyNewPort} from "../deck/types.js"
 
 export const [PortsView, makePortsElement] = shadowDuplex((deck: Deck) => {
 	useCss(themeCss, styleCss)
@@ -24,7 +25,9 @@ export const [PortsView, makePortsElement] = shadowDuplex((deck: Deck) => {
 		deck,
 		dnd: new loot.DragAndDrops({
 			acceptDrop(_event, draggy, droppy) {
-				if (isHappy(droppy.portId))
+				if (droppy.portId === droppyNewPort)
+					hub.plug(draggy.controller, hub.createPort())
+				else if (isHappy(droppy.portId))
 					hub.plug(draggy.controller, droppy.portId)
 				else
 					hub.unplug(draggy.controller)
@@ -37,22 +40,30 @@ export const [PortsView, makePortsElement] = shadowDuplex((deck: Deck) => {
 			<div class=ports>
 				${hub.portIds.map(renderPort)}
 
-				${when(hub.portIds.length < deck.maxPorts, () => html`
-					<div class=box theme-card=dull>
+				${when(hub.portIds.length < deck.maxPorts, () => DropcardView({
+					class: "port new",
+					themeCard: "dull",
+					portId: droppyNewPort,
+					context,
+					content: html`
 						<button theme-button=naked @click="${clickCreatePort}">
 							${personAddSvg}
 							<span>add player</span>
 						</button>
-					</div>
-				`)}
+					`,
+				}))}
 
-				${CardView({
-					context,
+				${DropcardView({
+					class: "port unassigned",
 					themeCard: "dull",
-					class: "unassigned",
-					heading: html`<span>unassigned</span>`,
 					portId: null,
-					controllers: controllers.unassigned,
+					context,
+					content: html`
+						<h3>unassigned</h3>
+						<div class=controllerlist>
+							${controllers.unassigned.map(c => ControllerView(context, c))}
+						</div>
+					`,
 				})}
 			</div>
 		</div>
