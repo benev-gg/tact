@@ -12,8 +12,8 @@ export class Assignments {
 	}
 
 	async assign(controller: Controller, profileKey: ProfileKey) {
-		this.#data.subby.publish()
 		await assignProfile(this.#data, controller, profileKey)
+		this.#data.subby.publish()
 	}
 
 	assignedProfileKeyOf(controller: Controller) {
