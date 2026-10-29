@@ -16,7 +16,6 @@ export class Profiles<B extends Bindings = any> {
 
 	stock = new RMap<ProfileKey, Profile<B>>()
 	custom = new RMap<ProfileKey, Profile<B>>()
-	assignments = new RMap<Controller, ProfileKey>()
 
 	constructor(stock: Record<ProfileKey, Profile<B>>) {
 		this.defaultKey = got(Object.keys(stock)[0], "profiles requires at least one in stock")
@@ -39,20 +38,20 @@ export class Profiles<B extends Bindings = any> {
 			?? got(this.stock.get(this.defaultKey))
 	}
 
-	/** learn what profile key a controller is assigned to. */
-	query(controller: Controller): ProfileKey {
-		for (const [c, profileKey] of this.assignments) {
-			if (c === controller)
-				return profileKey
-		}
-		return this.defaultKey
-	}
-
-	/** assign a controller to a specific profile. */
-	assign(controller: Controller, profileKey: ProfileKey) {
-		controller.bindings = this.get(profileKey).bindings
-		this.assignments.set(controller, profileKey)
-	}
+	// /** learn what profile key a controller is assigned to. */
+	// query(controller: Controller): ProfileKey {
+	// 	for (const [c, profileKey] of this.assignments) {
+	// 		if (c === controller)
+	// 			return profileKey
+	// 	}
+	// 	return this.defaultKey
+	// }
+	//
+	// /** assign a controller to a specific profile. */
+	// assign(controller: Controller, profileKey: ProfileKey) {
+	// 	controller.bindings = this.get(profileKey).bindings
+	// 	this.assignments.set(controller, profileKey)
+	// }
 
 	create(profile: Profile<B>) {
 		this.#ensureCompatible(profile.bindings)

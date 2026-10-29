@@ -3,7 +3,7 @@ import {Kv} from "@e280/kv"
 import {Hub} from "./hub.js"
 import {Profiles} from "./profiles.js"
 import {Bindings} from "../../input/types.js"
-import {ControllerInfo} from "./controller-info.js"
+import {ControllerRegistry} from "./registry.js"
 
 export type ProfileKey = string
 
@@ -23,7 +23,7 @@ export type Deck<B extends Bindings = any> = {
 	bindings: B
 	maxPorts: number
 	profiles: Profiles<B>
-	controllerInfo: ControllerInfo
+	registry: ControllerRegistry
 }
 
 export const asDeck = <B extends Bindings>(deck: Deck<B>) => deck

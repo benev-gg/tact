@@ -5,16 +5,17 @@ import {lightView} from "@e280/sly"
 import dragVerticalFillSvg from "../../../icons/akar/drag-vertical-fill.svg.js"
 
 import {Context} from "../../deck/types.js"
+import {hueify} from "../../../../utils/hueify.js"
 import {Controller} from "../../../../input/controller.js"
-import { ProfileSelectView } from "../../profile-select/view.js"
+import {ProfileSelectView} from "../../profile-select/view.js"
 
 export const ControllerView = lightView((context: Context, controller: Controller) => {
 	const {deck, dnd} = context
 	const dragzone = dnd.dragzone(() => ({controller}))
 	const currentProfileKey = deck.profiles.query(controller)
-	const info = deck.controllerInfo.get(controller)
+	const meta = deck.registry.get(controller) ?? deck.registry.fallback()
 
-	const style = `--hue: ${info.hue};`
+	const style = `--hue: ${hueify(meta?.id ?? 0)};`
 
 	return html`
 		<div class=controller
@@ -29,9 +30,9 @@ export const ControllerView = lightView((context: Context, controller: Controlle
 				${dragVerticalFillSvg}
 			</div>
 
-			<h4 class=label title="${info.tooltip}">
-				<span class=icon>${info.icon}</span>
-				<span class=name>${info.name}</span>
+			<h4 class=label title="${meta.tooltip}">
+				<span class=icon>${meta.icon}</span>
+				<span class=name>${meta.name}</span>
 			</h4>
 
 			${ProfileSelectView(deck, currentProfileKey, key => {

@@ -6,7 +6,7 @@ import {GamepadSource} from "../../input/sources/gamepad.js"
 
 export function autoGamepads(
 		hub: Hub,
-		fn?: (controller: Controller, source: GamepadSource) => void
+		fn?: (controller: Controller, source: GamepadSource) => () => void
 	) {
 
 	return onPad(pad => {
@@ -18,9 +18,12 @@ export function autoGamepads(
 		})
 
 		hub.plug(controller)
-		fn?.(controller, source)
+		const dispose = fn?.(controller, source)
 
-		return () => hub.remove(controller)
+		return () => {
+			hub.remove(controller)
+			dispose?.()
+		}
 	})
 }
 

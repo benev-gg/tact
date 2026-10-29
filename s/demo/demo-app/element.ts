@@ -15,16 +15,13 @@ import {Profiles} from "../../lib/ui/deck/profiles.js"
 import {DeckView} from "../../lib/ui/views/deck/view.js"
 import {Controller} from "../../lib/input/controller.js"
 import {Sources} from "../../lib/input/sources/sources.js"
-import {ColorWheel} from "../../lib/ui/deck/color-wheel.js"
 import {autoGamepads} from "../../lib/ui/deck/auto-gamepads.js"
 import {PointerSource} from "../../lib/input/sources/pointer.js"
+import {ControllerRegistry} from "../../lib/ui/deck/registry.js"
 import {KeyboardSource} from "../../lib/input/sources/keyboard.js"
-import {ControllerInfo} from "../../lib/ui/deck/controller-info.js"
 
 export const setupDemoApp = () => shadowElement(() => {
 	useCss(styleCss)
-
-	const colorWheel = useOnce(() => new ColorWheel())
 
 	const deck = useOnce(() => {
 		const bindings = asBindings({
@@ -45,7 +42,8 @@ export const setupDemoApp = () => shadowElement(() => {
 			},
 		})
 
-		const controllerInfo = new ControllerInfo()
+		const registry = new ControllerRegistry()
+
 		const controller = new Controller({
 			bindings,
 			source: new Sources(
@@ -54,9 +52,9 @@ export const setupDemoApp = () => shadowElement(() => {
 			),
 		})
 
-		controllerInfo.set(controller, {
+		registry.attach(controller, {
 			icon: devicesSvg,
-			hue: colorWheel.hue,
+			handle: "standard",
 			name: "keyboard and mouse",
 			tooltip: "",
 		})
@@ -64,7 +62,7 @@ export const setupDemoApp = () => shadowElement(() => {
 		return asDeck({
 			bindings,
 			maxPorts: 4,
-			controllerInfo,
+			registry,
 			kv: new Kv(),
 			hub: new Hub(bindings).plug(controller),
 			profiles: new Profiles({
@@ -108,13 +106,16 @@ export const setupDemoApp = () => shadowElement(() => {
 	})
 
 	useMount(() => autoGamepads(deck.hub, (controller, source) => {
+		const handle = `${source.pad.gamepad.id} ${source.pad.gamepad.index + 1}`
 		deck.profiles.assign(controller, "gamer")
-		deck.controllerInfo.set(controller, {
+		deck.registry.attach(controller, {
 			icon: gameControllerSvg,
-			hue: colorWheel.hue,
-			name: `${source.pad.gamepad.id} ${source.pad.gamepad.index + 1}`,
+			handle,
+			name: handle,
 			tooltip: "",
+			defaultProfileKey: "gamer",
 		})
+		return () => deck.registry.detach(controller)
 	}))
 
 	useMount(() => cycle(async() => deck.hub.encodeAll()))
