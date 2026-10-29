@@ -5,7 +5,7 @@ export type Expression = (
 
 	// samplers
 	| string // use last-known sample value for a code like "KeyW", "pointer.move.up".
-	| ["sum", string] // sum values this frame.
+	| ["accumulate", string] // sum values this frame.
 	| ["up", string] // count releases this frame.
 	| ["down", string] // count presses this frame.
 	| ["was", string] // get previously known value from before this frame.

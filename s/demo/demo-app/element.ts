@@ -30,8 +30,8 @@ export const setupDemoApp = () => shadowElement(() => {
 			},
 			spatial: {
 				looking: {
-					horizontal: ["sum", "pointer.x"],
-					vertical: ["sum", "pointer.y"],
+					horizontal: ["accumulate", "pointer.x"],
+					vertical: ["accumulate", "pointer.y"],
 				},
 				moving: {
 					forward: "KeyW",

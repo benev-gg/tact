@@ -23,7 +23,7 @@ export function evaluate(
 		return context.latestValues.get(expression) ?? 0
 
 	else switch (expression[0]) {
-		case "sum": {
+		case "accumulate": {
 			const code = expression[1]
 			let x = 0
 			for (const sample of context.recentSamples) {
