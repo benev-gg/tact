@@ -2,98 +2,96 @@
 # 🎮 @benev/tact
 > *from keypress to couch co-op.*
 
-**tact is a tiny input toolkit for web games.**  
-keyboards, mice, gamepads. expressive bindings json dsl.  
-binary messages for efficient networking and web worker multithreading.  
+**tact is a user-input toolkit for web games.**
 
-```ts
-npm install @benev/tact@next
-```
-
-
-
-<br/>
-
-## 🕹️ sources emit samples.
-
-- **samples look like** `{code: "KeyW", value: 1}`
-    ```ts
-    import {Sources, KeyboardSource, PointerSource} from "@benev/tact"
-    ```
-    ```ts
-    const source = new Sources(
-      new KeyboardSource(),
-      new PointerSource(),
-    )
-    ```
-    - proper sources: [GamepadSource](./s/lib/input/sources/gamepad.ts), [KeyboardSource](./s/lib/input/sources/keyboard.ts), [PointerSource](./s/lib/input/sources/pointer.ts), [StickSource](./s/lib/input/sources/stick.ts).
-    - utility sources: [Sources](./s/lib/input/sources/sources.ts) *(consolidates sources)*, [PlainSource](./s/lib/input/sources/plain.ts) *(handy base class)*.
+🖱 keyboards, mice, gamepads.  
+🧩 expressive bindings json dsl.  
+🎨 bindings are user-customizable.  
+🫂 multiplayer and splitscreen capable.  
+🧬 binary for efficient workers and networking.  
+🎸 ready-to-rock drop-in user-interface.  
 
 
 
 <br/>
 
-## 🕹️ bindings is a tiny language for interpreting samples.
+## 🎮 let's play.
 
-- **bindings dsl is json-friendly.**
+- **install tact.**
+    ```sh
+    npm install @benev/tact@next
+    ```
+- **make your app's standard bindings.**
     ```ts
     import {asBindings} from "@benev/tact"
-    ```
-    ```ts
+
     const bindings = asBindings({
-      forward: ["max", "KeyW", "ArrowUp"],
-      jump: ["down", "Space"],
-      look: ["sum", "pointer.x"],
+      jump: "Space",
+      forward: "KeyW",
+      look: ["accumulate", "pointer.x"],
     })
     ```
-    - see [expression.ts](./s/lib/input/expression.ts) to learn what's possible.
+    - bindings is a tiny json dsl. see [expression.ts](./s/lib/input/expression.ts).
+- **let's also have some alternative bindings for gamepads.**
+    ```ts
+    import {asStockProfiles} from "@benev/tact"
+
+    const stock = asStockProfiles<typeof bindings>({
+      standard: {
+        label: "⌨️standard",
+        bindings,
+      },
+      gamepad: {
+        label: "🎮gamer",
+        bindings: {
+          jump: "gamepad.1",
+          forward: ["remap", 0, -1, 0, 1, "gamepad.axis.2"],
+          look: ["*", ["dt"], "gamepad.axis.3", 100],
+        },
+      },
+    })
+    ```
+- **now we can setup tact and register the elements.**
+    ```ts
+    import {setupTact} from "@benev/tact"
+
+    const tact = await setupTact({stock, maxPorts: 4})
+    tact.mouseAndKeyboard()
+    tact.gamepads("gamepad")
+    tact.registerElements()
+    ```
+- **simply put the `<tact-deck>` in your html page.**
+    ```html
+    <tact-deck></tact-deck>
+    ```
 
 
 
 <br/>
 
-## 🕹️ controllers, decoders.
+## 🎮 encoding, decoding, and your game logic.
 
-- **controller encodes input data, decoder decodes it.**
+- **make a collector.**
     ```ts
-    import {Controller, InputDecoder} from "@benev/tact"
+    import {InputCollector} from "@benev/tact"
+
+    const collector = new InputCollector()
     ```
+- **now it's time for the real action!**
     ```ts
-    const controller = new Controller({bindings, source})
-    const decoder = new InputDecoder(bindings)
+    setInterval(() => {
+      const buffer = tact.deck.hub.encodeAll()
+      for (const [playerId, inputs] of collector.decodeAll(buffer)) {
+
+        // your game logic can read these handy input values.
+        inputs.jump.value // values are numbers 0  to 1.
+        inputs.jump.was // previous value (to detect up/down).
+        inputs.forward.value
+        inputs.look.value
+      }
+    }, 16.67)
     ```
-- **the data is binary for efficient networking.**
-    ```ts
-    function frame() {
-
-      // data is an ArrayBuffer (you could stream it over the network).
-      const data = controller.encode()
-
-      // decoding interprets the data as handy input objects.
-      const inputs = decoder.decode(data)
-
-      // your game logic can read these handy input values.
-      inputs.forward.value // current held state.
-      inputs.jump.value // down-presses this frame.
-      inputs.look.value // mouse movement this frame.
-
-      // this was so cool, let's do this forever.
-      requestAnimationFrame(frame)
-    }
-
-    requestAnimationFrame(frame)
-    ```
-- **networking:** imagine a clientside controller, and a serverside decoder.
-- **workerized multithreading:** imagine controller on the main thread, decoder on the simulation thread.
-- **update the controllers's bindings anytime.**
-    ```ts
-    // the new bindings must be schema-compatible or an error is thrown.
-    controller.bindings = {
-      forward: "KeyE",
-      jump: "Space",
-      look: "gamepad.axis.2"
-    }
-    ```
+    💡 *you could stream the buffers across the network to a remote collector.*
 
 
 
