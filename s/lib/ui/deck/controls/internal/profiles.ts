@@ -1,8 +1,8 @@
 
+import {ControlsData} from "./setup.js"
 import {Profile, ProfileKey} from "../../types.js"
 import {assignProfile, getProfile} from "./fns.js"
 import {Bindings} from "../../../../input/types.js"
-import {ControlsData} from "./setup.js"
 import {isCompatible} from "../../../../input/investigate/is-compatible.js"
 
 export class Profiles<B extends Bindings> {
@@ -34,8 +34,9 @@ export class Profiles<B extends Bindings> {
 	}
 
 	async create(key: ProfileKey, profile: Profile<B>) {
-		const {kvs} = this.#data
+		const {kvs, profiles} = this.#data
 		this.#ensureBindingsAreCompatible(profile.bindings)
+		profiles.customs.set(key, profile)
 		await kvs.profiles.set(key, profile)
 	}
 

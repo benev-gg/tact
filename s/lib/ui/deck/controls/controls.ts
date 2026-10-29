@@ -22,9 +22,13 @@ export class Controls<B extends Bindings> {
 	#rebind(controller: Controller) {
 		const {preferences, assignments, controllers} = this.#data
 		const meta = got(controllers.get(controller))
-		controller.bindings = this.profiles.get(
-			assignments.get(controller) ?? preferences.get(meta.handle)
-		).bindings
+
+		const profileKey = assignments.get(controller)
+			?? preferences.get(meta.handle)
+			?? meta.defaultProfileKey
+
+		controller.bindings = this.profiles.get(profileKey).bindings
+		assignments.set(controller, profileKey)
 	}
 
 	async load() {

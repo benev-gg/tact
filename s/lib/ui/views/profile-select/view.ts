@@ -21,7 +21,12 @@ export const ProfileSelectView = shadowView((
 	}
 
 	return html`
-		<select part=select theme-select @change=${handleChange}>
+		<select
+			part=select
+			theme-select
+			.value="${currentProfileKey}"
+			@change="${handleChange}">
+
 			${profiles.stocks.map(([key, profile]) => html`
 				<option
 					value="${key}"

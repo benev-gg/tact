@@ -23,6 +23,10 @@ export const [BindingsView, makeBindingsElement] = shadowDuplex((deck: Deck) => 
 	const profile = profiles.get($profileKey())
 	const isReadonly = profiles.isStock($profileKey())
 
+	const baseline = profile.basedOn
+		? profiles.get(profile.basedOn)
+		: profile
+
 	const updateBindings = (bindings: Bindings) => {
 		let key = $profileKey()
 
@@ -90,7 +94,7 @@ export const [BindingsView, makeBindingsElement] = shadowDuplex((deck: Deck) => 
 				${renderBindings(
 					false,
 					profile.bindings,
-					profiles.get(profile.basedOn).bindings,
+					baseline.bindings,
 					updateBindings,
 				)}
 			</div>

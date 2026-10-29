@@ -31,6 +31,7 @@ export async function assignProfile<B extends Bindings>(
 	assignments.set(controller, profileKey)
 
 	await given(controllers.get(controller)?.handle, async handle => {
+		data.preferences.set(handle, profileKey)
 		await kvs.preferences.set(handle, profileKey)
 	})
 }
