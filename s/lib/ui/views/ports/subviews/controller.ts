@@ -1,6 +1,5 @@
 
 import {html} from "lit"
-import {got} from "@e280/stz"
 import {lightView} from "@e280/sly"
 
 import gameControllerSvg from "../../../icons/akar/game-controller.svg.js"
@@ -15,7 +14,7 @@ export const ControllerView = lightView((context: Context, controller: Controlle
 	const {deck, dnd} = context
 	const {controls} = deck
 	const dragzone = dnd.dragzone(() => ({controller}))
-	const currentProfileKey = got(controls.assignments.assignedProfileKeyOf(controller))
+	const currentProfileKey = controls.assignments.assignedProfileKeyOf(controller)
 	const meta = controls.meta(controller) ?? {
 		id: 0,
 		icon: gameControllerSvg,

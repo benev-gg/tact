@@ -24,7 +24,7 @@ export class Controls<B extends Bindings> {
 		const meta = got(controllers.get(controller))
 		controller.bindings = this.profiles.get(
 			assignments.get(controller) ?? preferences.get(meta.handle)
-		)
+		).bindings
 	}
 
 	async load() {

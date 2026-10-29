@@ -27,8 +27,9 @@ export class Controller<B extends Bindings = any> {
 	set bindings(b: Rebindings<B>) {
 		const bindings = deepFreeze(structuredClone(b)) as Rebindings<B>
 		const fresh = investigate(bindings)
+		const goodHash = this.#investigation.hash
 
-		if (fresh.hash !== this.#investigation.hash)
+		if (fresh.hash !== goodHash)
 			throw new Error("incompatible bindings")
 
 		this.#bindings = bindings
