@@ -10,7 +10,7 @@ import settingsHorizontalSvg from "../../icons/akar/settings-horizontal.svg.js"
 
 import {Deck} from "../../deck/types.js"
 import {PortsView} from "../ports/view.js"
-import {BindingsView} from "../bindings/view.js"
+import {CustomizeView} from "../customize/view.js"
 
 export const [DeckView, makeDeckElement] = shadowDuplex((deck: Deck) => {
 	useCss(themeCss, styleCss)
@@ -40,7 +40,7 @@ export const [DeckView, makeDeckElement] = shadowDuplex((deck: Deck) => {
 					</button>
 
 					${PortsView.with({attrs, props: [deck]})}
-					${BindingsView.with({attrs, props: [deck]})}
+					${CustomizeView.with({attrs, props: [deck]})}
 				`,
 			})}
 		</div>

@@ -1,4 +1,5 @@
 
+import {register} from "@e280/sly"
 import {cycle, nap} from "@e280/stz"
 
 import {PortId} from "../hub.js"
@@ -14,18 +15,17 @@ import {KeyboardSource} from "../../../input/sources/keyboard.js"
 
 import {makeDeckElement} from "../../views/deck/view.js"
 import {makePortsElement} from "../../views/ports/view.js"
-import {makeBindingsElement} from "../../views/bindings/view.js"
+import {makeCustomizeElement} from "../../views/customize/view.js"
 
 import devicesSvg from "../../icons/akar/devices.svg.js"
 import gameControllerSvg from "../../icons/akar/game-controller.svg.js"
-import { register } from "@e280/sly"
 
 export async function setupTact<B extends Bindings>(params: SetupParams<B>) {
 	const deck = await setupDeck(params)
 
 	const elements = {
 		TactDeck: makeDeckElement(deck),
-		TactBindings: makeBindingsElement(deck),
+		TactCustomize: makeCustomizeElement(deck),
 		TactPorts: makePortsElement(deck),
 	}
 

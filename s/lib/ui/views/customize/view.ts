@@ -15,7 +15,7 @@ import {Controls} from "../../deck/controls/controls.js"
 import {renderBindings} from "./parts/render-bindings.js"
 import {ProfileSelectView} from "../profile-select/view.js"
 
-export const [BindingsView, makeBindingsElement] = shadowDuplex((options: {controls: Controls}) => {
+export const [CustomizeView, makeCustomizeElement] = shadowDuplex((options: {controls: Controls}) => {
 	useCss(themeCss, styleCss)
 	const {controls, controls: {profiles}} = options
 	const $profileKey = useSignal(controls.fallbackProfileKey)
