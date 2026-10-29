@@ -1,6 +1,6 @@
 
 import {assignProfile} from "./fns.js"
-import {ControlsData} from "./setup.js"
+import {ControlsData} from "./data.js"
 import {ProfileKey} from "../../types.js"
 import {Controller} from "../../../../input/controller.js"
 
@@ -12,7 +12,8 @@ export class Assignments {
 	}
 
 	async assign(controller: Controller, profileKey: ProfileKey) {
-		return assignProfile(this.#data, controller, profileKey)
+		this.#data.subby.publish()
+		await assignProfile(this.#data, controller, profileKey)
 	}
 
 	assignedProfileKeyOf(controller: Controller) {

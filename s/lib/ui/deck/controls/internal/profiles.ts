@@ -1,5 +1,5 @@
 
-import {ControlsData} from "./setup.js"
+import {ControlsData} from "./data.js"
 import {Profile, ProfileKey} from "../../types.js"
 import {assignProfile, getProfile} from "./fns.js"
 import {Bindings} from "../../../../input/types.js"
@@ -38,6 +38,7 @@ export class Profiles<B extends Bindings> {
 		this.#ensureBindingsAreCompatible(profile.bindings)
 		profiles.customs.set(key, profile)
 		await kvs.profiles.set(key, profile)
+		this.#data.subby.publish()
 	}
 
 	async clone(key: ProfileKey, basedOn: ProfileKey) {
@@ -49,10 +50,10 @@ export class Profiles<B extends Bindings> {
 		const {kvs, assignments, profiles: {customs, fallback}} = this.#data
 		customs.delete(profileKey)
 		await kvs.profiles.delete(profileKey)
-		for (const [controller, controllerKey] of assignments) {
+		for (const [controller, controllerKey] of assignments)
 			if (controllerKey === profileKey)
 				await assignProfile(this.#data, controller, fallback.key)
-		}
+		this.#data.subby.publish()
 	}
 
 	async update(profileKey: ProfileKey, changes: Partial<{
@@ -76,6 +77,7 @@ export class Profiles<B extends Bindings> {
 		}
 
 		await kvs.profiles.set(profileKey, freshProfile)
+		this.#data.subby.publish()
 	}
 }
 

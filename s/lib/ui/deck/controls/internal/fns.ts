@@ -1,6 +1,6 @@
 
 import {given, got} from "@e280/stz"
-import {ControlsData} from "./setup.js"
+import {ControlsData} from "./data.js"
 import {ProfileKey} from "../../types.js"
 import {Bindings} from "../../../../input/types.js"
 import {Controller} from "../../../../input/controller.js"

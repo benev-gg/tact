@@ -3,7 +3,7 @@ import {collect, got, setEntries} from "@e280/stz"
 
 import {Profiles} from "./internal/profiles.js"
 import {Bindings} from "../../../input/types.js"
-import {setupControlsData} from "./internal/setup.js"
+import {makeControlsData} from "./internal/data.js"
 import {Assignments} from "./internal/assignments.js"
 import {Controller} from "../../../input/controller.js"
 import {ControllerMeta, ControlsOptions} from "./types.js"
@@ -15,7 +15,7 @@ export class Controls<B extends Bindings = any> {
 	readonly stock
 
 	constructor(options: ControlsOptions<B>) {
-		this.#data = setupControlsData(options)
+		this.#data = makeControlsData(options)
 		this.profiles = new Profiles(this.#data)
 		this.assignments = new Assignments(this.#data)
 		this.stock = options.stock
@@ -40,7 +40,10 @@ export class Controls<B extends Bindings = any> {
 	async load() {
 		const {kvs, controllers, preferences, profiles: {customs}} = this.#data
 
+		customs.clear()
 		setEntries(customs, await collect(kvs.profiles))
+
+		preferences.clear()
 		setEntries(preferences, await collect(kvs.preferences))
 
 		for (const controller of controllers.keys())

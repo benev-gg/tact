@@ -8,15 +8,15 @@ import {Controller} from "../../../../input/controller.js"
 import {ControllerHandle, ControllerMeta, ControlsOptions} from "../types.js"
 
 export type ControlsData<B extends Bindings> = (
-	ReturnType<typeof setupControlsData<B>>
+	ReturnType<typeof makeControlsData<B>>
 )
 
-export function setupControlsData<B extends Bindings>({
+export function makeControlsData<B extends Bindings>({
 		kv,
 		stock,
 	}: ControlsOptions<B>) {
 
-	const fallbackKey = got(Object.keys(stock)[0], "profiles requires at least one in stock")
+	const fallbackKey = got(Object.keys(stock)[0], "missing stock profiles")
 	const fallbackProfile = got(stock[fallbackKey])
 	const bindings = fallbackProfile.bindings
 
