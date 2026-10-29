@@ -1,0 +1,60 @@
+
+import {asBindings} from "../lib/input/types.js"
+import {asStockProfiles} from "../lib/ui/deck/types.js"
+
+export const bindings = asBindings({
+	interactions: {
+		use: "KeyE",
+	},
+	spatial: {
+		looking: {
+			horizontal: ["accumulate", "pointer.x"],
+			vertical: ["accumulate", "pointer.y"],
+		},
+		moving: {
+			forward: "KeyW",
+			backward: "KeyS",
+			leftward: "KeyA",
+			rightward: "KeyD",
+		},
+	},
+})
+
+export const stock = asStockProfiles<typeof bindings>({
+	standard: {label: "⌨️standard", bindings},
+	gamer: {label: "🎮gamer", bindings: {
+		interactions: {
+			use: "gamepad.1",
+		},
+		spatial: {
+			looking: {
+				horizontal: ["*", ["dt"], "gamepad.axis.3", 100],
+				vertical: ["*", ["dt"], "gamepad.axis.4", 100],
+			},
+			moving: {
+				forward: ["remap", 0, -1, 0, 1, "gamepad.axis.2"],
+				backward: ["remap", 0, 1, 0, 1, "gamepad.axis.2"],
+				leftward: ["remap", 0, -1, 0, 1, "gamepad.axis.1"],
+				rightward: ["remap", 0, 1, 0, 1, "gamepad.axis.1"],
+			},
+		},
+	}},
+	micro: {label: "🦠micro", bindings: {
+		interactions: {
+			use: ["*", "gamepad.5", "gamepad.6"],
+		},
+		spatial: {
+			looking: {
+				horizontal: ["*", ["dt"], ["+", "gamepad.1", ["-", "gamepad.4"]], 100],
+				vertical: ["*", ["dt"], ["+", "gamepad.2", ["-", "gamepad.3"]], 100],
+			},
+			moving: {
+				forward: ["remap", 0, -1, 0, 1, "gamepad.axis.2"],
+				backward: ["remap", 0, 1, 0, 1, "gamepad.axis.2"],
+				leftward: ["remap", 0, -1, 0, 1, "gamepad.axis.1"],
+				rightward: ["remap", 0, 1, 0, 1, "gamepad.axis.1"],
+			},
+		},
+	}},
+})
+

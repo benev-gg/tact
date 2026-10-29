@@ -9,15 +9,15 @@ import themeCss from "../theme.css.js"
 import copySvg from "../../icons/akar/copy.svg.js"
 import trashCanSvg from "../../icons/akar/trash-can.svg.js"
 
-import {Deck} from "../../deck/types.js"
 import {Bindings} from "../../../input/types.js"
+import {makeId} from "../../../utils/make-id.js"
+import {Controls} from "../../deck/controls/controls.js"
 import {renderBindings} from "./parts/render-bindings.js"
 import {ProfileSelectView} from "../profile-select/view.js"
-import { makeId } from "../../../utils/make-id.js"
 
-export const [BindingsView, makeBindingsElement] = shadowDuplex((deck: Deck) => {
+export const [BindingsView, makeBindingsElement] = shadowDuplex((options: {controls: Controls}) => {
 	useCss(themeCss, styleCss)
-	const {controls, controls: {profiles}} = deck
+	const {controls, controls: {profiles}} = options
 	const $profileKey = useSignal(controls.fallbackProfileKey)
 
 	const profile = profiles.get($profileKey())
@@ -59,7 +59,7 @@ export const [BindingsView, makeBindingsElement] = shadowDuplex((deck: Deck) => 
 		<div class=plate theme-card>
 			<header class=topbar>
 				<div class=corner>
-					${ProfileSelectView(deck, $profileKey(), $profileKey)}
+					${ProfileSelectView(options, $profileKey(), $profileKey)}
 
 					<button title="copy this profile" theme-button=naked @click="${clone}">
 						${copySvg}

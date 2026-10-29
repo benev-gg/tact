@@ -3,10 +3,10 @@ import {html} from "lit"
 import {shadowView, useCss, useName} from "@e280/sly"
 import styleCss from "./style.css.js"
 import themeCss from "../theme.css.js"
-import {Deck} from "../../deck/types.js"
+import {Controls} from "../../deck/controls/controls.js"
 
 export const ProfileSelectView = shadowView((
-		deck: Deck,
+		deck: {controls: Controls},
 		currentProfileKey: string,
 		onChange: (key: string) => void,
 	) => {

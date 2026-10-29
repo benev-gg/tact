@@ -8,15 +8,21 @@ import {Assignments} from "./internal/assignments.js"
 import {Controller} from "../../../input/controller.js"
 import {ControllerMeta, ControlsOptions} from "./types.js"
 
-export class Controls<B extends Bindings> {
+export class Controls<B extends Bindings = any> {
 	#data
 	profiles
 	assignments
+	readonly stock
 
 	constructor(options: ControlsOptions<B>) {
 		this.#data = setupControlsData(options)
 		this.profiles = new Profiles(this.#data)
 		this.assignments = new Assignments(this.#data)
+		this.stock = options.stock
+	}
+
+	get on() {
+		return this.#data.subby.on
 	}
 
 	#rebind(controller: Controller) {

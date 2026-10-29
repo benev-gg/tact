@@ -1,6 +1,6 @@
 
 import {RMap} from "@e280/strata"
-import {got, IdCounter, setEntries} from "@e280/stz"
+import {got, IdCounter, setEntries, subby} from "@e280/stz"
 
 import {Profile, ProfileKey} from "../../types.js"
 import {Bindings} from "../../../../input/types.js"
@@ -29,6 +29,8 @@ export function setupControlsData<B extends Bindings>({
 	setEntries(profiles.stocks, Object.entries(stock))
 
 	return {
+		subby: subby(),
+
 		kv,
 		stock,
 		bindings,

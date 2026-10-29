@@ -47,7 +47,7 @@ export default template(import.meta.url, async orb => html`
 				</div>
 			</header>
 
-			<demo-app></demo-app>
+			<tact-deck></tact-deck>
 		</body>
 	</html>
 `)

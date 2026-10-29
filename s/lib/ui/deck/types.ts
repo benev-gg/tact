@@ -1,5 +1,4 @@
 
-import {Kv} from "@e280/kv"
 import {Hub} from "./hub.js"
 import {Bindings} from "../../input/types.js"
 import {Controls} from "./controls/controls.js"
@@ -12,17 +11,14 @@ export type Profile<B extends Bindings = any> = {
 	basedOn?: string
 }
 
-export type ProfilesData = {
-	custom: [ProfileKey, Profile][],
-}
+export type StockProfiles<B extends Bindings> = Record<ProfileKey, Profile<B>>
 
 export type Deck<B extends Bindings = any> = {
-	kv: Kv
 	hub: Hub<B>
-	bindings: B
 	maxPorts: number
 	controls: Controls<B>
 }
 
 export const asDeck = <B extends Bindings>(deck: Deck<B>) => deck
+export const asStockProfiles = <B extends Bindings>(stock: StockProfiles<B>) => stock
 

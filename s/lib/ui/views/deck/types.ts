@@ -1,7 +1,7 @@
 
 import {loot} from "@e280/sly"
-import {Deck} from "../../deck/types.js"
 import {PortId} from "../../deck/hub.js"
+import {Deck} from "../../deck/types.js"
 import {Controller} from "../../../input/controller.js"
 
 export const droppyNewPort = Symbol("droppyNewPort")
