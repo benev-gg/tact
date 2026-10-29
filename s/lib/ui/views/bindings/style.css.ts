@@ -23,9 +23,13 @@ export default css`@layer view {
 		align-items: center;
 		gap: var(--pad);
 
-		p {
+		small {
+			user-select: none;
 			opacity: 0.5;
 			font-style: italic;
+			border: 1px solid;
+			border-radius: var(--round);
+			padding: var(--nib) var(--pad);
 		}
 	}
 
@@ -35,6 +39,10 @@ export default css`@layer view {
 		gap: var(--pad);
 		flex: 1 1 auto;
 		justify-content: end;
+
+		input[type="text"] {
+			width: 12em;
+		}
 	}
 }
 

@@ -23,6 +23,7 @@ export const ExpressionView = lightView((
 				<input
 					type=number
 					step=any
+					theme-input
 					.value="${expression}"
 					?readonly="${isReadonly}"
 					@change="${(event: Event) => {
@@ -39,6 +40,7 @@ export const ExpressionView = lightView((
 		return html`
 			<input
 				type=text
+				theme-input
 				.value="${expression}"
 				?readonly="${isReadonly}"
 				@change="${(event: Event) => {

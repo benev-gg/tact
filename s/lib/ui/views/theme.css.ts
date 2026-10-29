@@ -52,6 +52,8 @@ ${cssReset}
 	color: inherit;
 
 	cursor: pointer;
+	user-select: none;
+
 	opacity: 0.8;
 	gap: 0.5em;
 	padding: 0.5em;
@@ -74,6 +76,39 @@ ${cssReset}
 	&[theme-button~="angry"] {
 		&:is(:hover, :focus-visible) { color: red; }
 	}
+}
+
+[theme-select] {
+	--base: var(--tint, var(--prime));
+	font: inherit;
+	color: inherit;
+	background: transparent;
+	border: 1px solid var(--base);
+	border-radius: var(--round);
+	padding: var(--nib) var(--pad);
+	box-shadow: inset 0 0 1em oklch(from var(--base) l c h / 40%);
+
+	&:is(:hover, :focus-visible) {
+		filter: brightness(110%);
+		box-shadow: inset 0 0 1em oklch(from var(--base) l c h / 60%);
+	}
+
+	&:active {
+		filter: brightness(90%);
+		box-shadow: inset 0 0 1em oklch(from var(--base) l c h / 40%);
+	}
+}
+
+[theme-input] {
+	--base: var(--tint, var(--prime));
+	--chill: oklch(from var(--base) l c h / 50%);
+	font: inherit;
+	color: inherit;
+	background: transparent;
+	border: 1px solid var(--chill);
+	border-radius: var(--round);
+	padding: 0 var(--nib);
+	box-shadow: inset 0 0 1em oklch(from var(--chill) l c h / 20%);
 }
 
 }`

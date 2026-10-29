@@ -59,14 +59,15 @@ export const [BindingsView, makeBindingsElement] = shadowDuplex((deck: Deck) => 
 						</button>
 					`}
 
-					${when(isReadonly, () => html`<p>this stock profile is readonly.</p>`)}
-					${given(profile.basedOn, basedOn => html`<p>based on ${profiles.get(basedOn).label}</p>`)}
+					${when(isReadonly, () => html`<small>readonly</small>`)}
+					${given(profile.basedOn, basedOn => html`<small>based on ${profiles.get(basedOn).label}</small>`)}
 				</div>
 
 				<div class=tools>
 					${isReadonly ? null : html`
 						<input
 							type=text
+							theme-input
 							.value="${profile.label}"
 							@change="${(event: Event) => {
 								const input = event.currentTarget as HTMLInputElement

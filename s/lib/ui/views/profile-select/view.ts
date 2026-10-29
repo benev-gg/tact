@@ -20,7 +20,7 @@ export const ProfileSelectView = shadowView((
 	}
 
 	return html`
-		<select @change=${handleChange}>
+		<select part=select theme-select @change=${handleChange}>
 			${Array.from(deck.profiles.stock).map(([key, profile]) => html`
 				<option
 					value="${key}"

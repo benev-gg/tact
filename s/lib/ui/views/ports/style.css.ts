@@ -92,6 +92,10 @@ export default css`@layer view {
 			background: color-mix(in oklch, transparent, var(--bg) 70%);
 			filter: brightness(120%);
 		}
+
+		[view="profile-select"]::part(select) {
+			--base: oklch(from var(--tint) l c h / 50%);
+		}
 	}
 
 	.controller {
