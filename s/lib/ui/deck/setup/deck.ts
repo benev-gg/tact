@@ -15,7 +15,7 @@ export async function setupDeck<B extends Bindings>(params: SetupParams<B>) {
 	const broadcastChannel = params.broadcastChannel
 		?? new BroadcastChannel("tact")
 
-	const {maxPorts} = params
+	const {maxPlayers} = params
 	const {bindings} = firstStock(params.stock).profile
 
 	const hub = new Hub(bindings)
@@ -26,6 +26,6 @@ export async function setupDeck<B extends Bindings>(params: SetupParams<B>) {
 	broadcastChannel.onmessage = () => controls.load()
 	controls.on(() => broadcastChannel.postMessage({}))
 
-	return asDeck({hub, controls, maxPorts})
+	return asDeck({hub, controls, maxPlayers})
 }
 

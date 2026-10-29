@@ -40,7 +40,7 @@ export const [ControllersView, makeControllersElement] = shadowDuplex((deck: Dec
 			<div class=ports>
 				${hub.portIds.map(renderPort)}
 
-				${when(hub.portIds.length < deck.maxPorts, () => DropcardView({
+				${when(hub.portIds.length < deck.maxPlayers, () => DropcardView({
 					class: "port new",
 					themeCard: "dull",
 					portId: droppyNewPort,

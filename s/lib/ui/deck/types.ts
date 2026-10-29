@@ -15,7 +15,7 @@ export type StockProfiles<B extends Bindings> = Record<ProfileKey, Profile<B>>
 
 export type Deck<B extends Bindings = any> = {
 	hub: Hub<B>
-	maxPorts: number
+	maxPlayers: number
 	controls: Controls<B>
 }
 
