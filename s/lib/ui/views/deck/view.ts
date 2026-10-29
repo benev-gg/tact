@@ -36,7 +36,7 @@ export const [DeckView, makeDeckElement] = shadowDuplex((deck: Deck) => {
 
 					<button theme-button>
 						${settingsHorizontalSvg}
-						<span>bindings</span>
+						<span>customize</span>
 					</button>
 
 					${PortsView.with({attrs, props: [deck]})}
