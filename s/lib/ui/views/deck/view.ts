@@ -9,7 +9,7 @@ import gameControllerSvg from "../../icons/akar/game-controller.svg.js"
 import settingsHorizontalSvg from "../../icons/akar/settings-horizontal.svg.js"
 
 import {Deck} from "../../deck/types.js"
-import {PortsView} from "../ports/view.js"
+import {ControllersView} from "../controllers/view.js"
 import {CustomizeView} from "../customize/view.js"
 
 export const [DeckView, makeDeckElement] = shadowDuplex((deck: Deck) => {
@@ -39,7 +39,7 @@ export const [DeckView, makeDeckElement] = shadowDuplex((deck: Deck) => {
 						<span>customize</span>
 					</button>
 
-					${PortsView.with({attrs, props: [deck]})}
+					${ControllersView.with({attrs, props: [deck]})}
 					${CustomizeView.with({attrs, props: [deck]})}
 				`,
 			})}

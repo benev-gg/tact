@@ -14,8 +14,8 @@ import {PointerSource} from "../../../input/sources/pointer.js"
 import {KeyboardSource} from "../../../input/sources/keyboard.js"
 
 import {makeDeckElement} from "../../views/deck/view.js"
-import {makePortsElement} from "../../views/ports/view.js"
 import {makeCustomizeElement} from "../../views/customize/view.js"
+import {makeControllersElement} from "../../views/controllers/view.js"
 
 import devicesSvg from "../../icons/akar/devices.svg.js"
 import gameControllerSvg from "../../icons/akar/game-controller.svg.js"
@@ -26,7 +26,7 @@ export async function setupTact<B extends Bindings>(params: SetupParams<B>) {
 	const elements = {
 		TactDeck: makeDeckElement(deck),
 		TactCustomize: makeCustomizeElement(deck),
-		TactPorts: makePortsElement(deck),
+		TactControllers: makeControllersElement(deck),
 	}
 
 	function gamepads(defaultProfileKey?: string) {

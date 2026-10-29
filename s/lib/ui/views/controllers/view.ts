@@ -13,7 +13,7 @@ import {DropcardView} from "./subviews/dropcard.js"
 import {ControllerView} from "./subviews/controller.js"
 import {Context, droppyNewPort} from "../deck/types.js"
 
-export const [PortsView, makePortsElement] = shadowDuplex((deck: Deck) => {
+export const [ControllersView, makeControllersElement] = shadowDuplex((deck: Deck) => {
 	useCss(themeCss, styleCss)
 
 	const {hub} = deck

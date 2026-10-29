@@ -23,5 +23,5 @@ export * from "./ui/deck/hub.js"
 export * from "./ui/deck/types.js"
 export * from "./ui/views/customize/view.js"
 export * from "./ui/views/deck/view.js"
-export * from "./ui/views/ports/view.js"
+export * from "./ui/views/controllers/view.js"
 
