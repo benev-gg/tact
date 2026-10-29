@@ -13,6 +13,7 @@ export const ProfileSelectView = shadowView((
 
 	useName("profile-select")
 	useCss(themeCss, styleCss)
+	const {profiles} = deck.controls
 
 	function handleChange(event: Event) {
 		const select = event.currentTarget as HTMLSelectElement
@@ -21,7 +22,7 @@ export const ProfileSelectView = shadowView((
 
 	return html`
 		<select part=select theme-select @change=${handleChange}>
-			${Array.from(deck.profiles.stock).map(([key, profile]) => html`
+			${profiles.stocks.map(([key, profile]) => html`
 				<option
 					value="${key}"
 					?selected="${key === currentProfileKey}">
@@ -29,7 +30,7 @@ export const ProfileSelectView = shadowView((
 				</option>
 			`)}
 
-			${Array.from(deck.profiles.custom).map(([key, profile]) => html`
+			${profiles.customs.map(([key, profile]) => html`
 				<option
 					value="${key}"
 					?selected="${key === currentProfileKey}">

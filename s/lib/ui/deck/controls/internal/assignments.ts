@@ -23,7 +23,7 @@ export class Assignments {
 		})
 	}
 
-	assignedKey(controller: Controller) {
+	assignedProfileKeyOf(controller: Controller) {
 		const {assignments} = this.#data
 		return assignments.get(controller)
 	}

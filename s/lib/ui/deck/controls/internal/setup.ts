@@ -2,11 +2,10 @@
 import {RMap} from "@e280/strata"
 import {got, IdCounter, setEntries} from "@e280/stz"
 
-import {Handle} from "../../assignments.js"
 import {Profile, ProfileKey} from "../../types.js"
 import {Bindings} from "../../../../input/types.js"
 import {Controller} from "../../../../input/controller.js"
-import {ControllerMeta, ControlsOptions} from "../types.js"
+import {ControllerHandle, ControllerMeta, ControlsOptions} from "../types.js"
 
 export type ControlsData<B extends Bindings> = (
 	ReturnType<typeof setupControlsData<B>>
@@ -39,7 +38,7 @@ export function setupControlsData<B extends Bindings>({
 
 		controllers: new RMap<Controller, ControllerMeta>(),
 		assignments: new RMap<Controller, ProfileKey>(),
-		preferences: new RMap<Handle, ProfileKey>(),
+		preferences: new RMap<ControllerHandle, ProfileKey>(),
 
 		kvs: {
 			profiles: kv.scope<Profile>("profiles"),

@@ -1,7 +1,6 @@
 
-import {got, hex} from "@e280/stz"
 import {Profile, ProfileKey} from "../../types.js"
-import {assignProfile} from "./fns.js"
+import {assignProfile, getProfile} from "./fns.js"
 import {Bindings} from "../../../../input/types.js"
 import {ControlsData} from "./setup.js"
 import {isCompatible} from "../../../../input/investigate/is-compatible.js"
@@ -18,28 +17,31 @@ export class Profiles<B extends Bindings> {
 			throw new Error("incompatible bindings")
 	}
 
-	get(profileKey?: ProfileKey) {
-		const {stocks, customs, fallback} = this.#data.profiles
-
-		if (profileKey === undefined)
-			return fallback.profile
-
-		return customs.get(profileKey)
-			?? stocks.get(profileKey)
-			?? got(stocks.get(fallback.key))
+	get stocks() {
+		return [...this.#data.profiles.stocks]
 	}
 
-	async create(profile: Profile<B>) {
+	get customs() {
+		return [...this.#data.profiles.customs]
+	}
+
+	isStock(profileKey: string) {
+		return this.#data.profiles.stocks.has(profileKey)
+	}
+
+	get(profileKey?: ProfileKey) {
+		return getProfile(this.#data, profileKey)
+	}
+
+	async create(key: ProfileKey, profile: Profile<B>) {
 		const {kvs} = this.#data
 		this.#ensureBindingsAreCompatible(profile.bindings)
-		const profileKey = hex.random(16)
-		await kvs.profiles.set(profileKey, profile)
-		return profileKey
+		await kvs.profiles.set(key, profile)
 	}
 
-	clone(basedOn: ProfileKey) {
+	async clone(key: ProfileKey, basedOn: ProfileKey) {
 		const {label, bindings} = this.get(basedOn)
-		return this.create({basedOn, bindings, label: `${label} copy`})
+		await this.create(key, {basedOn, bindings, label: `${label} copy`})
 	}
 
 	async delete(profileKey: ProfileKey) {

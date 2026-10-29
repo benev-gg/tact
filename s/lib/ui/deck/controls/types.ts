@@ -2,14 +2,15 @@
 import {Kv} from "@e280/kv"
 import {Content} from "@e280/sly"
 
-import {Handle} from "../assignments.js"
 import {Profile, ProfileKey} from "../types.js"
 import {Bindings} from "../../../input/types.js"
+
+export type ControllerHandle = string
 
 export type ControllerMeta = {
 	id: number
 	icon: Content
-	handle: Handle
+	handle: ControllerHandle
 	name: string
 	tooltip: string
 	defaultProfileKey: ProfileKey

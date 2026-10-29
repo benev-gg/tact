@@ -13,20 +13,25 @@ import {Deck} from "../../deck/types.js"
 import {Bindings} from "../../../input/types.js"
 import {renderBindings} from "./parts/render-bindings.js"
 import {ProfileSelectView} from "../profile-select/view.js"
+import { makeId } from "../../../utils/make-id.js"
 
 export const [BindingsView, makeBindingsElement] = shadowDuplex((deck: Deck) => {
 	useCss(themeCss, styleCss)
-	const {profiles} = deck
-	const $profileKey = useSignal(profiles.defaultKey)
+	const {controls, controls: {profiles}} = deck
+	const $profileKey = useSignal(controls.fallbackProfileKey)
 
 	const profile = profiles.get($profileKey())
-	const isReadonly = profiles.stock.has($profileKey())
+	const isReadonly = profiles.isStock($profileKey())
 
 	const updateBindings = (bindings: Bindings) => {
 		let key = $profileKey()
 
-		if (profiles.stock.has(key))
-			key = profiles.clone(key)
+		if (profiles.isStock(key)) {
+			const basedOn = key
+			const freshKey = makeId()
+			key = freshKey
+			profiles.clone(freshKey, basedOn)
+		}
 
 		profiles.update(key, {bindings})
 		$profileKey(key)
@@ -35,12 +40,15 @@ export const [BindingsView, makeBindingsElement] = shadowDuplex((deck: Deck) => 
 	const updateLabel = (profileKey: string, label: string) =>
 		profiles.update(profileKey, {label})
 
-	const clone = () =>
-		$profileKey.set(profiles.clone($profileKey()))
+	const clone = () => {
+		const key = makeId()
+		profiles.clone(key, $profileKey())
+		$profileKey.set(key)
+	}
 
 	const destroy = () => {
 		profiles.delete($profileKey())
-		$profileKey(profiles.defaultKey)
+		$profileKey(controls.fallbackProfileKey)
 	}
 
 	return html`

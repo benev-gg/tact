@@ -1,9 +1,8 @@
 
 import {Kv} from "@e280/kv"
 import {Hub} from "./hub.js"
-import {Profiles} from "./profiles.js"
 import {Bindings} from "../../input/types.js"
-import {ControllerRegistry} from "./registry.js"
+import {Controls} from "./controls/controls.js"
 
 export type ProfileKey = string
 
@@ -22,8 +21,7 @@ export type Deck<B extends Bindings = any> = {
 	hub: Hub<B>
 	bindings: B
 	maxPorts: number
-	profiles: Profiles<B>
-	registry: ControllerRegistry
+	controls: Controls<B>
 }
 
 export const asDeck = <B extends Bindings>(deck: Deck<B>) => deck

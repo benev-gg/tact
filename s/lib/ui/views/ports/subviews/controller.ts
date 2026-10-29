@@ -1,7 +1,9 @@
 
 import {html} from "lit"
+import {got} from "@e280/stz"
 import {lightView} from "@e280/sly"
 
+import gameControllerSvg from "../../../icons/akar/game-controller.svg.js"
 import dragVerticalFillSvg from "../../../icons/akar/drag-vertical-fill.svg.js"
 
 import {Context} from "../../deck/types.js"
@@ -11,9 +13,17 @@ import {ProfileSelectView} from "../../profile-select/view.js"
 
 export const ControllerView = lightView((context: Context, controller: Controller) => {
 	const {deck, dnd} = context
+	const {controls} = deck
 	const dragzone = dnd.dragzone(() => ({controller}))
-	const currentProfileKey = deck.profiles.query(controller)
-	const meta = deck.registry.get(controller) ?? deck.registry.fallback()
+	const currentProfileKey = got(controls.assignments.assignedProfileKeyOf(controller))
+	const meta = controls.meta(controller) ?? {
+		id: 0,
+		icon: gameControllerSvg,
+		handle: "controller",
+		name: "controller",
+		tooltip: "",
+		defaultProfileKey: controls.fallbackProfileKey,
+	}
 
 	const style = `--hue: ${hueify(meta?.id ?? 0)};`
 
@@ -36,7 +46,7 @@ export const ControllerView = lightView((context: Context, controller: Controlle
 			</h4>
 
 			${ProfileSelectView(deck, currentProfileKey, key => {
-				deck.profiles.assign(controller, key)
+				controls.assignments.assign(controller, key)
 			})}
 		</div>
 	`
