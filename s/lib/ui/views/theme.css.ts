@@ -9,23 +9,12 @@ export default css`
 ${cssReset}
 
 :host {
+	--bg: #1b1a18;
 	--text: #fffc;
-	--bg: transparent;
-	--card: #7896;
-	--card-unassigned: #8884;
-	--card-box: #8883;
-
-	--slate: #28395970;
-	--gem: #1e348c;
-	--gem-shimmer: cyan;
-
-	--subtle: #fff2;
-	--prime: #66b0dc;
-	--bravo: #75dc66;
-	--recording: yellow;
-
+	--prime: #fb0;
 	--draggy: rebeccapurple;
 	--droppy: cyan;
+	--recording: var(--prime);
 
 	--round: 0.5em;
 	--pad: 0.5em;
@@ -36,16 +25,22 @@ ${cssReset}
 }
 
 [theme-card] {
-	--shimmer: oklch(from var(--slate) calc(l * 2) calc(c * 1.5) h);
+	--tint: var(--prime);
+	--slate: color-mix(in oklch,
+		transparent,
+		color-mix(in oklch, var(--bg), var(--tint) 25%) 25%
+	);
+	--shimmer: color-mix(in oklch, transparent, var(--tint));
+
+	border-radius: var(--round);
 	background: var(--slate);
 	border: 1px solid var(--shimmer);
-	border-radius: var(--round);
 	box-shadow:
-		inset 0 0 2em color-mix(in oklch, transparent, var(--shimmer)),
+		inset 0 0 3em color-mix(in oklch, transparent, var(--shimmer) 30%),
 		var(--box-shadow);
 
 	&[theme-card="dull"] {
-		--slate: #4444;
+		--tint: #8888;
 	}
 }
 

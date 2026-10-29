@@ -62,11 +62,12 @@ export default css`@layer view {
 		display: flex;
 		align-items: end;
 		margin-left: 0.5em;
-		border-bottom: 1px dashed var(--subtle);
+		border-bottom: 1px dashed oklch(from var(--prime) l c h / 30%);
 		flex-wrap: wrap;
 		gap: 0 var(--pad);
+		padding: var(--nib);
 
-		min-height: 2.4em;
+		min-height: 3em;
 
 		&:last-of-type {
 			margin-bottom: calc(var(--space) * 2);
@@ -118,7 +119,7 @@ export default css`@layer view {
 
 		margin-left: 0.3em;
 		padding-left: 0.5em;
-		border-left: 1px solid var(--subtle);
+		border-left: 1px solid oklch(from var(--prime) l c h / 20%);
 	}
 
 	.expression .recorder {

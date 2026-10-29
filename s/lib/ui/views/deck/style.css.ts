@@ -12,17 +12,24 @@ export default css`@layer view {
 
 .deck {
 	padding: var(--pad);
-	background: color-mix(in oklch, transparent, var(--slate) 30%);
+	--tint: oklch(from var(--prime) l c h / 50%);
 }
 
 [view="shiny-tabs"] {
+	--prime: inherit;
+
+	--tint: var(--prime);
+	--slate: color-mix(in oklch,
+		transparent,
+		color-mix(in oklch, var(--bg), var(--tint) 25%) 25%
+	);
+	--shimmer: color-mix(in oklch, transparent, var(--tint));
+
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 
 	&::part(tabs) {
-		--shimmer: oklch(from var(--slate) calc(l * 2) calc(c * 1.5) h);
-
 		display: flex;
 		width: max-content;
 		justify-content: center;
@@ -44,15 +51,16 @@ export default css`@layer view {
 		background: transparent;
 		border-radius: var(--round);
 		border: 2px solid transparent;
+		text-shadow: var(--text-shadow);
 
 		&[data-tabbed] {
 			text-decoration: none;
-			color: var(--gem-shimmer);
-			background: var(--gem);
-			border-color: color-mix(in oklch, #fff4, var(--gem-shimmer));
+			color: var(--prime);
+			border-color: var(--prime);
+			background: color-mix(in oklch, var(--bg), var(--prime) 30%);
 			box-shadow:
-				inset 0 0 1.5em oklch(from var(--gem-shimmer) l c h / 50%),
-				0 0 2em oklch(from var(--gem-shimmer) l c h / 50%);
+				inset 0 0 1.5em oklch(from var(--shimmer) l c h / 50%),
+				0 0 2em oklch(from var(--shimmer) l c h / 50%);
 		}
 	}
 }

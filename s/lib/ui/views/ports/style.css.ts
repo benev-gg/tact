@@ -8,7 +8,6 @@ export default css`@layer view {
 	flex-direction: column;
 	align-items: center;
 	gap: var(--pad);
-	background: var(--bg);
 }
 
 .plate[data-drag-and-drop] {
@@ -46,6 +45,8 @@ export default css`@layer view {
 		padding: var(--pad);
 
 		border-style: dashed;
+		border-width: 2px;
+		border-color: oklch(from var(--text) l c h / 30%);
 		background: transparent;
 		box-shadow: none;
 
@@ -64,10 +65,6 @@ export default css`@layer view {
 	display: flex;
 	flex-direction: column;
 
-	&.unassigned {
-		--card: var(--card-unassigned);
-	}
-
 	h3 {
 		display: flex;
 		flex-wrap: wrap;
@@ -84,8 +81,7 @@ export default css`@layer view {
 	}
 
 	.controller {
-		--bg: oklch(from var(--card) 0.7 0.3 var(--hue, 0));
-		--shimmer: oklch(from var(--bg) calc(l * 1.2) c h);
+		--tint: oklch(0.7 0.3 var(--hue, 0));
 		background: color-mix(in oklch, transparent, var(--bg) 50%);
 		border: 2px solid var(--shimmer);
 		box-shadow:

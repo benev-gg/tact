@@ -19,6 +19,7 @@ export const ControllerView = lightView((context: Context, controller: Controlle
 	return html`
 		<div class=controller
 			style="${style}"
+			theme-card
 			?data-dragging="${dnd.dragging?.controller === controller}"
 			draggable="${dragzone.draggable}"
 			@dragstart="${dragzone.dragstart}"
