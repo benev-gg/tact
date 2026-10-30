@@ -73,15 +73,15 @@
 
 - **make a collector.**
     ```ts
-    import {InputCollector} from "@benev/tact"
+    import {Collector} from "@benev/tact"
 
-    const collector = new InputCollector()
+    const collector = new Collector(bindings)
     ```
 - **now it's time for the real action!**
     ```ts
     setInterval(() => {
       const buffer = tact.deck.hub.encodeAll()
-      for (const [playerId, inputs] of collector.decodeAll(buffer)) {
+      for (const {playerId, inputs} of collector.decodeAll(buffer)) {
 
         // your game logic can read these handy input values.
         inputs.jump.value // values are numbers 0  to 1.
