@@ -8,15 +8,17 @@ export default css`@layer view {
 
 output {
 	opacity: 0.5;
-	color: var(--prime);
-	font-size: 1em;
-	font-family: monospace;
 	display: block;
-	overflow-wrap: anywhere;
-	text-overflow: ellipsis;
+
+	font-size: 1em;
 	height: 8em;
-	padding: 0 4em;
+
 	overflow: hidden;
+	overflow-wrap: anywhere;
+
+	font-family: monospace;
+	color: var(--prime);
+	text-overflow: ellipsis;
 }
 
 }`

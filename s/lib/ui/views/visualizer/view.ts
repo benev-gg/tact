@@ -10,6 +10,7 @@ export const [VisualizerView, makeVisualizerElement] = shadowDuplex((visualizer:
 	useCss(themeCss, styleCss)
 
 	return html`
+		<slot></slot>
 		<output class=viz>${visualizer.$hex()}</output>
 	`
 })

@@ -54,7 +54,11 @@ export default template(import.meta.url, async orb => html`
 			</header>
 
 			<tact-deck></tact-deck>
-			<tact-visualizer></tact-visualizer>
+
+			<footer>
+				<p>binary data visualizer</p>
+				<tact-visualizer></tact-visualizer>
+			</footer>
 		</body>
 	</html>
 `)
