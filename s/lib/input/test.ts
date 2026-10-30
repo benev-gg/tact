@@ -173,13 +173,19 @@ export default suite({
 		const slow = new Controller({source, bindings})
 
 		source.onSample.publish({code: "KeyE", value: 1})
-		expect([...fast.evaluate(1)].map(i => i.value)).deep([1, 0])
+		expect([...fast.evaluate(1)]).deep([
+			{id: 0, value: 1},
+		])
 
 		source.onSample.publish({code: "KeyE", value: 0})
-		expect([...fast.evaluate(2)].map(i => i.value)).deep([0, 1])
+		expect([...fast.evaluate(2)]).deep([
+			{id: 1, value: 1},
+		])
 
-		// slow consumer receives both transitions in one batch.
-		expect([...slow.evaluate(20)].map(i => i.value)).deep([1, 1])
+		expect([...slow.evaluate(20)]).deep([
+			{id: 0, value: 1},
+			{id: 1, value: 1},
+		])
 
 		fast.dispose()
 		slow.dispose()

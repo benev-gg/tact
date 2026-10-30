@@ -1,12 +1,12 @@
 
 import {RMap, RSet} from "@e280/strata"
-import {got, IdCounter, setEntries} from "@e280/stz"
+import {got, IdCounter} from "@e280/stz"
 
 import {Bindings} from "../../input/types.js"
 import {Controller} from "../../input/controller.js"
+import {encodeParcels} from "../../input/data/parcel/encode.js"
 import {encodeIntents} from "../../input/data/intent/encode.js"
 import {hashBindings} from "../../input/investigate/hash-bindings.js"
-import { encodeParcels } from "../../input/data/parcel/encode.js"
 
 export type PortId = number
 
@@ -14,10 +14,7 @@ export class Hub<B extends Bindings = any> {
 	#hash
 	#ids = new IdCounter()
 	#unassigned = new RSet<Controller<B>>()
-	#ports = new RMap<PortId, {
-		controllers: RSet<Controller<B>>,
-		intents: RMap<number, number>,
-	}>()
+	#ports = new RMap<PortId, {controllers: RSet<Controller<B>>}>()
 
 	constructor(readonly bindings: B) {
 		this.#hash = hashBindings(bindings)
@@ -39,7 +36,7 @@ export class Hub<B extends Bindings = any> {
 
 	createPort(): PortId {
 		const portId = this.#ids.next()
-		this.#ports.set(portId, {controllers: new RSet(), intents: new RMap()})
+		this.#ports.set(portId, {controllers: new RSet()})
 		return portId
 	}
 
@@ -76,7 +73,8 @@ export class Hub<B extends Bindings = any> {
 	}
 
 	encode(portId: PortId, time = performance.now()) {
-		const {controllers, intents} = got(this.#ports.get(portId))
+		const intents = new Map<number, number>()
+		const {controllers} = got(this.#ports.get(portId))
 
 		for (const controller of controllers) {
 			for (const intent of controller.evaluate(time)) {
