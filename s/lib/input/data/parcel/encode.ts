@@ -2,7 +2,7 @@
 import {Parcel} from "./types.js"
 import {endian} from "../endian.js"
 
-export function encodeParcel(parcels: Parcel[]): ArrayBuffer {
+export function encodeParcels(parcels: Parcel[]): ArrayBuffer {
 	const sizeHeader = 8
 	const size = parcels.reduce(
 		(total, {intents}) => total + sizeHeader + intents.byteLength,

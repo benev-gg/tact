@@ -3,7 +3,7 @@ import {Parcel} from "./types.js"
 import {endian} from "../endian.js"
 import {sizeHeader, sizeLength, sizePortId} from "./sizes.js"
 
-export function decodeParcel(buffer: ArrayBuffer): Parcel[] {
+export function decodeParcels(buffer: ArrayBuffer): Parcel[] {
 	const view = new DataView(buffer)
 	const parcels: Parcel[] = []
 	let cursor = 0
