@@ -82,7 +82,7 @@ ${cssReset}
 	--base: var(--tint, var(--prime));
 	font: inherit;
 	color: inherit;
-	background: transparent;
+	background: var(--bg);
 	border: 1px solid var(--base);
 	border-radius: var(--round);
 	padding: var(--nib) var(--pad);
