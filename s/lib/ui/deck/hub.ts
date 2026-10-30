@@ -78,22 +78,16 @@ export class Hub<B extends Bindings = any> {
 	encode(portId: PortId, time = performance.now()) {
 		const {controllers, intents} = got(this.#ports.get(portId))
 
-		const fresh = new Map<number, number>(
-			[...intents.keys()].map(id => [id, 0])
-		)
-
 		for (const controller of controllers) {
 			for (const intent of controller.evaluate(time)) {
-				const alpha = fresh.get(intent.id) ?? 0
-				fresh.set(intent.id, alpha + intent.value)
+				const alpha = intents.get(intent.id) ?? 0
+				intents.set(intent.id, alpha + intent.value)
 			}
 		}
 
-		const changedIntents = [...fresh]
-			.filter(([id, value]) => value !== (intents.get(id) ?? 0))
+		const changedIntents = [...intents]
+			.filter(([, value]) => value !== 0)
 			.map(([id, value]) => ({id, value}))
-
-		setEntries(intents, fresh)
 
 		return encodeIntents(this.#hash, changedIntents)
 	}

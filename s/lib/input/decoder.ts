@@ -15,9 +15,11 @@ export class InputDecoder<B extends Bindings> {
 	}
 
 	decode(...buffers: ArrayBuffer[]): Inputs<B> {
-		for (const input of this.#investigation.inputList) {
-			input.sum = 0
+		const inputs = this.#investigation.inputList
+
+		for (const input of inputs) {
 			input.was = input.value
+			input.sum = 0
 		}
 
 		for (const buffer of buffers) {
@@ -26,12 +28,16 @@ export class InputDecoder<B extends Bindings> {
 			if (decoded.hash !== this.#investigation.hash)
 				throw new Error("intent bindings hash mismatch")
 
+			for (const input of inputs)
+				input.value = 0
+
 			for (const {id, value} of decoded.intents) {
-				const input = this.#investigation.inputList[id]
-				if (!input) throw new Error(`unknown input id ${id}`)
+				const input = inputs[id]
 				input.value = value
-				input.sum += value
 			}
+
+			for (const input of inputs)
+				input.sum += input.value
 		}
 
 		return this.inputs
