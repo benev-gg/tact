@@ -116,7 +116,25 @@ i made tact because i want to make indie web game development easier. user input
 
 ## 🎮 get down to brass tacks.
 
-- 🍏 **use the core facilities directly,** without the ui or multiplayer.  
+- 🍏 **pov: your app isn't a game, no multiplayer, no gamepads.**  
+    ```ts
+    import {setupTact} from "@benev/tact"
+    import {InputDecoder} from "@benev/tact"
+
+    const tact = await setupTact({presets, maxPlayers: 1})
+    const controller = tact.mouseKeyboard()
+    tact.registerElements()
+
+    const decoder = new InputDecoder(bindings)
+
+    setInterval(() => {
+      const inputs = decoder.decode(controller.encode())
+
+      // here's where you do stuff with your inputs.
+      input.jump.value
+    }, 16.67)
+    ```
+- 🍏 **pov: your app doesn't even want any ui, or persistence.**  
     ```ts
     import {Controller, InputDecoder, KeyboardSource, PointerSource, Sources} from "@benev/tact"
 
