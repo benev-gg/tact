@@ -6,7 +6,7 @@ import {asDeck} from "../types.js"
 import {SetupParams} from "./types.js"
 import {Controls} from "../controls/controls.js"
 import {Bindings} from "../../../input/types.js"
-import {firstStock} from "../utils/first-stock.js"
+import {firstPreset} from "../utils/first-preset.js"
 
 export async function setupDeck<B extends Bindings>(params: SetupParams<B>) {
 	const kv = params.kv
@@ -16,7 +16,7 @@ export async function setupDeck<B extends Bindings>(params: SetupParams<B>) {
 		?? new BroadcastChannel("tact")
 
 	const {maxPlayers} = params
-	const {bindings} = firstStock(params.stock).profile
+	const {bindings} = firstPreset(params.presets).profile
 
 	const hub = new Hub(bindings)
 	const controls = new Controls({...params, kv})

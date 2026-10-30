@@ -12,13 +12,13 @@ export class Controls<B extends Bindings = any> {
 	#data
 	profiles
 	assignments
-	readonly stock
+	readonly presets
 
 	constructor(options: ControlsOptions<B>) {
 		this.#data = makeControlsData(options)
 		this.profiles = new Profiles(this.#data)
 		this.assignments = new Assignments(this.#data)
-		this.stock = options.stock
+		this.presets = options.presets
 	}
 
 	get on() {

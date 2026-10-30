@@ -10,14 +10,14 @@ export function getProfile<B extends Bindings>(
 		profileKey?: ProfileKey,
 	) {
 
-	const {stocks, customs, fallback} = data.profiles
+	const {presets, customs, fallback} = data.profiles
 
 	if (profileKey === undefined)
 		return fallback.profile
 
 	return customs.get(profileKey)
-		?? stocks.get(profileKey)
-		?? got(stocks.get(fallback.key))
+		?? presets.get(profileKey)
+		?? got(presets.get(fallback.key))
 }
 
 export async function assignProfile<B extends Bindings>(

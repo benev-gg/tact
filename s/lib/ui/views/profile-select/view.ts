@@ -23,7 +23,7 @@ export const ProfileSelectView = lightView((
 			.value="${currentProfileKey}"
 			@change="${handleChange}">
 
-			${profiles.stocks.map(([key, profile]) => html`
+			${profiles.presets.map(([key, profile]) => html`
 				<option
 					value="${key}"
 					?selected="${key === currentProfileKey}">

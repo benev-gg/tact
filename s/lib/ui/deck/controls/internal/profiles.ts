@@ -17,16 +17,16 @@ export class Profiles<B extends Bindings> {
 			throw new Error("incompatible bindings")
 	}
 
-	get stocks() {
-		return [...this.#data.profiles.stocks]
+	get presets() {
+		return [...this.#data.profiles.presets]
 	}
 
 	get customs() {
 		return [...this.#data.profiles.customs]
 	}
 
-	isStock(profileKey: string) {
-		return this.#data.profiles.stocks.has(profileKey)
+	isPreset(profileKey: string) {
+		return this.#data.profiles.presets.has(profileKey)
 	}
 
 	get(profileKey?: ProfileKey) {

@@ -5,7 +5,7 @@ import {setupDeck} from "./deck.js"
 import {SetupParams} from "./types.js"
 import {Bindings} from "../../../input/types.js"
 import {autoGamepads} from "../auto-gamepads.js"
-import {firstStock} from "../utils/first-stock.js"
+import {firstPreset} from "../utils/first-preset.js"
 import {Controller} from "../../../input/controller.js"
 import {Sources} from "../../../input/sources/sources.js"
 import {Visualizer} from "../../views/visualizer/visualizer.js"
@@ -39,14 +39,14 @@ export async function setupTact<B extends Bindings>(params: SetupParams<B>) {
 				handle,
 				name: handle,
 				tooltip: "",
-				defaultProfileKey: defaultProfileKey ?? firstStock(deck.controls.stock).key,
+				defaultProfileKey: defaultProfileKey ?? firstPreset(deck.controls.presets).key,
 			})
 			return () => deck.controls.detach(controller)
 		})
 	}
 
 	function mouseAndKeyboard() {
-		const {key, profile} = firstStock(deck.controls.stock)
+		const {key, profile} = firstPreset(deck.controls.presets)
 
 		const controller = new Controller({
 			bindings: profile.bindings,

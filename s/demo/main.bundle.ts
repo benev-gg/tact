@@ -1,10 +1,10 @@
 
 import {dom} from "@e280/sly"
 import {cycle, nap} from "@e280/stz"
-import {stock} from "./stock-profiles.js"
+import {presets} from "./presets.js"
 import {setupTact} from "../lib/ui/deck/setup/tact.js"
 
-const tact = await setupTact({stock, maxPlayers: 4})
+const tact = await setupTact({presets, maxPlayers: 4})
 tact.mouseAndKeyboard()
 tact.gamepads("gamer")
 tact.registerElements()

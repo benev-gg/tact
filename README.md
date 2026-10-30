@@ -23,7 +23,7 @@
     ```sh
     npm install @benev/tact@next
     ```
-- **make your app's standard bindings.**
+- **establish your app's standard bindings.**
     ```ts
     import {asBindings} from "@benev/tact"
 
@@ -34,11 +34,11 @@
     })
     ```
     - bindings is a tiny json dsl. see [expression.ts](./s/lib/input/expression.ts).
-- **let's also have some alternative bindings for gamepads.**
+- **let's have two presets available to the user. one for gamepads.**
     ```ts
-    import {asStockProfiles} from "@benev/tact"
+    import {asPresets} from "@benev/tact"
 
-    const stock = asStockProfiles<typeof bindings>({
+    const presets = asPresets<typeof bindings>({
       standard: {label: "⌨️standard", bindings},
       gamepad: {label: "🎮gamer", bindings: {
         jump: "gamepad.1",
@@ -47,11 +47,11 @@
       }},
     })
     ```
-- **now we can setup tact and register the elements.**
+- **now we can setup tact and register the html elements.**
     ```ts
     import {setupTact} from "@benev/tact"
 
-    const tact = await setupTact({stock, maxPlayers: 4})
+    const tact = await setupTact({presets, maxPlayers: 4})
     tact.mouseAndKeyboard()
     tact.gamepads("gamepad")
     tact.registerElements()

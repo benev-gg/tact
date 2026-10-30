@@ -1,11 +1,11 @@
 
 import {Kv} from "@e280/kv"
-import {StockProfiles} from "../types.js"
+import {Presets} from "../types.js"
 import {Bindings} from "../../../input/types.js"
 
 export type SetupParams<B extends Bindings> = {
 	maxPlayers: number
-	stock: StockProfiles<B>
+	presets: Presets<B>
 	kv?: Kv
 	broadcastChannel?: BroadcastChannel
 }

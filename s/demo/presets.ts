@@ -1,6 +1,6 @@
 
 import {asBindings} from "../lib/input/types.js"
-import {asStockProfiles} from "../lib/ui/deck/types.js"
+import {asPresets} from "../lib/ui/deck/types.js"
 
 export const bindings = asBindings({
 	interactions: {
@@ -20,7 +20,7 @@ export const bindings = asBindings({
 	},
 })
 
-export const stock = asStockProfiles<typeof bindings>({
+export const presets = asPresets<typeof bindings>({
 	standard: {label: "⌨️standard", bindings},
 	gamer: {label: "🎮gamer", bindings: {
 		interactions: {

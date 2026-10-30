@@ -13,26 +13,26 @@ export type ControlsData<B extends Bindings> = (
 
 export function makeControlsData<B extends Bindings>({
 		kv,
-		stock,
+		presets,
 	}: ControlsOptions<B>) {
 
-	const fallbackKey = got(Object.keys(stock)[0], "missing stock profiles")
-	const fallbackProfile = got(stock[fallbackKey])
+	const fallbackKey = got(Object.keys(presets)[0], "missing presets")
+	const fallbackProfile = got(presets[fallbackKey])
 	const bindings = fallbackProfile.bindings
 
 	const profiles = {
-		stocks: new RMap<ProfileKey, Profile<B>>(),
+		presets: new RMap<ProfileKey, Profile<B>>(),
 		customs: new RMap<ProfileKey, Profile<B>>(),
 		fallback: {key: fallbackKey, profile: fallbackProfile},
 	}
 
-	setEntries(profiles.stocks, Object.entries(stock))
+	setEntries(profiles.presets, Object.entries(presets))
 
 	return {
 		subby: subby(),
 
 		kv,
-		stock,
+		presets,
 		bindings,
 		idCounter: new IdCounter(),
 

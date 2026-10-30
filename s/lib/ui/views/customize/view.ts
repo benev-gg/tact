@@ -21,7 +21,7 @@ export const [CustomizeView, makeCustomizeElement] = shadowDuplex((options: {con
 	const $profileKey = useSignal(controls.fallbackProfileKey)
 
 	const profile = profiles.get($profileKey())
-	const isReadonly = profiles.isStock($profileKey())
+	const isReadonly = profiles.isPreset($profileKey())
 
 	const baseline = profile.basedOn
 		? profiles.get(profile.basedOn)
@@ -30,7 +30,7 @@ export const [CustomizeView, makeCustomizeElement] = shadowDuplex((options: {con
 	const updateBindings = (bindings: Bindings) => {
 		let key = $profileKey()
 
-		if (profiles.isStock(key)) {
+		if (profiles.isPreset(key)) {
 			const basedOn = key
 			const freshKey = makeId()
 			key = freshKey
