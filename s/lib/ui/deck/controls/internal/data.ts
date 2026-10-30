@@ -5,20 +5,22 @@ import {got, IdCounter, setEntries, subby} from "@e280/stz"
 import {Profile, ProfileKey} from "../../types.js"
 import {Bindings} from "../../../../input/types.js"
 import {Controller} from "../../../../input/controller.js"
+import {hashBindings} from "../../../../input/investigate/hash-bindings.js"
 import {ControllerHandle, ControllerMeta, ControlsOptions} from "../types.js"
 
 export type ControlsData<B extends Bindings> = (
 	ReturnType<typeof makeControlsData<B>>
 )
 
-export function makeControlsData<B extends Bindings>({
-		kv,
-		presets,
-	}: ControlsOptions<B>) {
-
+export function makeControlsData<B extends Bindings>(options: ControlsOptions<B>) {
+	const {presets} = options
 	const fallbackKey = got(Object.keys(presets)[0], "missing presets")
 	const fallbackProfile = got(presets[fallbackKey])
 	const bindings = fallbackProfile.bindings
+
+	const kv = options.kv.scope(
+		hashBindings(bindings).toString()
+	)
 
 	const profiles = {
 		presets: new RMap<ProfileKey, Profile<B>>(),
