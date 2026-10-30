@@ -107,8 +107,8 @@ i made tact because i want to make indie web game development easier. user input
       }
     }, 16.67)
     ```
-    💡 *you could stream the buffers across the network to a remote collector.*  
-    💡 *maybe imagine having the tact deck on the clientside, and the collector on the serverside (or a web worker!).*  
+    - 💡 *you could stream the buffers across the network to a remote collector.*
+    - 💡 *maybe imagine having the tact deck on the clientside, and the collector on the serverside (or a web worker!).*
 
 
 
@@ -118,8 +118,7 @@ i made tact because i want to make indie web game development easier. user input
 
 - 🍏 **pov: your app isn't a game, no multiplayer, no gamepads.**  
     ```ts
-    import {setupTact} from "@benev/tact"
-    import {InputDecoder} from "@benev/tact"
+    import {setupTact, InputDecoder} from "@benev/tact"
 
     const tact = await setupTact({presets, maxPlayers: 1})
     const controller = tact.mouseKeyboard()
@@ -134,6 +133,7 @@ i made tact because i want to make indie web game development easier. user input
       input.jump.value
     }, 16.67)
     ```
+    - 💡 *then the only ui you need is the `<tact-customize>` panel (also available as a sly view `CustomizeView`).*
 - 🍏 **pov: your app doesn't even want any ui, or persistence.**  
     ```ts
     import {Controller, InputDecoder, KeyboardSource, PointerSource, Sources} from "@benev/tact"
