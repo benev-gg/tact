@@ -7,18 +7,18 @@ export const DropcardView = lightView((o: {
 		class: string
 		themeCard?: string
 		context: Context
-		portId: DroppyPort["portId"]
+		playerId: DroppyPort["playerId"]
 		content: Content
 	}) => {
 
 	const {dnd} = o.context
-	const dropzone = dnd.dropzone(() => ({portId: o.portId}))
+	const dropzone = dnd.dropzone(() => ({playerId: o.playerId}))
 
 	return html`
 		<div class="${o.class}"
 			theme-card="${o.themeCard ?? ""}"
 			data-drop-candidate
-			?data-dropping="${dnd.hovering?.portId === o.portId}"
+			?data-dropping="${dnd.hovering?.playerId === o.playerId}"
 			@dragenter="${dropzone.dragenter}"
 			@dragleave="${dropzone.dragleave}"
 			@dragover="${dropzone.dragover}"

@@ -1,5 +1,5 @@
 
-export const sizePortId = 4
 export const sizeLength = 4
-export const sizeHeader = sizePortId + sizeLength
+export const sizePlayerId = 4
+export const sizeHeader = sizePlayerId + sizeLength
 

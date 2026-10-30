@@ -9,21 +9,21 @@ import {DropcardView} from "./dropcard.js"
 import {Context} from "../../deck/types.js"
 import {ControllerView} from "./controller.js"
 
-export const PortView = lightView((context: Context, portId: number, index: number) => {
+export const PlayerView = lightView((context: Context, playerId: number, index: number) => {
 	const {hub} = context.deck
-	const deletePort = () => hub.deletePort(portId)
-	const controllers = hub.controllers.assigned.get(portId) ?? []
+	const deletePlayer = () => hub.deletePlayer(playerId)
+	const controllers = hub.controllers.assigned.get(playerId) ?? []
 
 	return DropcardView({
-		class: "port",
-		portId,
+		class: "player",
+		playerId: playerId,
 		context,
 		content: html`
 			<h3>
 				<span>player ${index + 1}</span>
 
-				${when(hub.portIds.length > 1, () => html`
-					<button theme-button="naked angry" @click=${deletePort}>
+				${when(hub.playerIds.length > 1, () => html`
+					<button theme-button="naked angry" @click=${deletePlayer}>
 						${xSmallSvg}
 					</button>
 				`)}

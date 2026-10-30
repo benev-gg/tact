@@ -1,5 +1,8 @@
 
-import {PortId} from "../../../ui/deck/hub.js"
+import {PlayerId} from "../../../ui/deck/types.js"
 
-export type Parcel = {portId: PortId, intents: ArrayBuffer}
+export type Parcel = {
+	playerId: PlayerId
+	intents: ArrayBuffer
+}
 

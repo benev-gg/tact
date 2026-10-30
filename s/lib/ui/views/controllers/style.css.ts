@@ -11,7 +11,7 @@ export default css`@layer view {
 }
 
 [data-drag-and-drop] {
-	.port[data-drop-candidate] {
+	.player[data-drop-candidate] {
 		outline: 2px dashed color-mix(in oklch, transparent, var(--droppy) 80%);
 		background: color-mix(in oklch, var(--slate), var(--droppy) 20%);
 
@@ -22,7 +22,7 @@ export default css`@layer view {
 	}
 }
 
-.ports {
+.playerlist {
 	display: grid;
 	grid-template-columns: repeat(
 		auto-fit,
@@ -38,7 +38,7 @@ export default css`@layer view {
 	}
 }
 
-.port {
+.player {
 	display: flex;
 	flex-direction: column;
 

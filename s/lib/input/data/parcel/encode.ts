@@ -14,8 +14,8 @@ export function encodeParcels(parcels: Parcel[]): ArrayBuffer {
 	const bytes = new Uint8Array(buffer)
 	let cursor = 0
 
-	for (const {portId, intents} of parcels) {
-		view.setUint32(cursor, portId, endian)
+	for (const {playerId, intents} of parcels) {
+		view.setUint32(cursor, playerId, endian)
 		cursor += 4
 
 		view.setUint32(cursor, intents.byteLength, endian)

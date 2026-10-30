@@ -3,6 +3,8 @@ import {Hub} from "./hub.js"
 import {Bindings} from "../../input/types.js"
 import {Controls} from "./controls/controls.js"
 
+export type PlayerId = number
+
 export type ProfileKey = string
 
 export type Profile<B extends Bindings = any> = {

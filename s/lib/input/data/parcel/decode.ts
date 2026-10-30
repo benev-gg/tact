@@ -1,7 +1,7 @@
 
 import {Parcel} from "./types.js"
 import {endian} from "../endian.js"
-import {sizeHeader, sizeLength, sizePortId} from "./sizes.js"
+import {sizeHeader, sizeLength, sizePlayerId} from "./sizes.js"
 
 export function decodeParcels(buffer: ArrayBuffer): Parcel[] {
 	const view = new DataView(buffer)
@@ -12,8 +12,8 @@ export function decodeParcels(buffer: ArrayBuffer): Parcel[] {
 		if (buffer.byteLength - cursor < sizeHeader)
 			throw new Error("truncated header")
 
-		const portId = view.getUint32(cursor, endian)
-		cursor += sizePortId
+		const playerId = view.getUint32(cursor, endian)
+		cursor += sizePlayerId
 
 		const length = view.getUint32(cursor, endian)
 		cursor += sizeLength
@@ -24,7 +24,7 @@ export function decodeParcels(buffer: ArrayBuffer): Parcel[] {
 		const intents = buffer.slice(cursor, cursor + length)
 		cursor += length
 
-		parcels.push({portId, intents})
+		parcels.push({playerId: playerId, intents})
 	}
 
 	return parcels

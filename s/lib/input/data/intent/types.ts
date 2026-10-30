@@ -1,3 +1,6 @@
 
-export type Intent = {id: number, value: number}
+export type Intent = {
+	id: number
+	value: number
+}
 

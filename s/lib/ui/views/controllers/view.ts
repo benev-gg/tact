@@ -8,27 +8,27 @@ import themeCss from "../theme.css.js"
 import personAddSvg from "../../icons/akar/person-add.svg.js"
 
 import {Deck} from "../../deck/types.js"
-import {PortView} from "./subviews/port.js"
+import {PlayerView} from "./subviews/player.js"
 import {DropcardView} from "./subviews/dropcard.js"
 import {ControllerView} from "./subviews/controller.js"
-import {Context, droppyNewPort} from "../deck/types.js"
+import {Context, droppyNewPlayer} from "../deck/types.js"
 
 export const [ControllersView, makeControllersElement] = shadowDuplex((deck: Deck) => {
 	useCss(themeCss, styleCss)
 
 	const {hub} = deck
 	const controllers = hub.controllers
-	const clickCreatePort = () => deck.hub.createPort()
-	const renderPort = (p: number, i: number) => PortView(context, p, i)
+	const clickCreatePlayer = () => deck.hub.createPlayer()
+	const renderPlayer = (p: number, i: number) => PlayerView(context, p, i)
 
 	const context: Context = useOnce(() => ({
 		deck,
 		dnd: new loot.DragAndDrops({
 			acceptDrop(_event, draggy, droppy) {
-				if (droppy.portId === droppyNewPort)
-					hub.plug(draggy.controller, hub.createPort())
-				else if (isHappy(droppy.portId))
-					hub.plug(draggy.controller, droppy.portId)
+				if (droppy.playerId === droppyNewPlayer)
+					hub.plug(draggy.controller, hub.createPlayer())
+				else if (isHappy(droppy.playerId))
+					hub.plug(draggy.controller, droppy.playerId)
 				else
 					hub.unplug(draggy.controller)
 			},
@@ -37,16 +37,16 @@ export const [ControllersView, makeControllersElement] = shadowDuplex((deck: Dec
 
 	return html`
 		<div class=plate ?data-drag-and-drop="${!!context.dnd.dragging}">
-			<div class=ports>
-				${hub.portIds.map(renderPort)}
+			<div class=playerlist>
+				${hub.playerIds.map(renderPlayer)}
 
-				${when(hub.portIds.length < deck.maxPlayers, () => DropcardView({
-					class: "port new",
+				${when(hub.playerIds.length < deck.maxPlayers, () => DropcardView({
+					class: "player new",
 					themeCard: "dull",
-					portId: droppyNewPort,
+					playerId: droppyNewPlayer,
 					context,
 					content: html`
-						<button theme-button=naked @click="${clickCreatePort}">
+						<button theme-button=naked @click="${clickCreatePlayer}">
 							${personAddSvg}
 							<span>add player</span>
 						</button>
@@ -54,9 +54,9 @@ export const [ControllersView, makeControllersElement] = shadowDuplex((deck: Dec
 				}))}
 
 				${DropcardView({
-					class: "port unassigned",
+					class: "player unassigned",
 					themeCard: "dull",
-					portId: null,
+					playerId: null,
 					context,
 					content: html`
 						<h3>unassigned</h3>
