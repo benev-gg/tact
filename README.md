@@ -86,6 +86,8 @@
         // your game logic can read these handy input values.
         inputs.jump.value // values are numbers 0  to 1.
         inputs.jump.was // previous value (to detect up/down).
+        inputs.jump.sum // sum of values reported since last frame.
+
         inputs.forward.value
         inputs.look.value
       }

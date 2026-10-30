@@ -15,8 +15,10 @@ export class InputDecoder<B extends Bindings> {
 	}
 
 	decode(...buffers: ArrayBuffer[]): Inputs<B> {
-		for (const input of this.#investigation.inputList)
+		for (const input of this.#investigation.inputList) {
+			input.sum = 0
 			input.was = input.value
+		}
 
 		for (const buffer of buffers) {
 			const decoded = decodeIntents(buffer)
@@ -28,6 +30,7 @@ export class InputDecoder<B extends Bindings> {
 				const input = this.#investigation.inputList[id]
 				if (!input) throw new Error(`unknown input id ${id}`)
 				input.value = value
+				input.sum += value
 			}
 		}
 

@@ -24,7 +24,7 @@ export default suite({
 	}),
 
 	"update bindings": test(async() => {
-		const {sample, solve, encoder} = quickbind("KeyA")
+		const {sample, solve, controller} = quickbind("KeyA")
 
 		sample({code: "KeyA", value: 1})
 		expect(solve().value).is(1)
@@ -32,8 +32,8 @@ export default suite({
 		sample({code: "KeyA", value: 0})
 		expect(solve().value).is(0)
 
-		encoder.bindings = "KeyB"
-		expect(encoder.bindings).is("KeyB")
+		controller.bindings = "KeyB"
+		expect(controller.bindings).is("KeyB")
 		sample({code: "KeyA", value: 1})
 		expect(solve().value).is(0)
 
@@ -43,8 +43,8 @@ export default suite({
 	}),
 
 	"incompatible bindings throws an error": test(async() => {
-		const {encoder} = quickbind({alpha: "KeyA"})
-		expect(() => encoder.bindings = <any>{bravo: "KeyA"}).throws()
+		const {controller} = quickbind({alpha: "KeyA"})
+		expect(() => controller.bindings = <any>{bravo: "KeyA"}).throws()
 	}),
 
 	"rapid transitions": test(async() => {
@@ -66,6 +66,41 @@ export default suite({
 		expect(inputs.key.value).is(1)
 		expect(inputs.downs.value).is(0)
 		expect(inputs.ups.value).is(0)
+	}),
+
+	"quick tap controller-level": test(async() => {
+		const {sample, solve, inputs} = quickbind("KeyE")
+
+		solve()
+		expect(inputs.sum).is(0)
+
+		for (const value of [0, 1, 0])
+			sample({code: "KeyE", value})
+
+		solve()
+		expect(inputs.sum).is(1)
+
+		solve()
+		expect(inputs.sum).is(0)
+	}),
+
+	"quick tap decoder-level": test(async() => {
+		const {sample, solve, controller, decoder, inputs} = quickbind("KeyE")
+
+		solve()
+		expect(inputs.sum).is(0)
+		const datas: ArrayBuffer[] = []
+
+		for (const value of [0, 1, 0]) {
+			sample({code: "KeyE", value})
+			datas.push(controller.encode())
+		}
+
+		decoder.decode(...datas)
+		expect(inputs.sum).is(1)
+
+		solve()
+		expect(inputs.sum).is(0)
 	}),
 
 	"double tap in one frame": test(async() => {
@@ -127,7 +162,7 @@ export default suite({
 		expect(holding.holder.value).is(1)
 	}),
 
-	"independent encoder consumers": test(async() => {
+	"independent controller consumers": test(async() => {
 		const source = new PlainSource()
 		const bindings = asBindings({
 			downs: ["down", "KeyE"],

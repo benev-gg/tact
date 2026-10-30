@@ -17,8 +17,11 @@ export type Input = {
 	/** latest-known value. */
 	value: number
 
-	/** previously-known value. */
+	/** previously-known value from last frame. */
 	was: number
+
+	/** sum of values since last frame. */
+	sum: number
 }
 
 export type Inputs<B extends Bindings = any> = (

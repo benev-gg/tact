@@ -19,8 +19,17 @@ export function evaluate(
 	if (isNumber(expression))
 		return expression
 
-	else if (isString(expression))
-		return context.latestValues.get(expression) ?? 0
+	else if (isString(expression)) {
+		const latest = context.latestValues.get(expression) ?? 0
+		return context.recentSamples
+			.filter(s => s.code === expression)
+			.reduce(
+				(peak, s) => Math.abs(s.value) > Math.abs(peak)
+					? s.value
+					: peak,
+				latest,
+			)
+	}
 
 	else switch (expression[0]) {
 		case "accumulate": {

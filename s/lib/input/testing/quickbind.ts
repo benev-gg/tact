@@ -8,6 +8,7 @@ export function quickbind<B extends Bindings>(b: B) {
 	const source = new PlainSource()
 	const controller = new Controller({source, bindings: b})
 	const decoder = new InputDecoder(controller.bindings)
+	const {inputs} = decoder
 
 	const sample = (...samples: Sample[]) =>
 		samples.forEach(s => source.onSample.publish(s))
@@ -15,6 +16,6 @@ export function quickbind<B extends Bindings>(b: B) {
 	const solve = (time?: number) =>
 		decoder.decode(controller.encode(time))
 
-	return {source, encoder: controller, decoder, sample, solve}
+	return {source, controller, decoder, sample, solve, inputs}
 }
 
