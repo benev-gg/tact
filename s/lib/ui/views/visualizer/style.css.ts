@@ -8,14 +8,14 @@ export default css`@layer view {
 
 output {
 	opacity: 0.5;
-	color: lime;
+	color: var(--prime);
 	font-size: 1em;
 	font-family: monospace;
 	display: block;
 	overflow-wrap: anywhere;
 	text-overflow: ellipsis;
 	height: 8em;
-	padding: 0 2em;
+	padding: 0 4em;
 	overflow: hidden;
 }
 

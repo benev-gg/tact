@@ -9,18 +9,19 @@ export default css`
 ${cssReset}
 
 :host {
-	--bg: #1b1a18;
-	--text: #fffc;
-	--prime: #fb0;
-	--droppy: oklch(from var(--prime) l c calc(h + 100));
-	--recording: oklch(from var(--prime) l c calc(h + 100));
+	--prime: var(--tact-prime, #fb0);
 
-	--round: 0.5em;
-	--pad: 0.5em;
-	--nib: 0.2em;
-	--space: 1em;
-	--box-shadow: 0.1em 0.2em 1em #0006;
-	--text-shadow: 0.02em 0.04em 0.1em #000a;
+	--text: var(--tact-text, #fffc);
+	--bg: var(--tact-bg, oklch(from var(--prime) calc(l * 0.3) calc(c * 0.1) h));
+	--droppy: var(--tact-droppy, oklch(from var(--prime) l c calc(h + 100)));
+	--recording: var(--tact-recording, oklch(from var(--prime) l c calc(h + 100)));
+
+	--round: var(--tact-round, 0.5em);
+	--pad: var(--tact-pad, 0.5em);
+	--nib: var(--tact-nib, 0.2em);
+	--space: var(--tact-space, 1em);
+	--box-shadow: var(--tact-box-shadow, 0.1em 0.2em 1em #0006);
+	--text-shadow: var(--tact-text-shadow, 0.02em 0.04em 0.1em #000a);
 }
 
 [theme-card] {

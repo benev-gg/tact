@@ -70,6 +70,7 @@
 			padding: 0 2em;
 			h1 small { font-size: 0.6em; font-weight: normal; }
 			* + * { margin-top: 0.5em; }
+			label { padding-left: 1em; }
 		}
 
 		> section {
