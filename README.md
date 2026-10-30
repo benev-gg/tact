@@ -70,7 +70,7 @@ i made tact because i want to make indie web game development easier. user input
     <tact-deck></tact-deck>
     ```
     - 💡 *you also have each panel, `<tact-controllers>` and `<tact-customize>`.*
-    - 💡 *you can customize the colors with css:*
+    - 💡 *you can customize the colors with css.*
         ```html
         <style>
           html {
@@ -122,15 +122,15 @@ i made tact because i want to make indie web game development easier. user input
 
     const tact = await setupTact({presets, maxPlayers: 1})
     const controller = tact.mouseKeyboard()
-    tact.registerElements()
-
     const decoder = new InputDecoder(bindings)
+    tact.registerElements()
 
     setInterval(() => {
       const inputs = decoder.decode(controller.encode())
 
-      // here's where you do stuff with your inputs.
-      input.jump.value
+      // 🧙‍♂️ handle your inputs.
+      inputs.jump.value
+
     }, 16.67)
     ```
     - 💡 *then the only ui you need is the `<tact-customize>` panel (also available as a sly view `CustomizeView`).*
@@ -138,15 +138,17 @@ i made tact because i want to make indie web game development easier. user input
     ```ts
     import {Controller, InputDecoder, KeyboardSource, PointerSource, Sources} from "@benev/tact"
 
-    const controller = new Controller({
-      bindings,
-      source: new Sources(new KeyboardSource(), new PointerSource()),
-    })
-
+    const source = new Sources(new KeyboardSource(), new PointerSource())
+    const controller = new Controller({bindings, source})
     const decoder = new InputDecoder(bindings)
 
-    // call this in your gameloop.
-    const inputs = decoder.decode(controller.encode())
+    setInterval(() => {
+      const inputs = decoder.decode(controller.encode())
+
+      // 🧙‍♂️ handle your inputs.
+      inputs.jump.value
+
+    }, 16.67)
     ```
 
 
