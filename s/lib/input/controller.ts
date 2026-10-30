@@ -1,11 +1,12 @@
 
 import {deepFreeze} from "@e280/stz"
 import {Sampler} from "./utils/sampler.js"
-import {encodeData} from "./data/encode.js"
+import {Intent} from "./data/intent/types.js"
 import {evaluate} from "./evaluate/evaluate.js"
+import {encodeIntents} from "./data/intent/encode.js"
+import {Bindings, Rebindings, Source} from "./types.js"
 import {EvaluationContext} from "./evaluate/context.js"
 import {investigate} from "./investigate/investigate.js"
-import {Bindings, InputData, Intent, Rebindings, Source} from "./types.js"
 
 export class Controller<B extends Bindings = any> {
 	#sampler
@@ -53,8 +54,8 @@ export class Controller<B extends Bindings = any> {
 			this.#context.previousValues.set(code, value)
 	}
 
-	encode(time = performance.now()): InputData {
-		return encodeData(this.#investigation.hash, [...this.evaluate(time)])
+	encode(time = performance.now()) {
+		return encodeIntents(this.#investigation.hash, [...this.evaluate(time)])
 	}
 
 	clear() {

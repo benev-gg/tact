@@ -1,8 +1,9 @@
 
-import {Intent} from "../types.js"
-import {endian, sizeHash, sizeId, sizeValue} from "./params.js"
+import {Intent} from "./types.js"
+import {endian} from "../endian.js"
+import {sizeHash, sizeId, sizeValue} from "./sizes.js"
 
-export function decodeData(buffer: ArrayBuffer) {
+export function decodeIntents(buffer: ArrayBuffer) {
 	const intents: Intent[] = []
 	const dv = new DataView(buffer)
 	let cursor = 0

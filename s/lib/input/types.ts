@@ -12,10 +12,6 @@ export type Source = {
 	readonly poll?: () => void
 }
 
-export type Intent = {id: number, value: number}
-
-export type InputData = ArrayBuffer
-
 export type Input = {
 
 	/** latest-known value. */
@@ -23,9 +19,6 @@ export type Input = {
 
 	/** previously-known value. */
 	was: number
-
-	/** change in value since the previously-known value. */
-	delta: number
 }
 
 export type Inputs<B extends Bindings = any> = (

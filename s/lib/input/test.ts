@@ -6,10 +6,10 @@ import {Controller} from "./controller.js"
 import {PlainSource} from "./sources/plain.js"
 import {quickbind} from "./testing/quickbind.js"
 
-import plex from "./data/plex/test.js"
+import parcel from "./data/test.js"
 
 export default suite({
-	plex,
+	parcel,
 
 	"roundtrip": test(async() => {
 		const {sample, solve} = quickbind("KeyE")
@@ -21,7 +21,6 @@ export default suite({
 		const inputs = solve()
 		expect(inputs.value).is(1)
 		expect(inputs.was).is(0)
-		expect(inputs.delta).is(1)
 	}),
 
 	"update bindings": test(async() => {

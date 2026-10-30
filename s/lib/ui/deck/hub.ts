@@ -2,9 +2,9 @@
 import {RMap, RSet} from "@e280/strata"
 import {got, IdCounter} from "@e280/stz"
 
+import {Bindings} from "../../input/types.js"
 import {Controller} from "../../input/controller.js"
-import {Bindings, Intent} from "../../input/types.js"
-import {encodeData} from "../../input/data/encode.js"
+import {encodeIntents} from "../../input/data/intent/encode.js"
 import {hashBindings} from "../../input/investigate/hash-bindings.js"
 
 export type PortId = number
@@ -88,10 +88,9 @@ export class Hub<B extends Bindings = any> {
 			}
 		}
 
-		return encodeData(
+		return encodeIntents(
 			this.#hash,
-			[...intents]
-				.map(([id, value]): Intent => ({id, value})),
+			[...intents].map(([id, value]) => ({id, value})),
 		)
 	}
 
