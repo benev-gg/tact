@@ -13,6 +13,7 @@ export class Controller<B extends Bindings = any> {
 	#bindings: Rebindings<B>
 	#investigation
 	#context
+	#knownExpressionValues = new Map<number, number>()
 
 	constructor(options: {source: Source, bindings: B}) {
 		this.#bindings = deepFreeze(structuredClone(options.bindings)) as any as Rebindings<B>
@@ -47,8 +48,13 @@ export class Controller<B extends Bindings = any> {
 		for (const {code, value} of samples)
 			this.#context.latestValues.set(code, value)
 
-		for (const [id, expression] of this.#investigation.rootList.entries())
-			yield {id, value: evaluate(this.#context, expression)} as Intent
+		for (const [id, expression] of this.#investigation.rootList.entries()) {
+			const value = evaluate(this.#context, expression)
+			if (value !== this.#knownExpressionValues.get(id)) {
+				this.#knownExpressionValues.set(id, value)
+				yield {id, value} as Intent
+			}
+		}
 
 		for (const {code, value} of samples)
 			this.#context.previousValues.set(code, value)

@@ -1,6 +1,6 @@
 
 import {RMap, RSet} from "@e280/strata"
-import {got, IdCounter} from "@e280/stz"
+import {got, IdCounter, setEntries} from "@e280/stz"
 
 import {Bindings} from "../../input/types.js"
 import {Controller} from "../../input/controller.js"
@@ -78,21 +78,24 @@ export class Hub<B extends Bindings = any> {
 	encode(portId: PortId, time = performance.now()) {
 		const {controllers, intents} = got(this.#ports.get(portId))
 
-		for (const id of intents.keys())
-			intents.set(id, 0)
+		const fresh = new Map<number, number>(
+			[...intents.keys()].map(id => [id, 0])
+		)
 
 		for (const controller of controllers) {
 			for (const intent of controller.evaluate(time)) {
-				const knownValue = intents.get(intent.id) ?? 0
-				const mergedValue = knownValue + intent.value
-				intents.set(intent.id, mergedValue)
+				const alpha = fresh.get(intent.id) ?? 0
+				fresh.set(intent.id, alpha + intent.value)
 			}
 		}
 
-		return encodeIntents(
-			this.#hash,
-			[...intents].map(([id, value]) => ({id, value})),
-		)
+		const changedIntents = [...fresh]
+			.filter(([id, value]) => value !== (intents.get(id) ?? 0))
+			.map(([id, value]) => ({id, value}))
+
+		setEntries(intents, fresh)
+
+		return encodeIntents(this.#hash, changedIntents)
 	}
 
 	encodeAll(time = performance.now()) {
