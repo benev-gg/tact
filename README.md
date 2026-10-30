@@ -107,8 +107,8 @@ i made tact because i want to make indie web game development easier. user input
       }
     }, 16.67)
     ```
-    💡 *you could stream the buffers across the network to a remote collector.*
-    💡 *maybe imagine having the tact deck on the clientside, and the collector on the serverside (or a web worker!).*
+    💡 *you could stream the buffers across the network to a remote collector.*  
+    💡 *maybe imagine having the tact deck on the clientside, and the collector on the serverside (or a web worker!).*  
 
 
 
@@ -127,7 +127,7 @@ i made tact because i want to make indie web game development easier. user input
 
     const decoder = new InputDecoder(bindings)
 
-    // call this in your gameloop:
+    // call this in your gameloop.
     const inputs = decoder.decode(controller.encode())
     ```
 
