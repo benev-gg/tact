@@ -5,6 +5,7 @@ import {setupDeck} from "./deck.js"
 import {SetupParams} from "./types.js"
 import {Bindings} from "../../../input/types.js"
 import {autoGamepads} from "../auto-gamepads.js"
+import {ellipsis} from "../../../utils/ellipsis.js"
 import {firstPreset} from "../utils/first-preset.js"
 import {Controller} from "../../../input/controller.js"
 import {Sources} from "../../../input/sources/sources.js"
@@ -19,7 +20,6 @@ import {makeControllersElement} from "../../views/controllers/view.js"
 
 import devicesSvg from "../../icons/akar/devices.svg.js"
 import gameControllerSvg from "../../icons/akar/game-controller.svg.js"
-import { ellipsis } from "../../../utils/ellipsis.js"
 
 export async function setupTact<B extends Bindings>(params: SetupParams<B>) {
 	const deck = await setupDeck(params)
