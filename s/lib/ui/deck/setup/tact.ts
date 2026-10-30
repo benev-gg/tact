@@ -1,8 +1,6 @@
 
 import {register} from "@e280/sly"
-import {cycle, nap} from "@e280/stz"
 
-import {PortId} from "../hub.js"
 import {setupDeck} from "./deck.js"
 import {SetupParams} from "./types.js"
 import {Bindings} from "../../../input/types.js"
@@ -10,11 +8,13 @@ import {autoGamepads} from "../auto-gamepads.js"
 import {firstStock} from "../utils/first-stock.js"
 import {Controller} from "../../../input/controller.js"
 import {Sources} from "../../../input/sources/sources.js"
+import {Visualizer} from "../../views/visualizer/visualizer.js"
 import {PointerSource} from "../../../input/sources/pointer.js"
 import {KeyboardSource} from "../../../input/sources/keyboard.js"
 
 import {makeDeckElement} from "../../views/deck/view.js"
 import {makeCustomizeElement} from "../../views/customize/view.js"
+import {makeVisualizerElement} from "../../views/visualizer/view.js"
 import {makeControllersElement} from "../../views/controllers/view.js"
 
 import devicesSvg from "../../icons/akar/devices.svg.js"
@@ -22,11 +22,13 @@ import gameControllerSvg from "../../icons/akar/game-controller.svg.js"
 
 export async function setupTact<B extends Bindings>(params: SetupParams<B>) {
 	const deck = await setupDeck(params)
+	const visualizer = new Visualizer()
 
 	const elements = {
 		TactDeck: makeDeckElement(deck),
 		TactCustomize: makeCustomizeElement(deck),
 		TactControllers: makeControllersElement(deck),
+		TactVisualizer: makeVisualizerElement(visualizer),
 	}
 
 	function gamepads(defaultProfileKey?: string) {
@@ -75,6 +77,7 @@ export async function setupTact<B extends Bindings>(params: SetupParams<B>) {
 		deck,
 		gamepads,
 		mouseAndKeyboard,
+		visualizer,
 		elements,
 		registerElements,
 	}

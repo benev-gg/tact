@@ -1,18 +1,14 @@
 
 import {html} from "lit"
-import {shadowView, useCss, useName} from "@e280/sly"
-import styleCss from "./style.css.js"
-import themeCss from "../theme.css.js"
+import {lightView} from "@e280/sly"
 import {Controls} from "../../deck/controls/controls.js"
 
-export const ProfileSelectView = shadowView((
+export const ProfileSelectView = lightView((
 		deck: {controls: Controls},
 		currentProfileKey: string,
 		onChange: (key: string) => void,
 	) => {
 
-	useName("profile-select")
-	useCss(themeCss, styleCss)
 	const {profiles} = deck.controls
 
 	function handleChange(event: Event) {

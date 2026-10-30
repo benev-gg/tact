@@ -48,6 +48,7 @@ export default template(import.meta.url, async orb => html`
 			</header>
 
 			<tact-deck></tact-deck>
+			<tact-visualizer></tact-visualizer>
 		</body>
 	</html>
 `)

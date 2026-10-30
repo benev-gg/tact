@@ -9,7 +9,8 @@ tact.gamepads("gamer")
 tact.registerElements()
 
 cycle(async() => {
-	tact.deck.hub.encodeAll()
+	const data = tact.deck.hub.encodeAll()
+	tact.visualizer.update(data)
 	await nap(1000 / 60)
 })
 

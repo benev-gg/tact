@@ -60,6 +60,7 @@
 
 		gap: 1em;
 		padding: 0.5em;
+		padding-bottom: 8em;
 
 		> * {
 			width: min(100%, 50em);
