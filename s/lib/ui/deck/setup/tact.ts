@@ -19,6 +19,7 @@ import {makeControllersElement} from "../../views/controllers/view.js"
 
 import devicesSvg from "../../icons/akar/devices.svg.js"
 import gameControllerSvg from "../../icons/akar/game-controller.svg.js"
+import { ellipsis } from "../../../utils/ellipsis.js"
 
 export async function setupTact<B extends Bindings>(params: SetupParams<B>) {
 	const deck = await setupDeck(params)
@@ -37,8 +38,8 @@ export async function setupTact<B extends Bindings>(params: SetupParams<B>) {
 			deck.controls.attach(controller, {
 				icon: gameControllerSvg,
 				handle,
-				name: handle,
-				tooltip: "",
+				tooltip: handle,
+				name: ellipsis(handle, 32),
 				defaultProfileKey: defaultProfileKey ?? firstPreset(deck.controls.presets).key,
 			})
 			return () => deck.controls.detach(controller)
@@ -61,7 +62,7 @@ export async function setupTact<B extends Bindings>(params: SetupParams<B>) {
 		deck.controls.attach(controller, {
 			icon: devicesSvg,
 			handle: "standard",
-			name: "mouse and keyboard",
+			name: "mouse/keyboard",
 			tooltip: "",
 			defaultProfileKey: key,
 		})
