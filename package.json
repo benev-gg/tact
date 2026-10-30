@@ -1,7 +1,7 @@
 {
 	"name": "@benev/tact",
 	"version": "0.4.0-0",
-	"description": "🎮 keybindings and couch co-op",
+	"description": "🎮 from keypress to couch co-op",
 	"license": "MIT",
 	"author": "Chase Moskal <chasemoskal@gmail.com>",
 	"type": "module",
@@ -29,7 +29,7 @@
 		"@benev/math": "0.4.0-9",
 		"@e280/kv": "^0.2.4",
 		"@e280/shiny": "^0.1.1",
-		"@e280/stz": "^0.4.13"
+		"@e280/stz": "^0.4.14"
 	},
 	"devDependencies": {
 		"@e280/hottie": "^0.1.7",
