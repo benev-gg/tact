@@ -6,7 +6,11 @@ import {Controller} from "./controller.js"
 import {PlainSource} from "./sources/plain.js"
 import {quickbind} from "./testing/quickbind.js"
 
+import plex from "./data/plex/test.js"
+
 export default suite({
+	plex,
+
 	"roundtrip": test(async() => {
 		const {sample, solve} = quickbind("KeyE")
 
