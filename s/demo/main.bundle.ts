@@ -5,7 +5,7 @@ import {presets} from "./presets.js"
 import {setupTact} from "../lib/ui/deck/setup/tact.js"
 
 const tact = await setupTact({presets, maxPlayers: 4})
-tact.mouseAndKeyboard()
+tact.mouseKeyboard()
 tact.gamepads("gamer")
 tact.registerElements()
 

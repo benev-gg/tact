@@ -45,7 +45,7 @@ export async function setupTact<B extends Bindings>(params: SetupParams<B>) {
 		})
 	}
 
-	function mouseAndKeyboard() {
+	function mouseKeyboard() {
 		const {key, profile} = firstPreset(deck.controls.presets)
 
 		const controller = new Controller({
@@ -76,7 +76,7 @@ export async function setupTact<B extends Bindings>(params: SetupParams<B>) {
 	return {
 		deck,
 		gamepads,
-		mouseAndKeyboard,
+		mouseKeyboard,
 		visualizer,
 		elements,
 		registerElements,

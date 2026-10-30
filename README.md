@@ -52,7 +52,7 @@
     import {setupTact} from "@benev/tact"
 
     const tact = await setupTact({presets, maxPlayers: 4})
-    tact.mouseAndKeyboard()
+    tact.mouseKeyboard()
     tact.gamepads("gamepad")
     tact.registerElements()
     ```
