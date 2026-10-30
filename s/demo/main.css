@@ -71,10 +71,33 @@
 		}
 
 		> header {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			gap: 1em;
 			padding: 0 2em;
-			h1 small { font-size: 0.6em; font-weight: normal; }
-			* + * { margin-top: 0.5em; }
-			label { padding-left: 1em; }
+
+			h1 small {
+				font-size: 0.6em;
+				font-weight: normal;
+			}
+
+			blockquote {
+				opacity: 0.5;
+				font-style: italic;
+				padding-left: 1em;
+			}
+
+			label {
+				display: flex;
+				flex-direction: column;
+				align-items: end;
+				gap: 0.1em;
+			}
+
+			.links span {
+				opacity: 0.5;
+			}
 		}
 
 		> section {

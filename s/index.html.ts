@@ -31,25 +31,27 @@ export default template(import.meta.url, async orb => html`
 		</head>
 		<body>
 			<header>
-				<h1>
-					<strong>@benev/tact</strong>
-					<small>v${orb.packageVersion()}</small>
-				</h1>
 				<div>
-					<blockquote>"from keypress to couch co-op"</blockquote>
-					<p class=links>
-						<a href="./gamepad/">gamepad visualizer</a>
-						—
-						<a href="https://github.com/benev-gg/tact">github</a>
-						—
-						<a href="https://benev.gg/">benev.gg</a>
-					</p>
-					<p>
-						<label>
-							<span>➣ choose your color:</span>
-							<input type="color"/>
-						</label>
-					</p>
+					<h1>
+						<strong>@benev/tact</strong>
+						<small>v${orb.packageVersion()}</small>
+					</h1>
+					<div>
+						<blockquote>"from keypress to couch co-op"</blockquote>
+						<p class=links>
+							<a href="./gamepad/">gamepad visualizer</a>
+							<span>—</span>
+							<a href="https://github.com/benev-gg/tact">github</a>
+							<span>—</span>
+							<a href="https://benev.gg/">benev.gg</a>
+						</p>
+					</div>
+				</div>
+				<div>
+					<label>
+						<input type="color"/>
+						<span>choose your color ☝️</span>
+					</label>
 				</div>
 			</header>
 
