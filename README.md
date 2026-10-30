@@ -2,7 +2,8 @@
 # 🎮 @benev/tact
 > *from keypress to couch co-op.*
 
-**tact is a user-input toolkit for web games.**
+**tact is a user-input toolkit for web games.**  
+i made tact because i want to make indie web game development easier. user input seems like it should be easy, but doing it well is actually really complex. especially when you start thinking of multiplayer and multithreading. my goal with tact is to tame the complexity and give people something elegant and flexible that "just works".
 
 🌐 👉 ***https://tact.benev.gg/*** 👈 *try now*  
 
@@ -12,6 +13,9 @@
 🫂 multiplayer and splitscreen capable.  
 🧬 binary for efficient workers and networking.  
 🎸 ready-to-rock drop-in user-interface.  
+✍️ handcrafted by a human being.  
+
+
 
 ![](https://i.imgur.com/dCAlD14.png)
 
@@ -23,7 +27,7 @@
 
 ## 🎮 let's play.
 
-- 🍏 **install tact.**
+- 🍏 **install tact into your typescript project.**
     ```sh
     npm install @benev/tact@next
     ```
@@ -51,7 +55,7 @@
       }},
     })
     ```
-- 🍏 **now we can setup tact and register the html elements.**
+- 🍏 **setup tact.**
     ```ts
     import {setupTact} from "@benev/tact"
 
@@ -60,20 +64,22 @@
     tact.gamepads("gamepad")
     tact.registerElements()
     ```
-- 🍏 **simply put the `<tact-deck>` in your html page.**
+    - 💡 *set `maxPlayers` to 1 for single player.*
+- 🍏 **put the `<tact-deck>` in your html page.**
     ```html
     <tact-deck></tact-deck>
     ```
     - 💡 *you also have each panel, `<tact-controllers>` and `<tact-customize>`.*
-- 🍏 **color the whole ui with css.**
-    ```html
-    <style>
-      html {
-        --tact-prime: aqua;
-        --tact-bg: black;
-      }
-    </style>
-    ```
+    - 💡 *you can customize the colors with css:*
+        ```html
+        <style>
+          html {
+            --tact-prime: aqua;
+            --tact-bg: black;
+          }
+        </style>
+        ```
+- 🎉 **now users can configure controllers and customize bindings!**
 
 
 
@@ -81,14 +87,12 @@
 
 ## 🎮 encoding, decoding, and your game logic.
 
-- 🍏 **make a collector.**
+- 🍏 **now it's time for the real action!**
     ```ts
     import {Collector} from "@benev/tact"
 
     const collector = new Collector(bindings)
-    ```
-- 🍏 **now it's time for the real action!**
-    ```ts
+
     setInterval(() => {
       const buffer = tact.deck.hub.encodeAll()
       for (const {playerId, inputs} of collector.decodeAll(buffer)) {
@@ -104,6 +108,7 @@
     }, 16.67)
     ```
     💡 *you could stream the buffers across the network to a remote collector.*
+    💡 *maybe imagine having the tact deck on the clientside, and the collector on the serverside (or a web worker!).*
 
 
 
