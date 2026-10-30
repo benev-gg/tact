@@ -4,7 +4,7 @@ import {template, html, dataSvgEmoji, socialCard} from "@e280/scute"
 const title = "@benev/tact"
 const domain = "tact.benev.gg"
 const favicon = "/assets/b.png"
-const description = "🎮 keybindings and couch co-op"
+const description = "🎮 from keypress to couch co-op"
 
 export default template(import.meta.url, async orb => html`
 	<!doctype html>

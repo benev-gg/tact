@@ -64,8 +64,26 @@ i made tact because i want to make indie web game development easier. user input
     tact.gamepads("gamepad")
     tact.registerElements()
     ```
-    - 💡 *set `maxPlayers` to 1 for single player.*
-- 🍏 **put the `<tact-deck>` in your html page.**
+    - 💡 *you can set `maxPlayers` to 1 for single player.*
+- 🍏 **encoding, decoding, and your game logic.**
+    ```ts
+    setInterval(() => {
+      const buffer = tact.deck.hub.encodeAll()
+      for (const {playerId, inputs} of tact.collector.decodeAll(buffer)) {
+
+        // your game logic can read these handy input values.
+        inputs.jump.value // values are numbers 0  to 1.
+        inputs.jump.was // previous value (to detect up/down).
+        inputs.jump.sum // sum of values reported since last frame.
+
+        inputs.forward.value
+        inputs.look.value
+      }
+    }, 16.67)
+    ```
+    - 💡 *maybe imagine streaming the buffers across the network to a remote collector.*
+    - 💡 *maybe imagine the tact deck on the clientside, and the collector on the serverside (or a web worker!).*
+- 🍏 **put the `<tact-deck>` element in your html page.**
     ```html
     <tact-deck></tact-deck>
     ```
@@ -79,42 +97,14 @@ i made tact because i want to make indie web game development easier. user input
           }
         </style>
         ```
-- 🎉 **now users can configure controllers and customize bindings!**
-
-
-
-<br/>
-
-## 🎮 encoding, decoding, and your game logic.
-
-- 🍏 **now it's time for the real action!**
-    ```ts
-    import {Collector} from "@benev/tact"
-
-    const collector = new Collector(bindings)
-
-    setInterval(() => {
-      const buffer = tact.deck.hub.encodeAll()
-      for (const {playerId, inputs} of collector.decodeAll(buffer)) {
-
-        // your game logic can read these handy input values.
-        inputs.jump.value // values are numbers 0  to 1.
-        inputs.jump.was // previous value (to detect up/down).
-        inputs.jump.sum // sum of values reported since last frame.
-
-        inputs.forward.value
-        inputs.look.value
-      }
-    }, 16.67)
-    ```
-    - 💡 *you could stream the buffers across the network to a remote collector.*
-    - 💡 *maybe imagine having the tact deck on the clientside, and the collector on the serverside (or a web worker!).*
+- 🎉 **you're done! your users can manage controllers and customize bindings!**
 
 
 
 <br/>
 
 ## 🎮 get down to brass tacks.
+> *tact is flexible and composable for alternative use-cases.*
 
 - 🍏 **pov: your app isn't a game, no multiplayer, no gamepads.**  
     ```ts
