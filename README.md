@@ -4,6 +4,8 @@
 
 **tact is a user-input toolkit for web games.**
 
+🌐 👉 [tact.benev.gg](https://tact.benev.gg/) 👈  
+
 🖱 keyboards, mice, gamepads.  
 🧩 expressive bindings json dsl.  
 🎨 bindings are user-customizable.  
@@ -37,18 +39,12 @@
     import {asStockProfiles} from "@benev/tact"
 
     const stock = asStockProfiles<typeof bindings>({
-      standard: {
-        label: "⌨️standard",
-        bindings,
-      },
-      gamepad: {
-        label: "🎮gamer",
-        bindings: {
-          jump: "gamepad.1",
-          forward: ["remap", 0, -1, 0, 1, "gamepad.axis.2"],
-          look: ["*", ["dt"], "gamepad.axis.3", 100],
-        },
-      },
+      standard: {label: "⌨️standard", bindings},
+      gamepad: {label: "🎮gamer", bindings: {
+        jump: "gamepad.1",
+        forward: ["remap", 0, -1, 0, 1, "gamepad.axis.2"],
+        look: ["*", ["dt"], "gamepad.axis.3", 100],
+      }},
     })
     ```
 - **now we can setup tact and register the elements.**
@@ -94,6 +90,41 @@
     }, 16.67)
     ```
     💡 *you could stream the buffers across the network to a remote collector.*
+
+
+
+<br/>
+
+## 🎮 the more you know.
+
+- **color the whole ui with css.**
+    ```css
+    html {
+      --tact-prime: aqua;
+    }
+    ```
+
+
+
+<br/>
+
+## 🎮 you can use the core.
+
+- **get down to brass tacks.**  
+    you can use the core facilities directly, using tact without the ui or multi-controller hub etc.
+    ```ts
+    import {Controller, InputDecoder, KeyboardSource, PointerSource, Sources} from "@benev/tact"
+
+    const controller = new Controller({
+      bindings,
+      source: new Sources(new KeyboardSource(), new PointerSource()),
+    })
+
+    const decoder = new InputDecoder(bindings)
+
+    // call this in your gameloop:
+    const inputs = decoder.decode(controller.encode())
+    ```
 
 
 
