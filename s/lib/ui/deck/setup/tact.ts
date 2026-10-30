@@ -67,13 +67,6 @@ export async function setupTact<B extends Bindings>(params: SetupParams<B>) {
 		return controller
 	}
 
-	function encodingCycle(hz: number, fn: (portData: [PortId, ArrayBuffer][]) => void) {
-		return cycle(async() => {
-			fn(deck.hub.encodeAll())
-			await nap(1000 / hz)
-		})
-	}
-
 	function registerElements() {
 		register(elements)
 	}
@@ -82,7 +75,6 @@ export async function setupTact<B extends Bindings>(params: SetupParams<B>) {
 		deck,
 		gamepads,
 		mouseAndKeyboard,
-		encodingCycle,
 		elements,
 		registerElements,
 	}

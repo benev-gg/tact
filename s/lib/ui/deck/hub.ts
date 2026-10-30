@@ -6,6 +6,7 @@ import {Bindings} from "../../input/types.js"
 import {Controller} from "../../input/controller.js"
 import {encodeIntents} from "../../input/data/intent/encode.js"
 import {hashBindings} from "../../input/investigate/hash-bindings.js"
+import { encodeParcels } from "../../input/data/parcel/encode.js"
 
 export type PortId = number
 
@@ -94,17 +95,20 @@ export class Hub<B extends Bindings = any> {
 		)
 	}
 
-	encodeAll(time = performance.now()): [portId: PortId, data: ArrayBuffer][] {
+	encodeAll(time = performance.now()) {
 
 		// drain and discard unused controller inputs.
 		for (const controller of this.#unassigned)
 			controller.clear()
 
-		// return tuples of port ids and the encoded input data.
-		return Array.from(this.#ports.keys()).map(portId => [
+		// encode intents.
+		const parcels = Array.from(this.#ports.keys()).map(portId => ({
 			portId,
-			this.encode(portId, time),
-		])
+			intents: this.encode(portId, time),
+		}))
+
+		// encode parcels.
+		return encodeParcels(parcels)
 	}
 }
 
