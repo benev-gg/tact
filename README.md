@@ -4,7 +4,7 @@
 
 **tact is a user-input toolkit for web games.**
 
-🌐 👉 [tact.benev.gg](https://tact.benev.gg/) 👈  
+🌐 👉 ***https://tact.benev.gg/*** 👈  
 
 🖱 keyboards, mice, gamepads.  
 🧩 expressive bindings json dsl.  
@@ -19,11 +19,11 @@
 
 ## 🎮 let's play.
 
-- **install tact.**
+- 🍏 **install tact.**
     ```sh
     npm install @benev/tact@next
     ```
-- **establish your app's standard bindings.**
+- 🍏 **establish your app's standard bindings.**
     ```ts
     import {asBindings} from "@benev/tact"
 
@@ -33,8 +33,8 @@
       look: ["accumulate", "pointer.x"],
     })
     ```
-    - bindings is a tiny json dsl. see [expression.ts](./s/lib/input/expression.ts).
-- **let's have two presets available to the user. one for gamepads.**
+    - 💡 *bindings is a tiny json dsl. see [expression.ts](./s/lib/input/expression.ts).*
+- 🍏 **let's have two presets available to the user. one for gamepads.**
     ```ts
     import {asPresets} from "@benev/tact"
 
@@ -47,7 +47,7 @@
       }},
     })
     ```
-- **now we can setup tact and register the html elements.**
+- 🍏 **now we can setup tact and register the html elements.**
     ```ts
     import {setupTact} from "@benev/tact"
 
@@ -56,9 +56,19 @@
     tact.gamepads("gamepad")
     tact.registerElements()
     ```
-- **simply put the `<tact-deck>` in your html page.**
+- 🍏 **simply put the `<tact-deck>` in your html page.**
     ```html
     <tact-deck></tact-deck>
+    ```
+    - 💡 *you also have each panel, `<tact-controllers>` and `<tact-customize>`.*
+- 🍏 **color the whole ui with css.**
+    ```html
+    <style>
+      html {
+        --tact-prime: aqua;
+        --tact-bg: black;
+      }
+    </style>
     ```
 
 
@@ -67,13 +77,13 @@
 
 ## 🎮 encoding, decoding, and your game logic.
 
-- **make a collector.**
+- 🍏 **make a collector.**
     ```ts
     import {Collector} from "@benev/tact"
 
     const collector = new Collector(bindings)
     ```
-- **now it's time for the real action!**
+- 🍏 **now it's time for the real action!**
     ```ts
     setInterval(() => {
       const buffer = tact.deck.hub.encodeAll()
@@ -95,23 +105,9 @@
 
 <br/>
 
-## 🎮 the more you know.
+## 🎮 get down to brass tacks.
 
-- **color the whole ui with css.**
-    ```css
-    html {
-      --tact-prime: aqua;
-    }
-    ```
-
-
-
-<br/>
-
-## 🎮 you can use the core.
-
-- **get down to brass tacks.**  
-    you can use the core facilities directly, using tact without the ui or multi-controller hub etc.
+- 🍏 **use the core facilities directly,** without the ui or multiplayer.  
     ```ts
     import {Controller, InputDecoder, KeyboardSource, PointerSource, Sources} from "@benev/tact"
 
