@@ -170,7 +170,7 @@ export default suite({
 		expect(DOWN(2200).holdy.value).is(0)
 		expect(DOWN(2300).holdy.value).is(0)
 		expect(DOWN(2400).holdy.value).is(1)
-		expect(__up(2500).holdy.value).is(0)
+		expect(__up(2500).tappy.value).is(0) // FAILS
 	}),
 
 	"independent controller consumers": test(async() => {

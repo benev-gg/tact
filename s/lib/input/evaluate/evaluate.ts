@@ -1,6 +1,6 @@
 
 import {remap} from "@benev/math"
-import {arraylimit, guarantee, isHappy, isNumber, isString} from "@e280/stz"
+import {guarantee, isHappy, isNumber, isString} from "@e280/stz"
 
 import {isDown} from "../utils/is-down.js"
 import {EvaluationContext} from "./context.js"
@@ -179,72 +179,42 @@ export function evaluate(
 			return 0
 		}
 
-		// case "taps": {
-		// 	const [, taps, ms, subexpression] = expression
-		// 	const down = isDown(e(subexpression))
-		// 	const now = context.clock.time
-		//
-		// 	const state = guarantee(context.tapping, expression, () => ({
-		// 		wasDown: false,
-		// 		start: null as number | null,
-		// 		count: 0,
-		// 	}))
-		//
-		// 	// Expire the gesture.
-		// 	if (state.start !== null && now - state.start > ms) {
-		// 		state.start = null
-		// 		state.count = 0
-		// 	}
-		//
-		// 	let result = 0
-		//
-		// 	// Rising edge: begin a gesture.
-		// 	if (down && !state.wasDown && state.start === null)
-		// 		state.start = now
-		//
-		// 	// Falling edge: complete a tap.
-		// 	if (!down && state.wasDown && state.start !== null) {
-		// 		state.count++
-		//
-		// 		if (state.count >= taps) {
-		// 			result = 1
-		// 			state.count = 0
-		// 			state.start = null
-		// 		}
-		// 	}
-		//
-		// 	state.wasDown = down
-		// 	return result
-		// }
-
 		case "taps": {
 			const [, taps, ms, subexpression] = expression
 			const down = isDown(e(subexpression))
-			const {time} = context.clock
+			const now = context.clock.time
 
-			const records = guarantee(context.tapping, expression, () => ({
-				events: [],
+			const state = guarantee(context.tapping, expression, () => ({
+				wasDown: false,
+				startedAt: null as number | null,
+				count: 0,
 			}))
 
-			records.events.push({time, down})
-			records.events = records.events.filter(e => {
-				const age = time - e.time
-				return age < ms
-			})
-			records.events = arraylimit(records.events, 1024)
+			const pressed = down && !state.wasDown
+			const released = !down && state.wasDown
 
-			let count = 0
-			let wasDown = false
-			for (const e of records.events) {
-				if (wasDown && !e.down) count++
-				wasDown = e.down
+			if (state.startedAt !== null && now - state.startedAt >= ms) {
+				state.startedAt = null
+				state.count = 0
 			}
 
-			if (count === taps) {
-				records.events = []
-				return 1
+			let result = 0
+
+			if (pressed && state.startedAt === null)
+				state.startedAt = now
+
+			if (released && state.startedAt !== null) {
+				state.count++
+
+				if (state.count === taps) {
+					result = 1
+					state.count = 0
+					state.startedAt = null
+				}
 			}
-			else return 0
+
+			state.wasDown = down
+			return result
 		}
 
 		case "mod": {
