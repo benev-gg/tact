@@ -74,7 +74,7 @@ export async function setupTact<B extends Bindings>(params: SetupParams<B>) {
 		})
 
 		schedule(() => {
-			deck.hub.unplug(controller)
+			deck.hub.remove(controller)
 			deck.controls.detach(controller)
 		})
 
