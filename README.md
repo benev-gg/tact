@@ -210,20 +210,20 @@ with tact, i care very much that -- all input types are boiled down to simple nu
         ```
 - 🧙‍♂️ **you can namespace tact, if you're running multiple games on one website.**  
     ```ts
-    import {setupTact, setupKv} from "@benev/tact"
+    import {setupTact} from "@benev/tact"
 
     const tact = await setupTact({
       presets,
       maxPlayers: 4,
 
       // 🧙‍♂️ namespace the kv persistence layer.
-      kv: await setupKv({namespace: "falrysk"})
+      namespace: "falrysk",
     })
 
     tact.mouseKeyboard()
     tact.gamepads("gamepad")
 
-    // 🧙‍♂️ namespace the web components.
+    // 🧙‍♂️ you can even namespace the web components.
     customElements.define("tact-deck-falrysk", tact.elements.TactDeck)
       // <tact-deck-falrysk></tact-deck-falrysk>
     ```
