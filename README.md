@@ -2,18 +2,20 @@
 # 🎮 @benev/tact
 > *from keypress to couch co-op.*
 
-**tact is a user-input toolkit for web games.**  
-i made tact because i want to make indie web game development easier. user input seems like it should be easy, but doing it well is actually really complex. especially when you start thinking of multiplayer and multithreading. my goal with tact is to tame the complexity and give people something elegant and flexible that "just works".
+### tact is a user-input toolkit for web games.
 
 🌐 👉 ***https://tact.benev.gg/*** 👈 *try now*  
-
 🖱 keyboards, mice, gamepads.  
-🧩 expressive bindings json dsl.  
-🎨 bindings are user-customizable.  
-🫂 multiplayer and splitscreen capable.  
-🧬 binary for efficient workers and networking.  
 🎸 ready-to-rock drop-in user-interface.  
+🎨 users can customize keybinds and move controllers around.  
+
+🧩 expressive bindings json dsl.  
+🧬 binary for efficient workers and networking.  
+🫂 multiplayer and splitscreen capabilities.  
 ✍️ handcrafted by a human being.  
+
+user input seems simple, until it isn't.  
+it's actually pretty complex, especially when we add customizability, multiplayer, and multithreading. my goal with tact is to make an elegant system that "just works" for you. let's make indie web game development better.
 
 
 
