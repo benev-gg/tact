@@ -5,19 +5,17 @@
 ### tact is a user-input toolkit for web games.
 
 🌐 👉 ***https://tact.benev.gg/*** 👈 *try now*  
-🔥 powerful enough for games, simple enough for any app.  
 🖱 keyboards, mice, gamepads.  
-
-🧩 expressive bindings json dsl.  
-🎸 ready-to-rock drop-in user-interface.  
-🎨 users can customize keybinds and move controllers around.  
-
-🧬 binary for efficient workers and networking.  
-🫂 multiplayer and splitscreen capabilities.  
+🔥 powerful enough for multiplayer games, simple enough for any app.  
+🎸 users can customize keybinds with the ready-to-rock ui.  
+🧬 expressive bindings dsl, binary streaming for multiplayer/multithreading.  
+📡 binary streaming for multiplayer and web workers.  
 ✍️ handcrafted by a human being.  
 
 user input isn't as simple as you'd think.  
-after many design iterations, tact has evolved into an elegant system that handles hard problems for you like customizability, multiplayer, and multithreading. i'm trying to give you the *"it just works"* experience. tact is powerful enough for games, but simple enough for any app.
+after many design iterations, tact has evolved into an elegant system that handles hard problems for you like customizability, multiplayer, and multithreading. i'm trying to give you the *"it just works"* experience.
+
+with tact, i care very much that -- all input types are boiled down to simple numbers that are all treated the same -- that mouse movement precision and accuracy is holy and must not drop any pixels of movement despite encoders/decoders sampling at differing rates -- that gamepad support and local multiplayer is a great experience -- that inputs are streamed in compact binary format, ready to be sent across networks or to web workers -- that the bindings language is infinitely capable and expressive so you can remap values from funky gamepads and make ridiculously complex hotkey combinations.
 
 
 
@@ -81,7 +79,7 @@ after many design iterations, tact has evolved into an elegant system that handl
       for (const {playerId, inputs} of collector.decodeAll(buffer)) {
 
         // your game logic can read these handy input values.
-        inputs.jump.value // values are numbers 0  to 1.
+        inputs.jump.value // button-like values are numbers 0 to 1.
         inputs.jump.was // previous value (to detect up/down).
         inputs.jump.sum // sum of values reported since last frame.
 
@@ -153,7 +151,7 @@ after many design iterations, tact has evolved into an elegant system that handl
 
 <br/>
 
-## 🎮 advanced wizardy.
+## 🎮 advanced wizardry.
 > *tact is ready to do things your way.*
 
 - 🧙‍♂️ **the bindings dsl is literally a programming language.**  
@@ -180,7 +178,7 @@ after many design iterations, tact has evolved into an elegant system that handl
         asBindings({
 
           // tapping E yoinks a weapon into your inventory.
-          grab: ["tap", 250, "KeyE"],
+          grab: ["taps", 1, 250, "KeyE"],
 
           // holding E equips the weapon as your primary.
           equip: ["hold", 250, "KeyE"],
@@ -191,6 +189,8 @@ after many design iterations, tact has evolved into an elegant system that handl
         asBindings({
           lookX: ["accumulate", "pointer.x"],
         })
+
+        inputs.lookX.sum // use sum instead of value, to ensure you don't miss any pointer movement.
         ```
     - gamepads thumbstick inputs are best done with some math.
         ```ts
