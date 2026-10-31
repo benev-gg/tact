@@ -24,16 +24,21 @@ export async function setupDeck<B extends Bindings>(params: SetupParams<B>) {
 		await setupBroadcastChannel(namespace, params.broadcastChannel)
 	)
 
-	const {maxPlayers} = params
-	const {bindings} = firstPreset(params.presets).profile
-	const hub = new Hub(bindings)
-	const controls = new Controls({...params, kv})
+	try {
+		const {maxPlayers} = params
+		const {bindings} = firstPreset(params.presets).profile
+		const hub = new Hub(bindings)
+		const controls = new Controls({...params, kv})
 
-	schedule(ev(broadcastChannel, {message: () => controls.load()}))
-	schedule(controls.on(() => broadcastChannel.postMessage({})))
+		schedule(ev(broadcastChannel, {message: () => controls.load()}))
+		schedule(controls.on(() => broadcastChannel.postMessage({})))
 
-	await controls.load()
-
-	return asDeck({hub, controls, maxPlayers, dispose})
+		await controls.load()
+		return asDeck({hub, controls, maxPlayers, dispose})
+	}
+	catch (error) {
+		dispose()
+		throw error
+	}
 }
 
