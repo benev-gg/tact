@@ -3,7 +3,6 @@ import {register} from "@e280/sly"
 
 import {setupDeck} from "./deck.js"
 import {SetupParams} from "./types.js"
-import {Collector} from "../collector.js"
 import {Bindings} from "../../../input/types.js"
 import {autoGamepads} from "../auto-gamepads.js"
 import {ellipsis} from "../../../utils/ellipsis.js"
@@ -25,7 +24,6 @@ import gameControllerSvg from "../../icons/akar/game-controller.svg.js"
 export async function setupTact<B extends Bindings>(params: SetupParams<B>) {
 	const deck = await setupDeck(params)
 	const first = firstPreset(deck.controls.presets)
-	const collector = new Collector(first.profile.bindings)
 	const visualizer = new Visualizer()
 
 	const elements = {
@@ -79,12 +77,12 @@ export async function setupTact<B extends Bindings>(params: SetupParams<B>) {
 
 	return {
 		deck,
-		collector,
 		gamepads,
 		mouseKeyboard,
 		visualizer,
 		elements,
 		registerElements,
+		encodeAll: deck.hub.encodeAll.bind(deck.hub),
 	}
 }
 
