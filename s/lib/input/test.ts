@@ -163,7 +163,7 @@ export default suite({
 		expect(__up(1000).tappy.value).is(0)
 		expect(DOWN(1100).tappy.value).is(0)
 		expect(__up(1200).tappy.value).is(1)
-		expect(__up(1200).tappy.value).is(0)
+		expect(__up(1300).tappy.value).is(0)
 
 		expect(__up(2000).holdy.value).is(0)
 		expect(DOWN(2100).holdy.value).is(0)
