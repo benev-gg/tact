@@ -21,6 +21,7 @@ export function autoGamepads(
 		const dispose = fn?.(controller, source)
 
 		return () => {
+			controller.dispose()
 			hub.remove(controller)
 			dispose?.()
 		}

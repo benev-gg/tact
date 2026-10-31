@@ -1,4 +1,5 @@
 
+import {disposer, ev} from "@e280/stz"
 import {IdbMagazine, idbOpen, Kv} from "@e280/kv"
 import {Hub} from "../hub.js"
 import {asDeck} from "../types.js"
@@ -8,6 +9,8 @@ import {Bindings} from "../../../input/types.js"
 import {firstPreset} from "../utils/first-preset.js"
 
 export async function setupDeck<B extends Bindings>(params: SetupParams<B>) {
+	const {dispose, schedule} = disposer()
+
 	const namespace = params.namespace
 		? `tact_${params.namespace}`
 		: "tact"
@@ -26,9 +29,9 @@ export async function setupDeck<B extends Bindings>(params: SetupParams<B>) {
 
 	await controls.load()
 
-	broadcastChannel.onmessage = () => controls.load()
-	controls.on(() => broadcastChannel.postMessage({}))
+	schedule(ev(broadcastChannel, {message: () => controls.load()}))
+	schedule(controls.on(() => broadcastChannel.postMessage({})))
 
-	return asDeck({hub, controls, maxPlayers})
+	return asDeck({hub, controls, maxPlayers, dispose})
 }
 

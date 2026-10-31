@@ -25,7 +25,7 @@ import gameControllerSvg from "../../icons/akar/game-controller.svg.js"
 export async function setupTact<B extends Bindings>(params: SetupParams<B>) {
 	const {dispose, schedule, disposable} = disposer()
 
-	const deck = await setupDeck(params)
+	const deck = disposable(await setupDeck(params))
 	const first = firstPreset(deck.controls.presets)
 	const visualizer = new Visualizer()
 

@@ -4,7 +4,6 @@ import {Bindings} from "../../input/types.js"
 import {Controls} from "./controls/controls.js"
 
 export type PlayerId = number
-
 export type ProfileKey = string
 
 export type Profile<B extends Bindings = any> = {
@@ -19,6 +18,7 @@ export type Deck<B extends Bindings = any> = {
 	hub: Hub<B>
 	maxPlayers: number
 	controls: Controls<B>
+	dispose: () => void
 }
 
 export const asDeck = <B extends Bindings>(deck: Deck<B>) => deck
