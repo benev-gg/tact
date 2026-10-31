@@ -23,6 +23,7 @@ export async function setupDeck<B extends Bindings>(params: SetupParams<B>) {
 
 	const {maxPlayers} = params
 	const {bindings} = firstPreset(params.presets).profile
+	schedule(() => broadcastChannel.close())
 
 	const hub = new Hub(bindings)
 	const controls = new Controls({...params, kv})

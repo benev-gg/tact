@@ -57,10 +57,10 @@ export async function setupTact<B extends Bindings>(params: SetupParams<B>) {
 
 		const controller = disposable(new Controller({
 			bindings: profile.bindings,
-			source: new Sources(
-				new KeyboardSource(),
-				new PointerSource(),
-			),
+			source: disposable(new Sources(
+				disposable(new KeyboardSource()),
+				disposable(new PointerSource()),
+			)),
 		}))
 
 		deck.hub.plug(controller)
