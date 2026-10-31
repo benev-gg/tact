@@ -10,6 +10,7 @@ import {firstPreset} from "../utils/first-preset.js"
 
 export async function setupDeck<B extends Bindings>(params: SetupParams<B>) {
 	const {dispose, schedule} = disposer()
+	const broadcastWasProvided = !!params.broadcastChannel
 
 	const namespace = params.namespace
 		? `tact_${params.namespace}`
@@ -23,8 +24,6 @@ export async function setupDeck<B extends Bindings>(params: SetupParams<B>) {
 
 	const {maxPlayers} = params
 	const {bindings} = firstPreset(params.presets).profile
-	schedule(() => broadcastChannel.close())
-
 	const hub = new Hub(bindings)
 	const controls = new Controls({...params, kv})
 
@@ -32,6 +31,8 @@ export async function setupDeck<B extends Bindings>(params: SetupParams<B>) {
 
 	schedule(ev(broadcastChannel, {message: () => controls.load()}))
 	schedule(controls.on(() => broadcastChannel.postMessage({})))
+	if (!broadcastWasProvided)
+		schedule(() => broadcastChannel.close())
 
 	return asDeck({hub, controls, maxPlayers, dispose})
 }
