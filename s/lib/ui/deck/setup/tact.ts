@@ -73,6 +73,11 @@ export async function setupTact<B extends Bindings>(params: SetupParams<B>) {
 			defaultProfileKey: key,
 		})
 
+		schedule(() => {
+			deck.hub.unplug(controller)
+			deck.controls.detach(controller)
+		})
+
 		return controller
 	}
 
