@@ -182,7 +182,7 @@ i care about the little things. all input types are boiled down to simple number
       grab: ["taps", 1, 250, "KeyE"],
 
       // holding E equips the weapon as your primary.
-      equip: ["hold", 250, "KeyE"],
+      equip: ["held", 250, "KeyE"],
     })
     ```
 - 🧙‍♂️ **you can "accumulate" mouse inputs accurately,** to avoid losses in sampling frequency mismatches.
