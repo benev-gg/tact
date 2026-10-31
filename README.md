@@ -8,8 +8,8 @@
 🖱 keyboards, mice, gamepads.  
 🔥 powerful enough for multiplayer games, simple enough for any app.  
 🎸 users can customize keybinds with the ready-to-rock ui.  
-🧬 expressive bindings dsl, binary streaming for multiplayer/multithreading.  
-📡 binary streaming for multiplayer and web workers.  
+🧬 expressive bindings json dsl.  
+📡 binary streaming for multiplayer and multithreading.  
 ✍️ handcrafted by a human being.  
 
 user input isn't as simple as you'd think.  
@@ -44,7 +44,6 @@ with tact, i care very much that -- all input types are boiled down to simple nu
       look: ["accumulate", "pointer.x"],
     })
     ```
-    - 💡 *bindings is a tiny json dsl. see [expression.ts](./s/lib/input/expression.ts).*
 - 🍏 **let's have two presets available to the user, with one for gamepads.**
     ```ts
     import {asPresets} from "@benev/tact"
@@ -67,7 +66,9 @@ with tact, i care very much that -- all input types are boiled down to simple nu
     tact.gamepads("gamepad")
     tact.registerElements()
     ```
-    - 💡 *you can set `maxPlayers` to 1 for single player.*
+    - 💡 *you can set `{maxPlayers: 1}` for a single player game.*
+    - 💡 *you can pass `{namespace: "my-game"}` if you need to run multiple games on one website.*
+    - 💡 *you can namespace the elements like `customElements.define("tact-deck-my-game", tact.elements.TactDeck)`.*
 - 🍏 **encoding, decoding, and your game logic.**
     ```ts
     import {Collector} from "@benev/tact"
@@ -151,81 +152,62 @@ with tact, i care very much that -- all input types are boiled down to simple nu
 
 <br/>
 
-## 🎮 advanced wizardry.
-> *tact is ready to do things your way.*
+## 🎮 bindings wizardry.
+> *bindings can basically do anything.*
 
-- 🧙‍♂️ **the bindings dsl is literally a programming language.**  
-    - see [expression.ts](./s/lib/input/expression.ts) to get an idea of what's possible.
-    - arbitrary nesting is valid.
-        ```ts
-        asBindings("KeyW")
-
-        inputs.value // 1
-        ```
-        ```ts
-        asBindings({
-          actions: {
-            special: {
-              castMagicSpell: ["*", ["mod", "shift", "alt"], "KeyR"],
-            }
-          }
-        })
-
-        inputs.actions.special.castMagicSpell.value // 1
-        ```
-    - you can differentiate taps versus holds on the same key.
-        ```ts
-        asBindings({
-
-          // tapping E yoinks a weapon into your inventory.
-          grab: ["taps", 1, 250, "KeyE"],
-
-          // holding E equips the weapon as your primary.
-          equip: ["hold", 250, "KeyE"],
-        })
-        ```
-    - you can "accumulate" mouse inputs accurately, instead of just using the latest value (which could otherwise drop inputs in a lag spike).
-        ```ts
-        asBindings({
-          lookX: ["accumulate", "pointer.x"],
-        })
-
-        inputs.lookX.sum // use sum instead of value, to ensure you don't miss any pointer movement.
-        ```
-    - gamepads thumbstick inputs are best done with some math.
-        ```ts
-        asBindings({
-          forward: ["*",
-
-            // user-customizable sensitivity, equivalent with pointer-pixels-per-second.
-            1234,
-
-            // delta time factor, to ensure sensitivity is framerate-independent.
-            ["dt"],
-
-            // remapping the ranges because gamepads are naughty and often have jiggly deadzones.
-            ["remap", -0.1, -0.9, 0, 1, "gamepad.axis.1"],
-          ],
-        })
-        ```
-- 🧙‍♂️ **you can namespace tact, if you're running multiple games on one website.**  
+- 🧙‍♂️ **the bindings dsl is literally a little json programming language.**  
+    see [expression.ts](./s/lib/input/expression.ts) to get an idea of what's possible.
+- 🧙‍♂️ **arbitrary nesting is valid.**
     ```ts
-    import {setupTact} from "@benev/tact"
+    asBindings("KeyW")
 
-    const tact = await setupTact({
-      presets,
-      maxPlayers: 4,
-
-      // 🧙‍♂️ namespace the kv persistence layer.
-      namespace: "falrysk",
+    inputs.value // 1
+    ```
+    ```ts
+    asBindings({
+      actions: {
+        special: {
+          castMagicSpell: ["*", ["mod", "shift", "alt"], "KeyR"],
+        }
+      }
     })
 
-    tact.mouseKeyboard()
-    tact.gamepads("gamepad")
+    inputs.actions.special.castMagicSpell.value // 1
+    ```
+- 🧙‍♂️ **you can differentiate taps versus holds on the same key.**
+    ```ts
+    asBindings({
 
-    // 🧙‍♂️ you can even namespace the web components.
-    customElements.define("tact-deck-falrysk", tact.elements.TactDeck)
-      // <tact-deck-falrysk></tact-deck-falrysk>
+      // tapping E yoinks a weapon into your inventory.
+      grab: ["taps", 1, 250, "KeyE"],
+
+      // holding E equips the weapon as your primary.
+      equip: ["hold", 250, "KeyE"],
+    })
+    ```
+- 🧙‍♂️ **you can "accumulate" mouse inputs accurately,** to avoid losses in sampling frequency mismatches.
+    ```ts
+    asBindings({
+      lookX: ["accumulate", "pointer.x"],
+    })
+
+    inputs.lookX.sum // use sum instead of value, to ensure you don't lose any pointer movement.
+    ```
+- 🧙‍♂️ **gamepads thumbstick inputs are best done with some math.**
+    ```ts
+    asBindings({
+      forward: ["*",
+
+        // user-customizable sensitivity, equivalent with pointer-pixels-per-second.
+        1234,
+
+        // delta time factor, to ensure sensitivity is framerate-independent.
+        ["dt"],
+
+        // remapping the ranges because gamepads are naughty and often have jiggly deadzones.
+        ["remap", -0.1, -0.9, 0, 1, "gamepad.axis.1"],
+      ],
+    })
     ```
 
 
