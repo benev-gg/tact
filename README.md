@@ -67,8 +67,8 @@ i care about the little things. all input types are boiled down to simple number
     tact.registerElements()
     ```
     - 💡 *you can set `{maxPlayers: 1}` for a single player game.*
-    - 💡 *you can pass `{namespace: "my-game"}` if you need to run multiple games on one website.*
-    - 💡 *you can namespace the elements like `customElements.define("tact-deck-my-game", tact.elements.TactDeck)`.*
+    - 💡 *you can pass `{namespace: "falrysk"}` if you need to run multiple games on one website.*
+    - 💡 *you can register elements manually like `customElements.define("tact-deck-falrysk", tact.elements.TactDeck)`.*
 - 🍏 **encoding, decoding, and your game logic.**
     ```ts
     import {Collector} from "@benev/tact"
