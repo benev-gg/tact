@@ -15,7 +15,7 @@
 user input isn't as simple as you'd think.  
 after many design iterations, tact has evolved into an elegant system that handles hard problems for you like customizability, multiplayer, and multithreading. i'm trying to give you the *"it just works"* experience.
 
-with tact, i care very much that -- all input types are boiled down to simple numbers that are all treated the same -- that mouse movement precision and accuracy is holy and must not drop any pixels of movement despite encoders/decoders sampling at differing rates -- that gamepad support and local multiplayer is a great experience -- that inputs are streamed in compact binary format, ready to be sent across networks or to web workers -- that the bindings language is infinitely capable and expressive so you can remap values from funky gamepads and make ridiculously complex hotkey combinations.
+i care about the little things. all input types are boiled down to simple numbers, and packed up into efficient binary packets for streaming across networks and web workers. mouse movement precision and accuracy is holy, so there's careful design to make it resilient in the face of encoder/decoder sampling frequency mismatches. the bindings language is an infinitely capable recursive dsl so you can remap values from funky gamepads and make ridiculously complex logical hotkey combinations.
 
 
 
