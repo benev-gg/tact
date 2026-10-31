@@ -179,29 +179,72 @@ export function evaluate(
 			return 0
 		}
 
+		// case "taps": {
+		// 	const [, taps, ms, subexpression] = expression
+		// 	const down = isDown(e(subexpression))
+		// 	const now = context.clock.time
+		//
+		// 	const state = guarantee(context.tapping, expression, () => ({
+		// 		wasDown: false,
+		// 		start: null as number | null,
+		// 		count: 0,
+		// 	}))
+		//
+		// 	// Expire the gesture.
+		// 	if (state.start !== null && now - state.start > ms) {
+		// 		state.start = null
+		// 		state.count = 0
+		// 	}
+		//
+		// 	let result = 0
+		//
+		// 	// Rising edge: begin a gesture.
+		// 	if (down && !state.wasDown && state.start === null)
+		// 		state.start = now
+		//
+		// 	// Falling edge: complete a tap.
+		// 	if (!down && state.wasDown && state.start !== null) {
+		// 		state.count++
+		//
+		// 		if (state.count >= taps) {
+		// 			result = 1
+		// 			state.count = 0
+		// 			state.start = null
+		// 		}
+		// 	}
+		//
+		// 	state.wasDown = down
+		// 	return result
+		// }
+
 		case "taps": {
 			const [, taps, ms, subexpression] = expression
-			const presses = e(subexpression)
-			const now = context.clock.time
+			const down = isDown(e(subexpression))
+			const {time} = context.clock
 
-			const tapped = guarantee(context.tapping, expression, () => ({
-				events: [] as number[],
+			const records = guarantee(context.tapping, expression, () => ({
+				events: [],
 			}))
 
-			for (let i = 0; i < presses; i++)
-				tapped.events.push(now)
+			records.events.push({time, down})
+			records.events = records.events.filter(e => {
+				const age = time - e.time
+				return age < ms
+			})
+			records.events = arraylimit(records.events, 1024)
 
-			tapped.events = arraylimit(
-				tapped.events.filter(time => time >= now - ms),
-				128,
-			)
-
-			if (tapped.events.length >= taps) {
-				tapped.events = []
-				return 1
+			let count = 0
+			let wasDown = false
+			for (const e of records.events) {
+				if (wasDown && !e.down) count++
+				wasDown = e.down
 			}
 
-			return 0
+			if (count === taps) {
+				records.events = []
+				return 1
+			}
+			else return 0
 		}
 
 		case "mod": {

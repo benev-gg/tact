@@ -11,6 +11,12 @@ export class EvaluationContext {
 	previousValues = new Map<string, number>()
 
 	holding = new Map<object, {start: number}>()
-	tapping = new Map<object, {events: number[]}>()
+	tapping = new Map<object, {events: {time: number, down: boolean}[]}>()
+
+	// tapping = new Map<object, {
+	// 	wasDown: boolean
+	// 	start: number | null
+	// 	count: number
+	// }>()
 }
 

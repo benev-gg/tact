@@ -103,16 +103,28 @@ export default suite({
 		expect(inputs.sum).is(0)
 	}),
 
-	"double tap in one frame": test(async() => {
-		const {sample, solve} = quickbind(
-			["taps", 2, 300, ["down", "KeyE"]]
-		)
-
-		for (const value of [1, 0, 1, 0])
+	"single tap": test(async() => {
+		const {sample, solve} = quickbind(["taps", 1, 400, "KeyE"])
+		const hit = (time: number, value: number) => {
 			sample({code: "KeyE", value})
+			return solve(time).value
+		}
+		expect(hit(0, 0)).is(0)
+		expect(hit(100, 1)).is(0)
+		expect(hit(200, 0)).is(1)
+	}),
 
-		expect(solve(100).value).is(1)
-		expect(solve(200).value).is(0)
+	"double tap": test(async() => {
+		const {sample, solve} = quickbind(["taps", 2, 400, "KeyE"])
+		const hit = (time: number, value: number) => {
+			sample({code: "KeyE", value})
+			return solve(time).value
+		}
+		expect(hit(0, 0)).is(0)
+		expect(hit(100, 1)).is(0)
+		expect(hit(200, 0)).is(0)
+		expect(hit(300, 1)).is(0)
+		expect(hit(400, 0)).is(1)
 	}),
 
 	"held across empty frames": test(async() => {
@@ -136,30 +148,29 @@ export default suite({
 		expect(solve(900).value).is(1)
 	}),
 
-	"taps and holds coexist": test(async() => {
+	"taps vs held": test(async() => {
 		const {sample, solve} = quickbind({
-			tapper: ["taps", 1, 10, ["down", "KeyE"]],
-			holder: ["held", 10, "KeyE"],
+			tappy: ["taps", 1, 300, "KeyE"],
+			holdy: ["held", 300, "KeyE"],
 		})
+		const hit = (time: number, value: number) => {
+			sample({code: "KeyE", value})
+			return solve(time)
+		}
+		const __up = (time: number) => hit(time, 0)
+		const DOWN = (time: number) => hit(time, 1)
 
-		solve(0)
+		expect(__up(1000).tappy.value).is(0)
+		expect(DOWN(1100).tappy.value).is(0)
+		expect(__up(1200).tappy.value).is(1)
+		expect(__up(1200).tappy.value).is(0)
 
-		sample({code: "KeyE", value: 1})
-		expect(solve(1).tapper.value).is(1)
-
-		sample({code: "KeyE", value: 0})
-		const released = solve(2)
-		expect(released.tapper.value).is(0)
-		expect(released.holder.value).is(0)
-
-		sample({code: "KeyE", value: 1})
-		const pressed = solve(3)
-		expect(pressed.tapper.value).is(1)
-		expect(pressed.holder.value).is(0)
-
-		const holding = solve(13)
-		expect(holding.tapper.value).is(0)
-		expect(holding.holder.value).is(1)
+		expect(__up(2000).holdy.value).is(0)
+		expect(DOWN(2100).holdy.value).is(0)
+		expect(DOWN(2200).holdy.value).is(0)
+		expect(DOWN(2300).holdy.value).is(0)
+		expect(DOWN(2400).holdy.value).is(1)
+		expect(__up(2500).holdy.value).is(0)
 	}),
 
 	"independent controller consumers": test(async() => {
