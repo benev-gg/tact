@@ -152,12 +152,11 @@ i care about the little things. all input types are boiled down to simple number
 
 <br/>
 
-## 🎮 bindings wizardry.
-> *bindings can basically do anything.*
+## 🎮 bindings.
+> *bindings are a little json programming language.*
 
-- 🧙‍♂️ **the bindings dsl is literally a little json programming language.**  
-    see [expression.ts](./s/lib/input/expression.ts) to get an idea of what's possible.
-- 🧙‍♂️ **arbitrary nesting is valid.**
+- 🧬 **see [expression.ts](./s/lib/input/expression.ts) to get an idea of what's possible.**  
+- 🧬 **arbitrary nesting is valid.**
     ```ts
     asBindings("KeyW")
 
@@ -174,7 +173,7 @@ i care about the little things. all input types are boiled down to simple number
 
     inputs.actions.special.castMagicSpell.value // 1
     ```
-- 🧙‍♂️ **you can differentiate taps versus holds on the same key.**
+- 🧬 **you can differentiate taps versus holds on the same key.**
     ```ts
     asBindings({
 
@@ -185,7 +184,7 @@ i care about the little things. all input types are boiled down to simple number
       equip: ["held", 250, "KeyE"],
     })
     ```
-- 🧙‍♂️ **you can "accumulate" mouse inputs accurately,** to avoid losses in sampling frequency mismatches.
+- 🧬 **you can "accumulate" mouse inputs accurately,** to avoid losses in sampling frequency mismatches.
     ```ts
     asBindings({
       lookX: ["accumulate", "pointer.x"],
@@ -193,7 +192,7 @@ i care about the little things. all input types are boiled down to simple number
 
     inputs.lookX.sum // use sum instead of value, to ensure you don't lose any pointer movement.
     ```
-- 🧙‍♂️ **gamepads thumbstick inputs are best done with some math.**
+- 🧬 **gamepads thumbstick inputs are best done with some math.**
     ```ts
     asBindings({
       forward: ["*",
