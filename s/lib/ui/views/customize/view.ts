@@ -27,17 +27,17 @@ export const [CustomizeView, makeCustomizeElement] = shadowDuplex((options: {con
 		? profiles.get(profile.basedOn)
 		: profile
 
-	const updateBindings = (bindings: Bindings) => {
+	const updateBindings = async(bindings: Bindings) => {
 		let key = $profileKey()
 
 		if (profiles.isPreset(key)) {
 			const basedOn = key
 			const freshKey = makeId()
 			key = freshKey
-			profiles.clone(freshKey, basedOn)
+			await profiles.clone(freshKey, basedOn)
 		}
 
-		profiles.update(key, {bindings})
+		await profiles.update(key, {bindings})
 		$profileKey(key)
 	}
 
