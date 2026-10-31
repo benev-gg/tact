@@ -1,4 +1,5 @@
 
+import {disposer} from "@e280/stz"
 import {register} from "@e280/sly"
 
 import {setupDeck} from "./deck.js"
@@ -22,6 +23,8 @@ import devicesSvg from "../../icons/akar/devices.svg.js"
 import gameControllerSvg from "../../icons/akar/game-controller.svg.js"
 
 export async function setupTact<B extends Bindings>(params: SetupParams<B>) {
+	const {dispose, schedule, disposable} = disposer()
+
 	const deck = await setupDeck(params)
 	const first = firstPreset(deck.controls.presets)
 	const visualizer = new Visualizer()
@@ -34,7 +37,7 @@ export async function setupTact<B extends Bindings>(params: SetupParams<B>) {
 	}
 
 	function gamepads(defaultProfileKey?: string) {
-		return autoGamepads(deck.hub, (controller, source) => {
+		const stop = autoGamepads(deck.hub, (controller, source) => {
 			const handle = `${source.pad.gamepad.id} ${source.pad.gamepad.index + 1}`
 			deck.controls.attach(controller, {
 				icon: gameControllerSvg,
@@ -45,18 +48,20 @@ export async function setupTact<B extends Bindings>(params: SetupParams<B>) {
 			})
 			return () => deck.controls.detach(controller)
 		})
+		schedule(stop)
+		return stop
 	}
 
 	function mouseKeyboard() {
 		const {key, profile} = first
 
-		const controller = new Controller({
+		const controller = disposable(new Controller({
 			bindings: profile.bindings,
 			source: new Sources(
 				new KeyboardSource(),
 				new PointerSource(),
 			),
-		})
+		}))
 
 		deck.hub.plug(controller)
 
@@ -83,6 +88,7 @@ export async function setupTact<B extends Bindings>(params: SetupParams<B>) {
 		elements,
 		registerElements,
 		encodeAll: deck.hub.encodeAll.bind(deck.hub),
+		dispose,
 	}
 }
 
