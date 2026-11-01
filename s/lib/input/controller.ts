@@ -3,7 +3,6 @@ import {deepFreeze} from "@e280/stz"
 import {Sampler} from "./utils/sampler.js"
 import {Intent} from "./data/intent/types.js"
 import {evaluate} from "./evaluate/evaluate.js"
-import {minihash} from "./data/intent/minihash.js"
 import {encodeIntents} from "./data/intent/encode.js"
 import {Bindings, Rebindings, Source} from "./types.js"
 import {EvaluationContext} from "./evaluate/context.js"
@@ -60,7 +59,7 @@ export class Controller<B extends Bindings = any> {
 
 	encode(time = performance.now()) {
 		return encodeIntents(
-			minihash(this.#investigation.hash),
+			this.#investigation.minihash,
 			[...this.evaluate(time)],
 		)
 	}
