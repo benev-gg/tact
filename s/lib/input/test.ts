@@ -5,9 +5,9 @@ import {asBindings} from "./types.js"
 import {Controller} from "./controller.js"
 import {PlainSource} from "./sources/plain.js"
 import {quickbind} from "./testing/quickbind.js"
+import {isCompatible} from "./investigate/is-compatible.js"
 
 import parcel from "./data/test.js"
-import { isCompatible } from "./investigate/is-compatible.js"
 
 export default suite({
 	parcel,
