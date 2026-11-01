@@ -16,6 +16,6 @@ export function quickbind<B extends Bindings>(b: B) {
 	const solve = (time?: number) =>
 		decoder.decode(controller.encode(time))
 
-	return {source, controller, decoder, sample, solve, inputs}
+	return {bindings: b, source, controller, decoder, sample, solve, inputs}
 }
 

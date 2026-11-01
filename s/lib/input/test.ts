@@ -7,6 +7,7 @@ import {PlainSource} from "./sources/plain.js"
 import {quickbind} from "./testing/quickbind.js"
 
 import parcel from "./data/test.js"
+import { isCompatible } from "./investigate/is-compatible.js"
 
 export default suite({
 	parcel,
@@ -21,6 +22,16 @@ export default suite({
 		const inputs = solve()
 		expect(inputs.value).is(1)
 		expect(inputs.was).is(0)
+	}),
+
+	"reordered bindings are equivalent": test(async() => {
+		const able = quickbind({alpha: "KeyA", bravo: "KeyB"})
+		const baker = quickbind({bravo: "KeyB", alpha: "KeyA"})
+		expect(isCompatible(able.bindings, baker.bindings)).is(true)
+		able.sample({code: "KeyA", value: 1})
+		const inputs = baker.decoder.decode(able.controller.encode())
+		expect(inputs.alpha.value).is(1)
+		expect(inputs.bravo.value).is(0)
 	}),
 
 	"update bindings": test(async() => {
