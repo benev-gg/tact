@@ -19,6 +19,6 @@ export function hashBindings(bindings: Bindings) {
 
 	recurse(bindings, ["b"])
 	paths.sort()
-	return hex(hash(...paths).slice(16))
+	return hex(hash("tact/bindings/v1", ...paths).slice(16))
 }
 
