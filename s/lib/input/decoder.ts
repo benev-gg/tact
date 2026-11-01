@@ -3,7 +3,7 @@ import {Inputs, Bindings} from "./types.js"
 import {decodeIntents} from "./data/intent/decode.js"
 import {investigate} from "./investigate/investigate.js"
 
-export class InputDecoder<B extends Bindings> {
+export class Decoder<B extends Bindings> {
 	#investigation
 
 	constructor(bindings: B) {

@@ -4,12 +4,12 @@ import {guarantee} from "@e280/stz"
 
 import {PlayerId} from "./types.js"
 import {Bindings} from "../../input/types.js"
-import {InputDecoder} from "../../input/decoder.js"
+import {Decoder} from "../../input/decoder.js"
 import {decodeParcels} from "../../input/data/parcel/decode.js"
 
 export class Collector<B extends Bindings> {
 	#bindings: B
-	#decoders = new RMap<PlayerId, InputDecoder<B>>()
+	#decoders = new RMap<PlayerId, Decoder<B>>()
 
 	constructor(bindings: B) {
 		this.#bindings = bindings
@@ -26,7 +26,7 @@ export class Collector<B extends Bindings> {
 		return guarantee(
 			this.#decoders,
 			playerId,
-			() => new InputDecoder(this.#bindings),
+			() => new Decoder(this.#bindings),
 		)
 	}
 

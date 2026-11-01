@@ -116,11 +116,11 @@ i care about the little things. all input types are boiled down to simple number
 
 - ⚙️ **pov: your app isn't a game, no multiplayer, no gamepads.**  
     ```ts
-    import {setupTact, InputDecoder} from "@benev/tact"
+    import {setupTact, Decoder} from "@benev/tact"
 
     const tact = await setupTact({presets, maxPlayers: 1})
     const controller = tact.mouseKeyboard()
-    const decoder = new InputDecoder(bindings)
+    const decoder = new Decoder(bindings)
     tact.registerElements()
 
     setInterval(() => {
@@ -134,11 +134,11 @@ i care about the little things. all input types are boiled down to simple number
     - 💡 *then the only ui you need is the `<tact-customize>` panel (also available as a sly view `CustomizeView`).*
 - ⚙️ **pov: your app doesn't even want any ui, or persistence.**  
     ```ts
-    import {Controller, InputDecoder, KeyboardSource, PointerSource, Sources} from "@benev/tact"
+    import {Controller, Decoder, KeyboardSource, PointerSource, Sources} from "@benev/tact"
 
     const source = new Sources(new KeyboardSource(), new PointerSource())
     const controller = new Controller({bindings, source})
-    const decoder = new InputDecoder(bindings)
+    const decoder = new Decoder(bindings)
 
     setInterval(() => {
       const inputs = decoder.decode(controller.encode())
