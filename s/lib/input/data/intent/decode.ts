@@ -8,7 +8,7 @@ export function decodeIntents(buffer: ArrayBuffer) {
 	const dv = new DataView(buffer)
 	let cursor = 0
 
-	const hash = dv.getUint32(cursor, endian)
+	const minihash = dv.getUint32(cursor, endian)
 	cursor += sizeHash
 
 	while (cursor < buffer.byteLength) {
@@ -21,6 +21,6 @@ export function decodeIntents(buffer: ArrayBuffer) {
 		intents.push({id, value})
 	}
 
-	return {hash, intents}
+	return {minihash, intents}
 }
 

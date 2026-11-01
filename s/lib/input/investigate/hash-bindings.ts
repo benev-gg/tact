@@ -1,6 +1,7 @@
 
-import {hash32} from "@e280/stz"
+import {hex} from "@e280/stz"
 import {Bindings} from "../types.js"
+import {hash} from "../../utils/hash.js"
 import {isExpression} from "./is-expression.js"
 
 export function hashBindings(bindings: Bindings) {
@@ -8,7 +9,7 @@ export function hashBindings(bindings: Bindings) {
 
 	function recurse(b: Bindings, path: string[]) {
 		if (isExpression(b)) {
-			paths.push(path.join("."))
+			paths.push(JSON.stringify(path))
 		}
 		else {
 			for (const [key, value] of Object.entries(b))
@@ -17,6 +18,7 @@ export function hashBindings(bindings: Bindings) {
 	}
 
 	recurse(bindings, ["b"])
-	return hash32(...paths)
+	paths.sort()
+	return hex(hash(...paths).slice(16))
 }
 

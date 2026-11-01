@@ -5,6 +5,7 @@ import {got, IdCounter} from "@e280/stz"
 import {PlayerId} from "./types.js"
 import {Bindings} from "../../input/types.js"
 import {Controller} from "../../input/controller.js"
+import {minihash} from "../../input/data/intent/minihash.js"
 import {encodeParcels} from "../../input/data/parcel/encode.js"
 import {encodeIntents} from "../../input/data/intent/encode.js"
 import {hashBindings} from "../../input/investigate/hash-bindings.js"
@@ -86,7 +87,7 @@ export class Hub<B extends Bindings = any> {
 			.filter(([, value]) => value !== 0)
 			.map(([id, value]) => ({id, value}))
 
-		return encodeIntents(this.#hash, changedIntents)
+		return encodeIntents(minihash(this.#hash), changedIntents)
 	}
 
 	encodeAll(time = performance.now()) {
