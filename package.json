@@ -21,14 +21,14 @@
 		"count": "find s -path '*/_archive' -prune -o -name '*.ts' -exec wc -l {} +"
 	},
 	"peerDependencies": {
-		"@e280/sly": "^0.4.9",
+		"@e280/sly": "^0.4.12",
 		"@e280/strata": "^0.5.6",
 		"lit": "^3.3.3"
 	},
 	"dependencies": {
 		"@awasm/noble": "^0.1.4",
 		"@benev/math": "0.4.0-9",
-		"@e280/kv": "^0.2.4",
+		"@e280/kv": "^0.2.5",
 		"@e280/shiny": "^0.1.1",
 		"@e280/stz": "^0.4.14"
 	},
