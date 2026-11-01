@@ -11,13 +11,13 @@ import {encodeIntents} from "../../input/data/intent/encode.js"
 import {hashBindings} from "../../input/investigate/hash-bindings.js"
 
 export class Hub<B extends Bindings = any> {
-	#hash
+	#minihash
 	#ids = new IdCounter()
 	#unassigned = new RSet<Controller<B>>()
 	#players = new RMap<PlayerId, {controllers: RSet<Controller<B>>}>()
 
 	constructor(readonly bindings: B) {
-		this.#hash = hashBindings(bindings)
+		this.#minihash = minihash(hashBindings(bindings))
 	}
 
 	get playerIds() {
@@ -87,7 +87,7 @@ export class Hub<B extends Bindings = any> {
 			.filter(([, value]) => value !== 0)
 			.map(([id, value]) => ({id, value}))
 
-		return encodeIntents(minihash(this.#hash), changedIntents)
+		return encodeIntents(this.#minihash, changedIntents)
 	}
 
 	encodeAll(time = performance.now()) {

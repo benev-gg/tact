@@ -1,6 +1,5 @@
 
 import {Inputs, Bindings} from "./types.js"
-import {minihash} from "./data/intent/minihash.js"
 import {decodeIntents} from "./data/intent/decode.js"
 import {investigate} from "./investigate/investigate.js"
 
@@ -26,7 +25,7 @@ export class InputDecoder<B extends Bindings> {
 		for (const buffer of buffers) {
 			const decoded = decodeIntents(buffer)
 
-			if (decoded.minihash !== minihash(this.#investigation.hash))
+			if (decoded.minihash !== this.#investigation.minihash)
 				throw new Error("intent bindings hash mismatch")
 
 			for (const input of inputs)

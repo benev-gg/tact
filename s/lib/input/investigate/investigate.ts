@@ -5,6 +5,7 @@ import {Expression} from "../expression.js"
 import {hashBindings} from "./hash-bindings.js"
 import {isExpression} from "./is-expression.js"
 import {Bindings, Input, Inputs} from "../types.js"
+import {minihash} from "../data/intent/minihash.js"
 
 export function investigate<B extends Bindings>(bindings: B) {
 	const hash = hashBindings(bindings)
@@ -27,6 +28,7 @@ export function investigate<B extends Bindings>(bindings: B) {
 
 	return {
 		hash,
+		minihash: minihash(hash),
 		inputs,
 		inputList,
 		rootList,
