@@ -166,14 +166,14 @@ i care about the little things. all input types are boiled down to simple number
     ```
     ```ts
     asBindings({
-      actions: {
-        special: {
-          castMagicSpell: ["*", ["mod", "shift", "alt"], "KeyR"],
+      special: {
+        magic: {
+          castSpell: ["*", ["mod", "shift", "alt"], "KeyR"],
         }
       }
     })
 
-    inputs.actions.special.castMagicSpell.value // 1
+    inputs.special.magic.castSpell.value // 1
     ```
 - 🧬 **you can differentiate taps versus holds on the same key.**
     ```ts
@@ -192,21 +192,24 @@ i care about the little things. all input types are boiled down to simple number
       lookX: ["accumulate", "pointer.x"],
     })
 
-    inputs.lookX.sum // use sum instead of value, to ensure you don't lose any pointer movement.
+    inputs.lookX.sum // use sum instead of value.
     ```
 - 🧬 **gamepads thumbstick inputs are best done with some math.**
     ```ts
     asBindings({
       forward: ["*",
 
-        // user-customizable sensitivity, equivalent with pointer-pixels-per-second.
+        // user-customizable sensitivity,
+        // equivalent with pointer-pixels-per-second.
         1234,
 
-        // delta time factor, to ensure sensitivity is framerate-independent.
+        // delta time factor,
+        // to ensure sensitivity is framerate-independent.
         ["dt"],
 
-        // remapping the ranges because gamepads are naughty and often have jiggly deadzones.
-        ["remap", -0.1, -0.9, 0, 1, "gamepad.axis.1"],
+        // remapping the ranges,
+        // because different gamepads represent the values differently.
+        ["remap", 0, -1, 0, 1, "gamepad.axis.1"],
       ],
     })
     ```
