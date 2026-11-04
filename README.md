@@ -72,13 +72,14 @@ i care about the little things. all input types are boiled down to simple number
     - 💡 *you can call `tact.dispose()` to release resources.*
 - 🍏 **encoding, decoding, and your game logic.**
     ```ts
-    import {Collector} from "@benev/tact"
+    import {Players} from "@benev/tact"
 
-    const collector = new Collector(bindings)
+    const players = new Players(bindings)
 
     setInterval(() => {
       const buffer = tact.encodeAll()
-      for (const {playerId, inputs} of collector.decodeAll(buffer)) {
+      players.decodeAll(buffer)
+      for (const [playerId, inputs] of players) {
 
         // your game logic can read these handy input values.
         inputs.jump.value // button-like values are numbers 0 to 1.
@@ -90,8 +91,8 @@ i care about the little things. all input types are boiled down to simple number
       }
     }, 16.67)
     ```
-    - 💡 *you could stream the buffers across the network to a remote collector, maybe with [renraku](https://github.com/e280/renraku).*
-    - 💡 *you could have the tact deck on the clientside, and the collector on the serverside (or a web worker!).*
+    - 💡 *maybe you'd like to stream the buffers over a network with [renraku](https://github.com/e280/renraku).*
+    - 💡 *maybe you'd like the tact deck on the clientside and the players on the serverside.*
 - 🍏 **put the `<tact-deck>` element in your html page.**
     ```html
     <tact-deck></tact-deck>
