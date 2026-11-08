@@ -22,6 +22,8 @@ import {makeControllersElement} from "../../views/controllers/view.js"
 import devicesSvg from "../../icons/akar/devices.svg.js"
 import gameControllerSvg from "../../icons/akar/game-controller.svg.js"
 
+export type Tact = Awaited<ReturnType<typeof setupTact>>
+
 export async function setupTact<B extends Bindings>(params: SetupParams<B>) {
 	const {dispose, schedule, disposable} = disposer()
 
