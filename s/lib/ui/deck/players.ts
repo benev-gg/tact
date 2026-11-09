@@ -47,6 +47,10 @@ export class Players<B extends Bindings> {
 		return {added, removed}
 	}
 
+	get size() {
+		return this.#decoders.size
+	}
+
 	has(playerId: PlayerId) {
 		return this.#decoders.has(playerId)
 	}
