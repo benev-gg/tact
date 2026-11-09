@@ -23,6 +23,8 @@ export const ExpressionView = lightView((
 				<input
 					type=number
 					step=any
+					name=number
+					autocomplete=off
 					theme-input
 					.value="${expression}"
 					?readonly="${isReadonly}"
@@ -40,6 +42,8 @@ export const ExpressionView = lightView((
 		return html`
 			<input
 				type=text
+				name=expression
+				autocomplete=off
 				theme-input
 				.value="${expression}"
 				?readonly="${isReadonly}"

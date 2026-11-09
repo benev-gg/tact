@@ -80,6 +80,8 @@ export const [CustomizeView, makeCustomizeElement] = shadowDuplex((options: {con
 					${isReadonly ? null : html`
 						<input
 							type=text
+							name=profile-label
+							autocomplete=off
 							theme-input
 							.value="${profile.label}"
 							@change="${(event: Event) => {

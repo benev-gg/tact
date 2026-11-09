@@ -49,7 +49,7 @@ export default template(import.meta.url, async orb => html`
 				</div>
 				<div>
 					<label>
-						<input type="color"/>
+						<input type="color" name="color" autocomplete="off"/>
 						<span>choose your color ☝️</span>
 					</label>
 				</div>
