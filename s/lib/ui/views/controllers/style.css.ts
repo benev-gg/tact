@@ -90,8 +90,9 @@ export default css`@layer view {
 			filter: brightness(120%);
 		}
 
-		[view="profile-select"]::part(select) {
-			--base: oklch(from var(--tint) l c h / 50%);
+		.select {
+			--base: color-mix(in oklch, transparent, var(--tint) 40%);
+			box-shadow: none;
 		}
 	}
 

@@ -18,7 +18,7 @@ export const ProfileSelectView = lightView((
 
 	return html`
 		<select
-			part=select
+			class=select
 			theme-select
 			.value="${currentProfileKey}"
 			@change="${handleChange}">
