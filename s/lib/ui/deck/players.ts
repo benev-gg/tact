@@ -3,8 +3,8 @@ import {RMap} from "@e280/strata"
 import {guarantee} from "@e280/stz"
 
 import {PlayerId} from "./types.js"
-import {Bindings} from "../../input/types.js"
 import {Decoder} from "../../input/decoder.js"
+import {Bindings, Inputs} from "../../input/types.js"
 import {decodeParcels} from "../../input/data/parcel/decode.js"
 
 export class Players<B extends Bindings> {
@@ -70,7 +70,7 @@ export class Players<B extends Bindings> {
 
 	*entries() {
 		for (const [playerId, {inputs}] of this.#decoders)
-			yield [playerId, inputs] as const
+			yield [playerId, inputs] as [PlayerId, Inputs<B>]
 	}
 
 	[Symbol.iterator]() {
