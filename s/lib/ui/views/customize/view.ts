@@ -56,7 +56,7 @@ export const [CustomizeView, makeCustomizeElement] = shadowDuplex((options: {con
 	}
 
 	return html`
-		<div class=plate theme-card>
+		<div class=plate theme-card part=plate>
 			<header class=topbar>
 				<div class=corner>
 					${ProfileSelectView(options, $profileKey(), $profileKey)}

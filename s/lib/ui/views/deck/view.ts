@@ -25,7 +25,7 @@ export const [DeckView, makeDeckElement] = shadowDuplex((deck: Deck) => {
 	})
 
 	return html`
-		<div class=deck theme-card>
+		<div class=deck theme-card part=deck>
 			${ShinyTabs.with({
 				props: [{control: tabsControl}],
 				children: html`
