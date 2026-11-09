@@ -10,7 +10,7 @@ export default css`@layer view {
 	text-shadow: var(--text-shadow);
 }
 
-.deck {
+[part="plate"] {
 	padding: var(--pad);
 	--tint: oklch(from var(--prime) l c h / 50%);
 }

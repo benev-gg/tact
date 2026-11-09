@@ -1,7 +1,7 @@
 
 import {html} from "lit"
 import {given, when} from "@e280/stz"
-import {shadowDuplex, useCss, useSignal} from "@e280/sly"
+import {shadowDuplex, useCss, useName, useSignal} from "@e280/sly"
 
 import styleCss from "./style.css.js"
 import themeCss from "../theme.css.js"
@@ -16,6 +16,7 @@ import {renderBindings} from "./parts/render-bindings.js"
 import {ProfileSelectView} from "../profile-select/view.js"
 
 export const [CustomizeView, makeCustomizeElement] = shadowDuplex((options: {controls: Controls}) => {
+	useName("tact-customize")
 	useCss(themeCss, styleCss)
 	const {controls, controls: {profiles}} = options
 	const $profileKey = useSignal(controls.fallbackProfileKey)
@@ -56,7 +57,7 @@ export const [CustomizeView, makeCustomizeElement] = shadowDuplex((options: {con
 	}
 
 	return html`
-		<div class=plate theme-card part=plate>
+		<div part=plate>
 			<header class=topbar>
 				<div class=corner>
 					${ProfileSelectView(options, $profileKey(), $profileKey)}

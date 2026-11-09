@@ -2,7 +2,7 @@
 import {css} from "lit"
 export default css`@layer view {
 
-.plate {
+[part="plate"] {
 	user-select: none;
 	display: flex;
 	flex-direction: column;

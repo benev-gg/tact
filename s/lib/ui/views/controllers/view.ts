@@ -1,7 +1,7 @@
 
 import {html} from "lit"
 import {isHappy, when} from "@e280/stz"
-import {loot, shadowDuplex, useCss, useOnce} from "@e280/sly"
+import {loot, shadowDuplex, useCss, useName, useOnce} from "@e280/sly"
 
 import styleCss from "./style.css.js"
 import themeCss from "../theme.css.js"
@@ -14,6 +14,7 @@ import {ControllerView} from "./subviews/controller.js"
 import {Context, droppyNewPlayer} from "../deck/types.js"
 
 export const [ControllersView, makeControllersElement] = shadowDuplex((deck: Deck) => {
+	useName("tact-controllers")
 	useCss(themeCss, styleCss)
 
 	const {hub} = deck
@@ -36,7 +37,7 @@ export const [ControllersView, makeControllersElement] = shadowDuplex((deck: Dec
 	}))
 
 	return html`
-		<div class=plate ?data-drag-and-drop="${!!context.dnd.dragging}">
+		<div part=plate ?data-drag-and-drop="${!!context.dnd.dragging}">
 			<div class=playerlist>
 				${hub.playerIds.map(renderPlayer)}
 
