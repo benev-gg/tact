@@ -18,6 +18,7 @@ import {ProfileSelectView} from "../profile-select/view.js"
 export const [CustomizeView, makeCustomizeElement] = shadowDuplex((options: {controls: Controls}) => {
 	useName("tact-customize")
 	useCss(themeCss, styleCss)
+
 	const {controls, controls: {profiles}} = options
 	const $profileKey = useSignal(controls.fallbackProfileKey)
 

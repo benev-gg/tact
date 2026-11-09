@@ -5,13 +5,13 @@ export default css`@layer view {
 [part="plate"] {
 	display: flex;
 	flex-direction: column;
+	gap: var(--space);
 }
 
 .topbar {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
-	padding: var(--pad) var(--space);
 
 	[view="profile-select"] {
 		font-size: 1.2em;
@@ -55,7 +55,6 @@ export default css`@layer view {
 .bindings {
 	user-select: none;
 	cursor: default;
-	padding: var(--space);
 
 	summary {
 		color: var(--prime);
