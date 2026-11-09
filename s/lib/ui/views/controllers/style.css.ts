@@ -22,15 +22,14 @@ export default css`@layer view {
 	}
 }
 
-.playerlist {
+[part="playerlist"] {
 	display: grid;
+	width: min(100%, calc(48em + var(--pad)));
+	gap: var(--pad);
 	grid-template-columns: repeat(
 		auto-fit,
 		minmax(min(100%, 20em), 1fr)
 	);
-
-	width: min(100%, calc(48em + var(--pad)));
-	gap: var(--pad);
 
 	> * {
 		min-width: 0;

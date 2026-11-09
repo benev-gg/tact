@@ -38,7 +38,7 @@ export const [ControllersView, makeControllersElement] = shadowDuplex((deck: Dec
 
 	return html`
 		<div part=plate ?data-drag-and-drop="${!!context.dnd.dragging}">
-			<div class=playerlist>
+			<div part=playerlist>
 				${hub.playerIds.map(renderPlayer)}
 
 				${when(hub.playerIds.length < deck.maxPlayers, () => DropcardView({
