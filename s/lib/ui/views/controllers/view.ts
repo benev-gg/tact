@@ -14,7 +14,7 @@ import {ControllerView} from "./subviews/controller.js"
 import {Context, droppyNewPlayer} from "../deck/types.js"
 
 export const [ControllersView, makeControllersElement] = shadowDuplex((deck: Deck) => {
-	useName("tact-controllers")
+	useName("controllers")
 	useCss(themeCss, styleCss)
 
 	const {hub} = deck

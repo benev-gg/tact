@@ -13,7 +13,7 @@ import {CustomizeView} from "../customize/view.js"
 import {ControllersView} from "../controllers/view.js"
 
 export const [DeckView, makeDeckElement] = shadowDuplex((deck: Deck) => {
-	useName("tact-deck")
+	useName("deck")
 	useCss(themeCss, styleCss)
 	const tabsControl = useOnce(() => new TabsControl())
 
@@ -40,12 +40,18 @@ export const [DeckView, makeDeckElement] = shadowDuplex((deck: Deck) => {
 
 					${ControllersView.with({
 						props: [deck],
-						attrs: {slot: "panel"},
+						attrs: {
+							slot: "panel",
+							exportparts: "plate:controllers-plate",
+						},
 					})}
 
 					${CustomizeView.with({
 						props: [deck],
-						attrs: {slot: "panel"},
+						attrs: {
+							slot: "panel",
+							exportparts: "plate:customize-plate, playerlist:customize-playerlist",
+						},
 					})}
 				`,
 			})}

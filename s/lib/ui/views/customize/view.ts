@@ -16,7 +16,7 @@ import {renderBindings} from "./parts/render-bindings.js"
 import {ProfileSelectView} from "../profile-select/view.js"
 
 export const [CustomizeView, makeCustomizeElement] = shadowDuplex((options: {controls: Controls}) => {
-	useName("tact-customize")
+	useName("customize")
 	useCss(themeCss, styleCss)
 
 	const {controls, controls: {profiles}} = options
