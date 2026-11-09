@@ -16,6 +16,9 @@ export class Players<B extends Bindings> {
 	}
 
 	decodeAll(...buffers: ArrayBuffer[]) {
+		if (buffers.length === 0)
+			return {added: [], removed: []}
+
 		const added: PlayerId[] = []
 		const removed: PlayerId[] = []
 		const grouped = new Map<PlayerId, ArrayBuffer[]>()
