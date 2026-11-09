@@ -4,8 +4,8 @@ import {asPresets} from "../lib/ui/deck/types.js"
 
 export const bindings = asBindings({
 	looking: {
-		horizontal: ["accumulate", "pointer.x"],
-		vertical: ["accumulate", "pointer.y"],
+		horizontal: ["*", ["accumulate", "pointer.x"], 800],
+		vertical: ["*", ["accumulate", "pointer.y"], 800],
 	},
 	moving: {
 		forward: "KeyW",
