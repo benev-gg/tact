@@ -125,7 +125,7 @@ i care about the little things. all input types are boiled down to simple number
     import {setupTact, Decoder} from "@benev/tact"
 
     const tact = await setupTact({presets, maxPlayers: 1})
-    const controller = tact.mouseKeyboard()
+    const {controller} = tact.mouseKeyboard()
     const decoder = new Decoder(bindings)
     tact.registerElements()
 
@@ -217,6 +217,20 @@ i care about the little things. all input types are boiled down to simple number
         ["remap", 0, -1, 0, 1, "gamepad.axis.1"],
       ],
     })
+    ```
+
+
+
+<br/>
+
+## 🎮 cool tips.
+> *the more you know.*
+
+- 💡 **you can set a pointer source to only respond while in pointer lock.**  
+    ```ts
+    const {pointer} = tact.mouseKeyboard()
+
+    pointer.allow = () => document.pointerLockElement !== null
     ```
 
 
