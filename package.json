@@ -27,10 +27,10 @@
 	},
 	"dependencies": {
 		"@awasm/noble": "^0.1.4",
-		"@benev/math": "0.4.0-10",
+		"@benev/math": "0.4.0-11",
 		"@e280/kv": "^0.2.6",
 		"@e280/shiny": "^0.1.1",
-		"@e280/stz": "^0.4.16"
+		"@e280/stz": "^0.4.17"
 	},
 	"devDependencies": {
 		"@e280/hottie": "^0.1.7",
