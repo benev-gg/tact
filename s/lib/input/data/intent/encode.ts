@@ -20,6 +20,6 @@ export function encodeIntents(minihash: number, intents: Intent[]) {
 		cursor += sizeValue
 	}
 
-	return buffer
+	return new Uint8Array(buffer)
 }
 

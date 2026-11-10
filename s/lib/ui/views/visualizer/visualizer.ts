@@ -9,7 +9,7 @@ export class Visualizer {
 		this.$hex.set("")
 	})
 
-	update(data: ArrayBuffer) {
+	update(data: Uint8Array) {
 		this.$hex(hex(new Uint8Array(data)))
 		this.clear()
 	}

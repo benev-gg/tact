@@ -1,10 +1,11 @@
 
+import {dataViewFrom} from "@e280/stz"
 import {Parcel} from "./types.js"
 import {endian} from "../endian.js"
 import {sizeHeader, sizeLength, sizePlayerId} from "./sizes.js"
 
-export function decodeParcels(buffer: ArrayBuffer): Parcel[] {
-	const view = new DataView(buffer)
+export function decodeParcels(buffer: Uint8Array): Parcel[] {
+	const view = dataViewFrom(buffer)
 	const parcels: Parcel[] = []
 	let cursor = 0
 

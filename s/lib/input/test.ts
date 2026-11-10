@@ -100,7 +100,7 @@ export default suite({
 
 		solve()
 		expect(inputs.sum).is(0)
-		const datas: ArrayBuffer[] = []
+		const datas: Uint8Array[] = []
 
 		for (const value of [0, 1, 0]) {
 			sample({code: "KeyE", value})

@@ -15,13 +15,13 @@ export class Players<B extends Bindings> {
 		this.#bindings = bindings
 	}
 
-	decodeAll(...buffers: ArrayBuffer[]) {
+	decodeAll(...buffers: Uint8Array[]) {
 		if (buffers.length === 0)
 			return {added: [], removed: []}
 
 		const added: PlayerId[] = []
 		const removed: PlayerId[] = []
-		const grouped = new Map<PlayerId, ArrayBuffer[]>()
+		const grouped = new Map<PlayerId, Uint8Array[]>()
 
 		for (const buffer of buffers)
 			for (const {playerId, intents} of decodeParcels(buffer))

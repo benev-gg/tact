@@ -14,7 +14,7 @@ export class Decoder<B extends Bindings> {
 		return this.#investigation.inputs
 	}
 
-	decode(...buffers: ArrayBuffer[]): Inputs<B> {
+	decode(...buffers: Uint8Array[]): Inputs<B> {
 		const inputs = this.#investigation.inputList
 
 		for (const input of inputs) {
