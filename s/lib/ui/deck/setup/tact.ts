@@ -56,13 +56,15 @@ export async function setupTact<B extends Bindings>(params: SetupParams<B>) {
 
 	function mouseKeyboard() {
 		const {key, profile} = first
+		const d2 = disposer()
 
-		const controller = disposable(new Controller({
+		const pointer = d2.disposable(new PointerSource())
+		const keyboard = d2.disposable(new KeyboardSource())
+		const source = d2.disposable(new Sources(keyboard, pointer))
+
+		const controller = d2.disposable(new Controller({
+			source,
 			bindings: profile.bindings,
-			source: disposable(new Sources(
-				disposable(new KeyboardSource()),
-				disposable(new PointerSource()),
-			)),
 		}))
 
 		deck.hub.plug(controller)
@@ -75,12 +77,13 @@ export async function setupTact<B extends Bindings>(params: SetupParams<B>) {
 			defaultProfileKey: key,
 		})
 
-		schedule(() => {
+		d2.schedule(() => {
 			deck.hub.remove(controller)
 			deck.controls.detach(controller)
 		})
 
-		return controller
+		schedule(d2.dispose)
+		return {controller, pointer, keyboard, source, dispose: d2.dispose}
 	}
 
 	function registerElements() {
