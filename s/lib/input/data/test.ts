@@ -12,8 +12,8 @@ export default suite({
 			const dataA = hex.random(16)
 			const dataB = hex.random(32)
 			const parcels = [
-				{playerId: 0, intents: hex.toBytes(dataA).buffer},
-				{playerId: 1, intents: hex.toBytes(dataB).buffer},
+				{playerId: 0, intents: hex.toBytes(dataA)},
+				{playerId: 1, intents: hex.toBytes(dataB)},
 			] as Parcel[]
 			expect(decodeParcels(encodeParcels(parcels)))
 				.deep(parcels)

@@ -21,7 +21,7 @@ export function encodeParcels(parcels: Parcel[]): Uint8Array {
 		view.setUint32(cursor, intents.byteLength, endian)
 		cursor += 4
 
-		bytes.set(new Uint8Array(intents), cursor)
+		bytes.set(intents, cursor)
 		cursor += intents.byteLength
 	}
 

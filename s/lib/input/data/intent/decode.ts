@@ -1,12 +1,12 @@
 
-import {dataViewFrom} from "@e280/stz"
+import {dataView} from "@e280/stz"
 import {Intent} from "./types.js"
 import {endian} from "../endian.js"
 import {sizeHash, sizeId, sizeValue} from "./sizes.js"
 
 export function decodeIntents(buffer: Uint8Array) {
 	const intents: Intent[] = []
-	const dv = dataViewFrom(buffer)
+	const dv = dataView(buffer)
 	let cursor = 0
 
 	const minihash = dv.getUint32(cursor, endian)

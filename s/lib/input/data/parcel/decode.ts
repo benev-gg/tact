@@ -1,11 +1,11 @@
 
-import {dataViewFrom} from "@e280/stz"
+import {dataView} from "@e280/stz"
 import {Parcel} from "./types.js"
 import {endian} from "../endian.js"
 import {sizeHeader, sizeLength, sizePlayerId} from "./sizes.js"
 
 export function decodeParcels(buffer: Uint8Array): Parcel[] {
-	const view = dataViewFrom(buffer)
+	const view = dataView(buffer)
 	const parcels: Parcel[] = []
 	let cursor = 0
 
@@ -22,7 +22,7 @@ export function decodeParcels(buffer: Uint8Array): Parcel[] {
 		if (length > buffer.byteLength - cursor)
 			throw new Error("truncated data")
 
-		const intents = buffer.slice(cursor, cursor + length)
+		const intents = buffer.subarray(cursor, cursor + length)
 		cursor += length
 
 		parcels.push({playerId: playerId, intents})
