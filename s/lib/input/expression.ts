@@ -5,6 +5,7 @@ export type Expression = (
 
 	// samplers
 	| string // use last-known sample value for a code like "KeyW", "pointer.move.up".
+	| ["??", code: string, fallback: Expression] // define a fallback value.
 	| ["accumulate", string] // sum values this frame.
 	| ["up", string] // count releases this frame.
 	| ["down", string] // count presses this frame.

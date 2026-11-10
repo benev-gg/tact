@@ -1,5 +1,5 @@
 
-import {remap} from "@benev/math"
+import {distance, remap} from "@benev/math"
 import {guarantee, isHappy, isNumber, isString} from "@e280/stz"
 
 import {isDown} from "../utils/is-down.js"
@@ -13,25 +13,33 @@ export function evaluate(
 
 	const e = (expression: Expression) => evaluate(context, expression)
 
-	if (expression === null)
-		return 0
-
-	if (isNumber(expression))
-		return expression
-
-	else if (isString(expression)) {
-		const latest = context.latestValues.get(expression) ?? 0
+	const getSamplePeak = (code: string, fallback: number) => {
+		const latest = context.latestValues.get(code) ?? fallback
 		return context.recentSamples
-			.filter(s => s.code === expression)
+			.filter(s => s.code === code)
 			.reduce(
-				(peak, s) => Math.abs(s.value) > Math.abs(peak)
+				(peak, s) => distance(s.value, fallback) > distance(peak, fallback)
 					? s.value
 					: peak,
 				latest,
 			)
 	}
 
+	if (expression === null)
+		return 0
+
+	else if (isNumber(expression))
+		return expression
+
+	else if (isString(expression))
+		return getSamplePeak(expression, 0)
+
 	else switch (expression[0]) {
+		case "??": {
+			const [, code, fallback] = expression
+			return getSamplePeak(code, e(fallback))
+		}
+
 		case "accumulate": {
 			const code = expression[1]
 			let x = 0
