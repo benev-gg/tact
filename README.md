@@ -77,8 +77,13 @@ i care about the little things. all input types are boiled down to simple number
     const players = new Players(bindings)
 
     setInterval(() => {
+
+      // encoding.
       const buffer = tact.encodeAll()
+
+      // decoding.
       players.decodeAll(buffer)
+
       for (const [playerId, inputs] of players) {
 
         // your game logic can read these handy input values.
