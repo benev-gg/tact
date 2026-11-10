@@ -13,7 +13,6 @@ export class Sampler {
 		this.#source = source
 		this.dispose = source.onSample(sample => {
 			this.#samples.push(sample)
-			if (this.#samples.length > limit) console.warn(`tact sampler exceeded limit ${limit}`)
 			this.#samples = arraylimit(this.#samples, limit)
 		})
 	}
