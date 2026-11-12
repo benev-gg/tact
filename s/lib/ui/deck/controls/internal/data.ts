@@ -47,6 +47,7 @@ export function makeControlsData<B extends Bindings>(options: ControlsOptions<B>
 		kvs: {
 			profiles: kv.scope<Profile>("profiles"),
 			preferences: kv.scope<ProfileKey>("preferences"),
+			selectedProfile: kv.cell<ProfileKey>("selectedProfile"),
 		},
 	}
 }

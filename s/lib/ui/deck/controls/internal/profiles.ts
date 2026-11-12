@@ -25,6 +25,13 @@ export class Profiles<B extends Bindings> {
 		return [...this.#data.profiles.customs]
 	}
 
+	has(profileKey: string) {
+		return (
+			this.#data.profiles.customs.has(profileKey) ||
+			this.#data.profiles.presets.has(profileKey)
+		)
+	}
+
 	isPreset(profileKey: string) {
 		return this.#data.profiles.presets.has(profileKey)
 	}

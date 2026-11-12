@@ -46,7 +46,7 @@ export const ControllerView = lightView((context: Context, controller: Controlle
 
 			${ProfileSelectView(deck, currentProfileKey, key => {
 				controls.assignments.assign(controller, key)
-				controls.$selectedProfileKey.set(key)
+				controls.setSelectedProfileKey(key)
 			})}
 		</div>
 	`
