@@ -1,7 +1,7 @@
 
 import {html} from "lit"
 import {given, when} from "@e280/stz"
-import {shadowDuplex, useCss, useName, useSignal} from "@e280/sly"
+import {shadowDuplex, useCss, useName} from "@e280/sly"
 
 import styleCss from "./style.css.js"
 import themeCss from "../theme.css.js"
@@ -19,18 +19,17 @@ export const [CustomizeView, makeCustomizeElement] = shadowDuplex((options: {con
 	useName("customize")
 	useCss(themeCss, styleCss)
 
-	const {controls, controls: {profiles}} = options
-	const $profileKey = useSignal(controls.fallbackProfileKey)
+	const {controls, controls: {profiles, $selectedProfileKey}} = options
 
-	const profile = profiles.get($profileKey())
-	const isReadonly = profiles.isPreset($profileKey())
+	const profile = profiles.get($selectedProfileKey())
+	const isReadonly = profiles.isPreset($selectedProfileKey())
 
 	const baseline = profile.basedOn
 		? profiles.get(profile.basedOn)
 		: profile
 
 	const updateBindings = async(bindings: Bindings) => {
-		let key = $profileKey()
+		let key = $selectedProfileKey()
 
 		if (profiles.isPreset(key)) {
 			const basedOn = key
@@ -40,7 +39,7 @@ export const [CustomizeView, makeCustomizeElement] = shadowDuplex((options: {con
 		}
 
 		await profiles.update(key, {bindings})
-		$profileKey(key)
+		$selectedProfileKey(key)
 	}
 
 	const updateLabel = (profileKey: string, label: string) =>
@@ -48,20 +47,20 @@ export const [CustomizeView, makeCustomizeElement] = shadowDuplex((options: {con
 
 	const clone = () => {
 		const key = makeId()
-		profiles.clone(key, $profileKey())
-		$profileKey.set(key)
+		profiles.clone(key, $selectedProfileKey())
+		$selectedProfileKey.set(key)
 	}
 
 	const destroy = () => {
-		profiles.delete($profileKey())
-		$profileKey(controls.fallbackProfileKey)
+		profiles.delete($selectedProfileKey())
+		$selectedProfileKey(controls.fallbackProfileKey)
 	}
 
 	return html`
 		<div part=plate>
 			<header class=topbar>
 				<div class=corner>
-					${ProfileSelectView(options, $profileKey(), $profileKey)}
+					${ProfileSelectView(options, $selectedProfileKey(), $selectedProfileKey)}
 
 					<button title="copy this profile" theme-button=naked @click="${clone}">
 						${copySvg}
@@ -87,7 +86,7 @@ export const [CustomizeView, makeCustomizeElement] = shadowDuplex((options: {con
 							.value="${profile.label}"
 							@change="${(event: Event) => {
 								const input = event.currentTarget as HTMLInputElement
-								updateLabel($profileKey(), input.value)
+								updateLabel($selectedProfileKey(), input.value)
 							}}"
 							/>
 					`}
