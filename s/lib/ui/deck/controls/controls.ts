@@ -87,9 +87,13 @@ export class Controls<B extends Bindings = any> {
 		const {preferences, assignments, controllers} = this.#data
 		const meta = got(controllers.get(controller))
 
-		const profileKey = assignments.get(controller)
+		const wanted = assignments.get(controller)
 			?? preferences.get(meta.handle)
 			?? meta.defaultProfileKey
+
+		const profileKey = this.profiles.has(wanted)
+			? wanted
+			: this.fallbackProfileKey
 
 		controller.bindings = this.profiles.get(profileKey).bindings
 		assignments.set(controller, profileKey)
