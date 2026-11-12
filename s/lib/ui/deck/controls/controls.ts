@@ -40,18 +40,6 @@ export class Controls<B extends Bindings = any> {
 		await this.#data.kvs.selectedProfile.set(key)
 	}
 
-	#rebind(controller: Controller) {
-		const {preferences, assignments, controllers} = this.#data
-		const meta = got(controllers.get(controller))
-
-		const profileKey = assignments.get(controller)
-			?? preferences.get(meta.handle)
-			?? meta.defaultProfileKey
-
-		controller.bindings = this.profiles.get(profileKey).bindings
-		assignments.set(controller, profileKey)
-	}
-
 	async load() {
 		const {kvs, controllers, preferences, profiles: {customs}} = this.#data
 
@@ -62,8 +50,11 @@ export class Controls<B extends Bindings = any> {
 		setEntries(preferences, await collect(kvs.preferences))
 
 		const selected = await kvs.selectedProfile.get()
-		if (selected && this.profiles.has(selected))
-			this.#$selected(selected)
+		this.#$selected(
+			(selected && this.profiles.has(selected))
+				? selected
+				: this.fallbackProfileKey
+		)
 
 		for (const controller of controllers.keys())
 			this.#rebind(controller)
@@ -90,6 +81,18 @@ export class Controls<B extends Bindings = any> {
 	detach(controller: Controller) {
 		this.#data.controllers.delete(controller)
 		this.#data.assignments.delete(controller)
+	}
+
+	#rebind(controller: Controller) {
+		const {preferences, assignments, controllers} = this.#data
+		const meta = got(controllers.get(controller))
+
+		const profileKey = assignments.get(controller)
+			?? preferences.get(meta.handle)
+			?? meta.defaultProfileKey
+
+		controller.bindings = this.profiles.get(profileKey).bindings
+		assignments.set(controller, profileKey)
 	}
 }
 

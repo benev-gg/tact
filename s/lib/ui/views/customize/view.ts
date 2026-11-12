@@ -45,22 +45,26 @@ export const [CustomizeView, makeCustomizeElement] = shadowDuplex((options: {con
 	const updateLabel = (profileKey: string, label: string) =>
 		profiles.update(profileKey, {label})
 
-	const clone = () => {
+	const clone = async() => {
 		const key = makeId()
-		profiles.clone(key, controls.selectedProfileKey)
-		controls.setSelectedProfileKey(key)
+		await profiles.clone(key, controls.selectedProfileKey)
+		await controls.setSelectedProfileKey(key)
 	}
 
-	const destroy = () => {
-		profiles.delete(controls.selectedProfileKey)
-		controls.setSelectedProfileKey(controls.fallbackProfileKey)
+	const destroy = async() => {
+		await profiles.delete(controls.selectedProfileKey)
+		await controls.setSelectedProfileKey(controls.fallbackProfileKey)
 	}
 
 	return html`
 		<div part=plate>
 			<header class=topbar>
 				<div class=corner>
-					${ProfileSelectView(options, controls.selectedProfileKey, controls.setSelectedProfileKey)}
+					${ProfileSelectView(
+						options,
+						controls.selectedProfileKey,
+						key => controls.setSelectedProfileKey(key),
+					)}
 
 					<button title="copy this profile" theme-button=naked @click="${clone}">
 						${copySvg}
