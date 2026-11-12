@@ -80,11 +80,19 @@ export default css`@layer view {
 			margin-bottom: calc(var(--space) * 2);
 		}
 
+		div {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: stretch;
+			gap: var(--nib);
+		}
+
 		> strong {
 			font-weight: normal;
 		}
 
 		> div {
+			flex-wrap: nowrap;
 			margin-left: auto;
 
 			input {
@@ -98,14 +106,8 @@ export default css`@layer view {
 			}
 		}
 
-		div {
-			display: flex;
-			flex-wrap: wrap;
-			align-items: stretch;
-			gap: var(--nib);
-		}
-
 		.bracket {
+			justify-content: end;
 			align-items: center;
 			gap: var(--nib);
 			padding: 2px var(--nib);
@@ -116,6 +118,10 @@ export default css`@layer view {
 
 			&.mod {
 				gap: var(--nib);
+			}
+
+			> strong {
+				margin-right: auto;
 			}
 		}
 	}
