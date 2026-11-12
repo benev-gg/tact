@@ -57,6 +57,7 @@ export default css`@layer view {
 	cursor: default;
 
 	summary {
+		cursor: pointer;
 		color: var(--prime);
 		width: max-content;
 		font-weight: bold;
@@ -94,6 +95,7 @@ export default css`@layer view {
 		> div {
 			flex-wrap: nowrap;
 			margin-left: auto;
+			padding-left: 1em;
 
 			input {
 				font: inherit;
