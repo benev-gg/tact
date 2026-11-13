@@ -18,8 +18,11 @@ export default template(import.meta.url, async orb => html`
 			<style>@layer base{html{background:#111}}</style>
 
 			<link rel="icon" href="${dataSvgEmoji("🎮")}"/>
-			<link rel="stylesheet" href="${orb.hashurl("demo/main.css")}"/>
 			<script type="module" src="${orb.hashurl("demo/main.bundle.min.js")}"></script>
+
+			<style>
+				${orb.inject("demo/main.css")}
+			</style>
 
 			${socialCard({
 				title,
