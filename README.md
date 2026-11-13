@@ -68,6 +68,7 @@ i care about the little things. all input types are boiled down to simple number
     ```
     - 💡 *you can set `{maxPlayers: 1}` for a single player game.*
     - 💡 *you can pass `{namespace: "falrysk"}` if you need to run multiple games on one website.*
+    - 💡 *you can provide `{labels: {"jump": "Jump!", "looking.horizontal": "Look left/right"}}` to give your bindings friendly names in the customization ui.*
     - 💡 *you can register elements manually like `customElements.define("tact-deck-falrysk", tact.elements.TactDeck)`.*
     - 💡 *you can call `tact.dispose()` to release resources.*
 - 🍏 **encoding, decoding, and your game logic.**
