@@ -48,7 +48,7 @@ function renderGroup(
 					original[key],
 					labels,
 					fresh => update({...bindings, [key]: fresh}),
-					[...path, key],
+					path,
 				)}
 			</div>
 		</details>
@@ -66,19 +66,19 @@ function renderExpression(
 
 	const key = path.at(-1)!
 	const label = (labels && labels[path.join(".")]) ?? key
-	const up = (fresh: Bindings) => update({...bindings, [key]: fresh})
-	const reset = () => up(original[key])
+	const update2 = (fresh: Bindings) => update({...bindings, [key]: fresh})
+	const reset = () => update2(original[key])
 
 	return html`
 		<div class=expression>
 			<strong>${label}</strong>
-			${RecorderView(isReadonly, up, reset, renderBindings(
+			${RecorderView(isReadonly, update2, reset, renderBindings(
 				isReadonly,
 				bindings[key],
 				original[key],
 				labels,
-				up,
-				[...path, key],
+				update2,
+				path,
 			))}
 		</div>
 	`

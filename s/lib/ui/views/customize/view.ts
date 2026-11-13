@@ -1,7 +1,7 @@
 
 import {html} from "lit"
 import {given, when} from "@e280/stz"
-import {Content, shadowDuplex, useCss, useName} from "@e280/sly"
+import {shadowDuplex, useCss, useName} from "@e280/sly"
 
 import styleCss from "./style.css.js"
 import themeCss from "../theme.css.js"
@@ -9,6 +9,7 @@ import themeCss from "../theme.css.js"
 import copySvg from "../../icons/akar/copy.svg.js"
 import trashCanSvg from "../../icons/akar/trash-can.svg.js"
 
+import {Labels} from "../../deck/types.js"
 import {makeId} from "../../../utils/make-id.js"
 import {Bindings} from "../../../input/types.js"
 import {Controls} from "../../deck/controls/controls.js"
@@ -17,7 +18,7 @@ import {ProfileSelectView} from "../profile-select/view.js"
 
 export const [CustomizeView, makeCustomizeElement] = shadowDuplex((options: {
 		controls: Controls
-		labels?: Record<string, Content>
+		labels?: Labels
 	}) => {
 
 	useName("customize")

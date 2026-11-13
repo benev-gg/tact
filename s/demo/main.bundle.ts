@@ -4,12 +4,7 @@ import {cycle, nap} from "@e280/stz"
 import {presets} from "./presets.js"
 import {setupTact} from "../lib/ui/deck/setup/tact.js"
 
-const labels = {
-	"looking": "Looking",
-	"looking.horizontal": "Horizontal!!",
-}
-
-const tact = await setupTact({presets, maxPlayers: 4, labels})
+const tact = await setupTact({presets, maxPlayers: 4})
 tact.mouseKeyboard()
 tact.gamepads("gamer")
 tact.registerElements()

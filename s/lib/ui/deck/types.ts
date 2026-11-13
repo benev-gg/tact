@@ -1,5 +1,4 @@
 
-import {Content} from "@e280/sly"
 import {Hub} from "./hub.js"
 import {Bindings} from "../../input/types.js"
 import {Controls} from "./controls/controls.js"
@@ -13,7 +12,7 @@ export type Profile<B extends Bindings = any> = {
 	basedOn?: string
 }
 
-export type Labels = Record<string, Content>
+export type Labels = Record<string, string>
 export type Presets<B extends Bindings> = Record<ProfileKey, Profile<B>>
 
 export type Deck<B extends Bindings = any> = {
