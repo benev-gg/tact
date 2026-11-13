@@ -1,6 +1,7 @@
 
 import {html} from "lit"
 import {Content} from "@e280/sly"
+import {Labels} from "../../../deck/types.js"
 import {Bindings} from "../../../../input/types.js"
 import {RecorderView} from "../subviews/recorder.js"
 import {ExpressionView} from "../subviews/expression.js"
@@ -10,7 +11,9 @@ export function renderBindings(
 		isReadonly: boolean,
 		bindings: Bindings,
 		original: Bindings,
+		labels: Labels | undefined,
 		update: (b: Bindings) => void,
+		path: string[],
 	): Content {
 
 	if (isExpression(bindings))
@@ -18,8 +21,8 @@ export function renderBindings(
 
 	return Object.entries(bindings).map(([key, child]) => (
 		isExpression(child)
-			? renderExpression(isReadonly, bindings, original as any, update, key)
-			: renderGroup(isReadonly, bindings, original as any, update, key)
+			? renderExpression(isReadonly, bindings, original as any, labels, update, [...path, key])
+			: renderGroup(isReadonly, bindings, original as any, labels, update, [...path, key])
 	))
 }
 
@@ -27,19 +30,25 @@ function renderGroup(
 		isReadonly: boolean,
 		bindings: Record<string, Bindings>,
 		original: Record<string, Bindings>,
+		labels: Labels | undefined,
 		update: (b: Bindings) => void,
-		key: string,
+		path: string[],
 	) {
+
+	const key = path.at(-1)!
+	const label = (labels && labels[path.join(".")]) ?? key
 
 	return html`
 		<details class=group open>
-			<summary>${key}</summary>
+			<summary>${label}</summary>
 			<div class=children>
 				${renderBindings(
 					isReadonly,
 					bindings[key],
 					original[key],
+					labels,
 					fresh => update({...bindings, [key]: fresh}),
+					[...path, key],
 				)}
 			</div>
 		</details>
@@ -50,17 +59,27 @@ function renderExpression(
 		isReadonly: boolean,
 		bindings: Record<string, Bindings>,
 		original: Record<string, Bindings>,
+		labels: Labels | undefined,
 		update: (b: Bindings) => void,
-		key: string,
+		path: string[],
 	) {
 
+	const key = path.at(-1)!
+	const label = (labels && labels[path.join(".")]) ?? key
 	const up = (fresh: Bindings) => update({...bindings, [key]: fresh})
 	const reset = () => up(original[key])
 
 	return html`
 		<div class=expression>
-			<strong>${key}</strong>
-			${RecorderView(isReadonly, up, reset, renderBindings(isReadonly, bindings[key], original[key], up))}
+			<strong>${label}</strong>
+			${RecorderView(isReadonly, up, reset, renderBindings(
+				isReadonly,
+				bindings[key],
+				original[key],
+				labels,
+				up,
+				[...path, key],
+			))}
 		</div>
 	`
 }

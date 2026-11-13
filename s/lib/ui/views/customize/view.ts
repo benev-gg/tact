@@ -1,7 +1,7 @@
 
 import {html} from "lit"
 import {given, when} from "@e280/stz"
-import {shadowDuplex, useCss, useName} from "@e280/sly"
+import {Content, shadowDuplex, useCss, useName} from "@e280/sly"
 
 import styleCss from "./style.css.js"
 import themeCss from "../theme.css.js"
@@ -15,7 +15,11 @@ import {Controls} from "../../deck/controls/controls.js"
 import {renderBindings} from "./parts/render-bindings.js"
 import {ProfileSelectView} from "../profile-select/view.js"
 
-export const [CustomizeView, makeCustomizeElement] = shadowDuplex((options: {controls: Controls}) => {
+export const [CustomizeView, makeCustomizeElement] = shadowDuplex((options: {
+		controls: Controls
+		labels?: Record<string, Content>
+	}) => {
+
 	useName("customize")
 	useCss(themeCss, styleCss)
 
@@ -102,7 +106,9 @@ export const [CustomizeView, makeCustomizeElement] = shadowDuplex((options: {con
 					false,
 					profile.bindings,
 					baseline.bindings,
+					options.labels,
 					updateBindings,
+					[],
 				)}
 			</div>
 		</div>
