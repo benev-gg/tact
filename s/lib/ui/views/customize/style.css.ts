@@ -10,39 +10,35 @@ export default css`@layer view {
 
 .topbar {
 	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
+	flex-direction: column;
+	gap: var(--nib);
 
 	[view="profile-select"] {
 		font-size: 1.2em;
 	}
 
-	.corner {
+	.interactive {
 		display: flex;
 		flex-wrap: wrap;
-		align-items: center;
 		gap: var(--pad);
 
 		small {
 			user-select: none;
 			opacity: 0.5;
+			padding: 0 var(--pad);
 			font-style: italic;
-			border: 1px solid;
-			border-radius: var(--round);
-			padding: var(--nib) var(--pad);
+		}
+
+		input {
+			margin-left: auto;
 		}
 	}
 
-	.tools {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--pad);
-		flex: 1 1 auto;
-		justify-content: end;
-
-		input[type="text"] {
-			width: 12em;
-		}
+	.info {
+		opacity: 0.5;
+		padding: 0 var(--pad);
+		font-size: 0.8em;
+		font-style: italic;
 	}
 }
 

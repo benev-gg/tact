@@ -59,7 +59,7 @@ export const [CustomizeView, makeCustomizeElement] = shadowDuplex((options: {con
 	return html`
 		<div part=plate>
 			<header class=topbar>
-				<div class=corner>
+				<div class=interactive>
 					${ProfileSelectView(
 						options,
 						controls.selectedProfileKey,
@@ -76,11 +76,6 @@ export const [CustomizeView, makeCustomizeElement] = shadowDuplex((options: {con
 						</button>
 					`}
 
-					${when(isReadonly, () => html`<small>readonly</small>`)}
-					${given(profile.basedOn, basedOn => html`<small>based on ${profiles.get(basedOn).label}</small>`)}
-				</div>
-
-				<div class=tools>
 					${isReadonly ? null : html`
 						<input
 							type=text
@@ -94,6 +89,11 @@ export const [CustomizeView, makeCustomizeElement] = shadowDuplex((options: {con
 							}}"
 							/>
 					`}
+				</div>
+
+				<div class=info>
+					${when(isReadonly, () => `this profile is readonly`)}
+					${given(profile.basedOn, basedOn => `this profile is based on "${profiles.get(basedOn).label}"`)}
 				</div>
 			</header>
 
